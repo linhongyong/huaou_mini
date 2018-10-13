@@ -1,0 +1,22 @@
+var str2Array = function (str) {
+  var array = JSON.parse(str);
+  return array;
+}
+
+var formatTimeTerse = function (str) {
+  var terseTime = "";
+  var len = str.length;
+  for (var i = 0; i < len; i++) {
+    if(i <= 10 || i >= 16){
+      continue;
+    }
+    terseTime += str[i];
+  }
+  return str;
+}
+
+
+module.exports = {
+  str2Array: str2Array,
+  formatTimeTerse: formatTimeTerse
+};

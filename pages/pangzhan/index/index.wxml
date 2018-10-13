@@ -1,0 +1,96 @@
+<zan-dialog id="zan-button-dialog" bindgetuserinfo="getuserinfo"></zan-dialog>
+
+<zan-dialog id="zan-vertical-dialog"></zan-dialog>
+<zan-toptips id="zan-toptips" content="{{ content }}" is-show="{{ $zanui.toptips.show }}" />
+
+<!-- 登录框 -->
+<login-modal isShow="{{isHasAccount}}">
+  <form class='display-flex-center-center padding-h-20' bindsubmit="onFormSubmit">
+    <view class='login-input margin-t-10'>
+      <input type='number' placeholder='请输入手机号' name="mobile" cursor-spacing="20"></input>
+    </view>
+    <view class='login-input margin-t-20'>
+      <input password placeholder='请输密码' name="password" cursor-spacing="20"></input>
+    </view>
+    <button class='ok-btn bg-theme' form-type="submit">登录</button>
+  </form>
+  <!-- 15381432412 -->
+</login-modal>
+
+<view class='position-f' >
+  <!-- 项目楼栋选择 -->
+  <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
+    <view class='bg-theme font-white text-c toptipbar padding-v-10' wx:if="{{projectList.length > 0}}">
+      {{multiArray[0][multiIndex[0]]}}<text wx:if="{{multiArray[1].length}}">，{{multiArray[1][multiIndex[1]]}}号楼</text>
+    </view>
+  </picker>
+  <!-- 旁站菜单 -->
+  <view>
+    <zan-tab
+      bind:tabchange="onTabchange"
+      list="{{ tab.list }}"
+      selected-id="{{ currentPzIndex+1 }}"
+      scroll="{{ tab.scroll }}"
+      height="{{ tab.height }}"/>
+  </view>
+</view>
+
+<view  style="height:188rpx;"></view>
+
+<!-- 机械灌注桩 -->
+<view class="bg-white" wx:if="{{currentPzIndex == 0}}" >
+<!-- 楼栋列表 -->
+  <view class='between'>
+    <block wx:for="{{pangzhanList}}" wx:key="{{index}}">
+      <navigator url='{{"../pangzhan_jxgzz/pangzhan_jxgzz?pileCode="+item.pileCode}}'>
+        <button class='building-btn undo' wx:if='{{ item.status == 0 }}'>
+          {{ item.pileCode }}
+        </button>
+        <button class='building-btn doing' wx:if='{{ item.status == 1 }}'>
+          {{ item.pileCode }}
+        </button>
+        <button class='building-btn finished' wx:if='{{ item.status == 2 }}'>
+          {{ item.pileCode }}
+        </button>
+      </navigator>
+     </block>
+  </view>
+</view>
+
+<!-- 水泥搅拌桩 -->
+<view class="bg-white margin-t-10"  wx:if="{{currentPzIndex == 1}}">
+  <view wx:for="{{shuiniList}}" wx:key="{{index}}">
+    <navigator url='../pangzhan_shuini/pangzhan_shuini?pileStartNum={{item.pileStartNum}}'>
+      <view class='padding-v-20 padding-h-20 top-line display-flex-center-between'>
+        <text class='flex-6'>{{item.pileStartNum}}号桩</text>
+        <text class='margin-l-20 flex-6' wx:if="{{item.status == 1}}">已完成</text>
+        <text class='margin-l-20 flex-6' wx:else>进行中</text>
+        <text class='iconfont icon-chakangengduo flex-1' ></text>
+      </view>   
+    </navigator>
+  </view>
+</view>
+
+
+<!-- 通用 -->
+<view class="bg-white margin-t-10"  wx:if="{{currentPzIndex == 2}}">
+  <view wx:for="{{tongyongList}}" wx:key="{{index}}">
+    <navigator url='../pangzhan_tongyong/pangzhan_tongyong?id={{item.id}}'>
+      <view class='padding-v-20 padding-h-20 top-line display-flex-center-between'>
+        <text class='flex-2'>{{item.building}}幢</text>
+        <text class='margin-l-20 flex-3'>{{item.workProcedure}}</text>
+        <!-- <text class='margin-l-20 flex-6' wx:if="{{item.status < 16}}">No:{{item.status < 10 && item.status > 0  ? "0"+item.status : item.status }} 阶段</text>
+        <text class='margin-l-20 flex-6' wx:else>已完成</text> -->
+        <text class='iconfont icon-chakangengduo flex-1' ></text>
+      </view>   
+    </navigator>
+  </view>
+</view>
+<view class="bg-white margin-t-10"  wx:if="{{tabId > 3}}">
+  <view class='padding-10'>暂未开放此功能</view>
+</view>
+
+
+
+<!-- 添加按钮 -->
+<view class='add-buttom' bindtap='showAddMenu'><text class='iconfont icon-add font-theme'></text></view>

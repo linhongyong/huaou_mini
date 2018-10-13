@@ -1,0 +1,3 @@
+<view class="zan-toptips {{ isShow ? 'zan-toptips--show' : '' }}"
+ style="z-index:9999; background-color:{{ backgroundColor }}">{{ content }}</view>
+

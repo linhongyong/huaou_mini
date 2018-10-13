@@ -1,0 +1,9 @@
+<template name="submitCommentTemplate">
+  <view class='position-f padding-10 bg-f4 display-flex-center-between' style='bottom:0;left:0;z-index:999;width:100%'>
+    <!-- <text class='iconfont icon'></text> -->
+    <textarea fixed="true" value="{{comment}}" cursor-spacing="10" class='bg-white padding-10' placeholder='说点什么吧~' auto-height style='width:560rpx;border-radius:5px' bindinput="setComment"></textarea>
+
+    <button class='font-theme font-14' style='width:100rpx;padding:10rpx 0;margin-left:0;margin-right:0;line-height:2;' 
+  bindtap='submitComment'>提交</button>
+  </view>
+</template>

@@ -1,0 +1,95 @@
+
+.login-modal{
+  width: 80vw;
+  height: 475rpx;
+  /* border-radius: 100rpx; 没效果*/
+  position: fixed;
+  top: 25%;
+  left: 10vw;
+  z-index: 9999;
+  border-radius: 8rpx;
+}
+/*弹窗主体*/
+.modal-content {
+	position: fixed;
+	/* bottom: -700px; */
+	left: 0;
+	width: 100%;
+	/* height: 700px; */
+	/*box-shadow: 10rpx 0 30rpx rgba(0,0,0,.9);*/
+	margin-top: 5px;
+	background: #fff;
+	z-index: 999;
+}
+/*遮罩层*/
+.modal-mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    opacity: .4;
+    z-index: 99;
+}
+/*初始隐藏*/
+.hidden {
+	display: none;
+}
+
+.modal-box{
+  width: 80%;
+  height: 500rpx;
+  position: fixed;
+  top: 20%;
+  left: 10%;
+  background-color: white;
+  z-index: 999;
+  border-radius: 8rpx;
+}
+
+.ng-fl{
+  width: 100%;
+}
+.ng-fl::after{
+  display: table;
+  content: "";
+  clear:both;
+}
+.ng-fl-l{
+  float: left;
+}
+.ng-fl-r{
+  float: right;
+}
+
+.ok-btn{
+  background-color: #04BE01;
+  width: 70%;
+  margin: 0 auto;
+  color: white;
+  line-height:2.2;
+  font-size: 30rpx;
+  margin-top: 40rpx;
+  border-radius:6rpx;
+}
+
+.font-16{
+  font-size: 32rpx;
+}
+
+.padding-10-20{
+  padding: 20rpx 40rpx;
+}
+.bg-white{
+  background-color: white;
+}
+.margin-t-10{
+  margin-top: 20rpx;
+}
+.font-ccc{
+  color: #ccc;
+}
+.text-c{
+  text-align: center;
+}

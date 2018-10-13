@@ -1,0 +1,8 @@
+<view class="modal">
+	<view class="modal-mask  {{state}} {{maskVisual}}"  bindtap='toggleDiv'></view>
+	<view animation="{{animationData}}" 
+  class="modal-content" 
+  style="{{'position:fixed; bottom: -'+height+'px;height: '+height+'px;'}}">
+	    <slot></slot>
+  </view>
+</view>

@@ -1,0 +1,4 @@
+
+<template name="hasNoMoreTemplate">
+  <view class='text-c font-14 padding-v-10 top-line bg-white' wx:if="{{ hasMore==0 && list.length > 0}}">我是有底线的 </view>
+ </template>

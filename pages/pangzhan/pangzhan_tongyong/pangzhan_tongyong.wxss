@@ -1,0 +1,47 @@
+/* pages/pangzhan_update/pangzhan_update.wxss */
+
+.clock{
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  border: 10rpx solid #FDC562;
+}
+.clock .time{
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #473716;
+}
+
+.colon{
+  width: 16rpx;
+  text-align: center;
+}
+
+.die{
+  /* display: none; */
+}
+.passive{
+  background-color: white;
+}
+.active{
+  background-color: white;
+}
+
+.input{
+  /* border:1px solid #ccc; */
+  padding: 10rpx;
+  border-radius: 4rpx;
+  width: 200rpx;
+}
+.height-80{
+  height: 80px;
+}
+.toptipbar{
+  position: fixed;
+  top: 0px;
+  width: 100%;
+  z-index: 999;
+}
+#zan-toptips{
+  z-index: 99999
+}

@@ -1,0 +1,10 @@
+<template name="essayFooterTemplate">
+  <view class='padding-v-10 padding-l-5 bottom-line' wx:if="{{ id }}">
+    <text class='iconfont icon-view-num margin-r-5'>
+      <text class='margin-l-5'>{{ view }}</text>
+    </text>
+    <text class='iconfont icon-good margin-l-10 {{is_zan ? "font-theme":""}}' bindtap='updateZan'>
+      <text class='margin-l-5'>{{ zan }}</text>
+    </text> 
+  </view>
+</template>

@@ -1,0 +1,10 @@
+<template name="essayHeaderTemplate">
+  <view class='padding-t-10 font-bold font-24 ng-textAuto3' style='line-height:60rpx;'>{{ title }}</view>
+  <view class='bottom-line padding-v-10 display-flex-center-between margin-t-10' wx:if="{{ id }}">
+    <view class='display-flex-center font-14'>
+      <image class='' src='{{avatar_url}}' style='width:50rpx;height:50rpx;border-radius:25rpx;'></image>
+      <text class='margin-l-10'>{{ nick_name }}</text>
+    </view>
+    <text class='font-666 font-14 font-italic'>{{ create_time }}</text>
+  </view>
+</template>

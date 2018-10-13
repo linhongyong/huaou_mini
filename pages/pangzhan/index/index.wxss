@@ -1,0 +1,39 @@
+
+.building-btn{
+  display: inline-block;
+  width: 120rpx;
+  height: 120rpx;
+  line-height: 120rpx;
+  margin-top: 8rpx;
+  padding-left: 0rpx;
+  padding-right: 0rpx;
+}
+.position-f{
+  z-index: 999;
+}
+.add-buttom{
+  position: fixed;
+  bottom: 60rpx;
+  right: 40rpx;
+}
+.add-buttom .iconfont{
+  font-size: 80rpx;
+}
+.login-input{
+  border-bottom: 1px solid #ccc;
+}
+.ok-btn{
+  width: 100%;
+  margin: 80rpx auto 0;
+  color: white;
+  line-height:2.2;
+  font-size: 30rpx;
+  border-radius:6rpx;
+}
+
+.doing{
+  background-color: rgb(21, 216, 47)
+}
+.finished{
+  background-color: #3B94F1
+}

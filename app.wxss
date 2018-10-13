@@ -1,0 +1,189 @@
+/**app.wxss**/
+page{
+  background-color: #F4F5F9;
+  font-family: '微软雅黑'
+}
+view, image{
+   box-sizing: border-box;
+   font-size: 34rpx;
+   /* line-height: 44rpx; */
+}
+view{
+  /* background-color: white; */
+}
+.container {
+  background-color:#FDFAF3;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between; 
+  box-sizing: border-box;
+} 
+.box {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between; 
+  box-sizing: border-box;
+} 
+
+.text-c{
+  text-align: center;
+}
+.text-r{
+  text-align: right;
+}
+.scroll_box{
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.scroll-item{
+  display: inline-block;
+}
+
+.oneline{
+  text-overflow: ellipsis;
+  overflow:hidden; 
+  white-space:nowrap; 
+}
+.orange{
+  color: #eb6100;
+  font-size: 32rpx;
+}
+.block{
+  display: block;
+}
+.bottom-line{
+ border-bottom: 1px solid #efefef;
+}
+.top-line{
+ border-top: 1px solid #efefef;
+}
+.left-line{
+ border-left: 1px solid #efefef;
+}
+.bottom-bold-line{
+ border-bottom: 10px solid #FBEFE1;
+}
+
+.bg-white{
+  background-color: #FFFFFF;
+}
+.bg-f4{
+  background-color: #f4f4f4;
+}
+
+
+.ng-image image{
+  width: 100%;
+  height: 100%;
+}
+
+.bottom-btn{
+  line-height: 80rpx;
+  color: white;
+  text-align: center;
+  position: fixed;
+  bottom: 50rpx;
+  left: 5%;
+  width: 90%;
+}
+.btn{
+  line-height: 80rpx;
+  text-align: center;
+}
+
+.no-radius{
+  border-radius: 0rpx;
+}
+
+.clear-btn-default{
+  font-size: 28rpx;
+  display: inline-block;
+  padding-left: 0rpx;
+  padding-right: 0rpx;
+  /* line-height: 36rpx; */
+  border: 0!important;
+  outline: 0;
+  line-height: initial;
+}
+.clear-btn-default[class="con_listbox"]::after {
+  border: 0;
+} 
+.clear-btn-default::after {
+  width:0;
+  height:0;
+}
+.good button[type="default"] {
+  background-color:transparent;
+}
+
+.form_button{
+  background-color:transparent!important;
+  padding:0;
+  margin:0;
+  display:block;  
+  position:relative;
+  border: 0;
+  outline: 0;
+  padding-left:0;
+  padding-right:0;
+  border-radius:5rpx;
+  color:transparent;
+  font-size: inherit;
+  text-align: left;
+  line-height: inherit;
+  }
+button.form_button::after{
+  content:'';
+  width:0;
+  height:0;
+  -webkit-transform:scale(1);
+  transform:scale(1);
+  display:none;
+  background-color:transparent;
+  border: 0;
+  outline: 0;
+} 
+.heigth-40{
+  height: 80rpx;
+}
+.height-40{
+  height: 80rpx;
+}
+.height-30{
+  height: 60rpx;
+}
+.no-tap-light{
+  -webkit-tap-highlight-color:transparent
+}
+.theme-blue{
+  color: #00A1BA;
+}
+.theme-blue-bg{
+  background: #00A1BA;
+}
+
+.ng-fill{
+  width:100%;
+  height: 100%;
+}
+@import "wxss/pd-mg.wxss";
+@import "wxss/display.wxss";
+@import "wxss/font.wxss";
+@import "wxss/icon.wxss";
+@import "wxss/border.wxss";
+@import "wxss/theme.wxss";
+
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 200rpx 0;
+  box-sizing: border-box;
+} 

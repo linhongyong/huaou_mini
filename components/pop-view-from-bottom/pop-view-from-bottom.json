@@ -1,0 +1,6 @@
+{
+  "component": true,
+  "usingComponents": {
+    "component-tag-name": "/../components/pop-view-from-bottom/pop-view-from-bottom"
+  }
+}

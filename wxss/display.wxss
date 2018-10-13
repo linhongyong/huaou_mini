@@ -1,0 +1,138 @@
+.display-flex-between{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.display-flex-center-between{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.display-flex-top-between{
+    display: flex;
+    /* align-items: center; */
+    justify-content: space-between;
+}
+.display-flex-center-right{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.display-flex-center{
+    display: flex;
+    align-items: center;
+}
+.display-flex-center-center{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.display-flex-center-center-column{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.display-flex-between-left{
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+} 
+.display-flex-center-center-column{
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.display-flex-top-center{
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+}
+.flex-row{
+  display: flex;
+  flex-direction: row;
+}
+.flex-colunm{
+  display: flex;
+  flex-direction: column;
+}
+.flex-1{
+  flex: 1;
+}
+.flex-2{
+  flex: 2;
+}
+.flex-3{
+  flex: 3;
+}
+.flex-4{
+  flex: 4;
+}
+.flex-5{
+  flex: 5;
+}
+.flex-6{
+  flex: 6;
+}
+.flex-7{
+  flex: 7;
+}
+.flex-8{
+  flex: 8;
+}
+.flex-9{
+  flex: 9;
+}
+
+.ng-fl{
+  width: 100%;
+}
+.ng-fl::after{
+  display: table;
+  content: "";
+  clear:both;
+}
+.ng-fl-l{
+  float: left;
+}
+.ng-fl-r{
+  float: right;
+}
+.between{
+  display: flex;
+  justify-content: space-between;  
+  flex-wrap:wrap;
+  box-sizing: content-box;
+}
+.vertical-center-pr{
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.display-f{
+  display: flex;
+}
+.display-b{
+  display: block;
+}
+.display-ib{
+  display: inline-block;
+}
+.display-tr{
+  display: table-row;
+}
+.display-tc{
+  display: table-cell;
+}
+
+.position-r{
+  position: relative;
+}
+.position-a{
+  position: absolute;
+}
+.position-f{
+  position: fixed;
+}

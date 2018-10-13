@@ -1,0 +1,11 @@
+
+<template name="hotSearch">
+  <view class='padding-10-20' wx:if="{{ hotList.length > 0 }}">
+    <text class=''>热门搜索</text>
+    <view class='search-word ng-fl'>
+      <view class='ng-fl-l item margin-t-10'  wx:for="{{ hotList }}" wx:key="index"  data-keywordhot="{{ item.id }}" bindtap='toSearch'>{{ item.id }}</view>
+    </view>
+  </view>
+</template>
+
+

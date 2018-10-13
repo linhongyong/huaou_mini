@@ -1,0 +1,18 @@
+ .two-column-list{
+  display: flex;
+  justify-content: space-between;  
+  flex-wrap:wrap;
+  box-sizing: content-box;
+}
+.two-column-list .item{
+  width: 370rpx; 
+  background-color: white;
+  margin-top: 10rpx;
+  border-radius: 0rpx;
+}
+.good-name{
+  word-break:break-all;display:-webkit-box; -webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+  font-size: 32rpx;
+  height: 72rpx;
+  line-height: 36rpx;
+}

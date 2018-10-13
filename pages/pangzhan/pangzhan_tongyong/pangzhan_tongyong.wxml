@@ -1,0 +1,217 @@
+<wxs src="./../../../wxs/tools.wxs" module="tools" />
+<zan-toptips id="zan-toptips" content="{{ content }}" is-show="{{ $zanui.toptips.show }}" /> 
+<zan-dialog id="zan-base-dialog"></zan-dialog>
+
+<view class='bg-theme font-white text-c toptipbar' style='height:30px;line-height:30px'>
+  <text wx:if="{{pileStartNum}}">{{pileStartNum}}桩到</text>
+  <text wx:if="{{pileEndNum}}">{{pileEndNum}}桩 </text>
+  旁站数据采集
+</view>
+<view style='height:30px;line-height:30px'></view>
+<!-- 楼栋 -->
+<view class='padding-h-20 display-flex-center-between bottom-line height-80  bg-white'>
+  <view>楼栋</view>
+  <view class='display-flex-center-right'>
+    <form bindsubmit="onInputSave" data-index="building" class='' wx:if="{{isBuildingEdit}}">
+        <view class='display-flex-center'>
+          <input class='input' type='number' placeholder='请输入...'  cursor-spacing="30" name="value" value=''  ></input>
+          <text class='iconfont icon-17cuowu padding-l-5  margin-l-10' style='font-size:50rpx;color:red' bindtap='toDone' data-index="building"></text>
+          <button formType="submit" class='btn font-theme bg-white clear-btn-default margin-l-10'>
+            <text class='iconfont icon-dui1 padding-l-5' style='font-size:60rpx;'></text>
+          </button>
+        </view>
+    </form>
+
+    <view class='display-flex-center-center'  wx:else bindtap='toEdit' data-index="building">
+      <view class='font-666' wx:if="{{building == null}}">请输入</view>  
+      <view class='' wx:else>{{ building }}</view>  
+    </view>
+  </view>
+</view>
+
+<!-- 工序  -->
+<view class='padding-h-20 bottom-line display-flex-center-between height-80 bg-white'>
+  <view class=''>工序 </view>
+  <picker class='' bindchange="onPickerChangeOfProcedure" value="{{currentProcedure}}" range="{{procedureList}}">
+    <view class="display-flex-center-between">
+      <view class='{{currentProcedure == 0 ? "font-666" : ""}}'> {{procedureList[currentProcedure]}}</view>
+    </view>
+  </picker>
+</view>
+
+
+
+<!--旁站部位 -->
+<view class='padding-h-20 display-flex-center-between bottom-line height-80  bg-white'>
+  <view>旁站部位</view>
+  <view class='display-flex-center-right'>
+    <form bindsubmit="onInputSave" data-index="pzPart" class='' wx:if="{{isPzPartEdit}}">
+        <view class='display-flex-center'>
+          <input class='input' type='number' placeholder='请输入...'  cursor-spacing="30" name="value" value='' ></input>
+          <text class='iconfont icon-17cuowu padding-l-5  margin-l-10' style='font-size:50rpx;color:red' bindtap='toDone' data-index="pzPart"></text>
+          <button formType="submit" class='btn font-theme bg-white clear-btn-default margin-l-10'>
+            <text class='iconfont icon-dui1 padding-l-5' style='font-size:60rpx;'></text>
+          </button>
+        </view>
+    </form>
+
+    <view class='display-flex-center-center'  wx:else bindtap='toEdit' data-index="pzPart">
+      <view class='font-666' wx:if="{{pzPart == null}}">请输入</view>  
+      <view class='' wx:else>{{ pzPart }}</view>  
+    </view>
+  </view>
+</view>
+<view class='padding-h-20 display-flex-center-between bottom-line height-80 bg-white'>
+    <view>天气</view>
+    <view class='display-flex-center-right'>
+     <radio-group class="radio-group" bindchange="radioChangeOfWeather">
+      <label class="radio"> <radio value="晴" color="#3B94F1" checked='{{ weather =="晴" }}'/>晴 </label>
+      <label class="radio margin-h-20"> <radio value="阴"  color="#3B94F1" checked='{{ weather =="阴" }}'/>阴 </label>
+      <label class="radio"> <radio value="雨"  color="#3B94F1" checked='{{ weather =="雨" }}'/>雨 </label>
+     </radio-group> 
+    </view>
+</view>
+  <!-- 开始时间 -->
+  <view class='padding-h-20 display-flex-center-between bottom-line height-80 bg-white'>
+    <view>开始时间</view>
+    <view class='display-flex-center-right'>
+      <view class='display-flex-center-right' wx:if="{{lookStartTime != null}}">
+        <picker mode="time" value="{{tools.formatTimeTerse(lookStartTime)}}" start="00:00" end="23:59" bindchange="bindTimeChange" data-index="lookStartTime" >
+          <view class="picker">{{tools.formatTimeTerse(lookStartTime)}}</view>
+        </picker>
+      </view>
+      <!-- <text class='padding-r-10 font-666' wx:else>点击记录时间</text> -->
+      <view class='display-flex-center-center'  wx:if="{{ lookStartTime == null }}" bindtap='getTime' data-index="lookStartTime">
+        <view class='clock margin-h-auto display-flex-center-center'>
+          <view  class='display-flex-center-center'>
+            <view class='time'>{{hour}}</view>
+            <view class='time colon' hidden="{{isColonShow}}">:</view>
+            <view class='time colon' hidden="{{!isColonShow}}"></view>
+            <view class='time'>{{minute}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <!-- 结束时间 -->
+  <view class='padding-h-20 display-flex-center-between bottom-line height-80 bg-white'>
+    <view>结束时间</view>
+    <view class='display-flex-center-right'>
+      <view class='display-flex-center-right' wx:if="{{lookEndTime != null}}">
+        <picker mode="time" value="{{tools.formatTimeTerse(lookEndTime)}}" start="00:00" end="23:59" bindchange="bindTimeChange" data-index="lookEndTime" >
+          <view class="picker">{{tools.formatTimeTerse(lookEndTime)}}</view>
+        </picker>
+      </view>
+      <!-- <text class='padding-r-10 font-666' wx:else>点击记录时间</text> -->
+      <view class='display-flex-center-center'  wx:if="{{ lookEndTime == null }}" bindtap='getTime' data-index="lookEndTime">
+        <view class='clock margin-h-auto display-flex-center-center'>
+          <view  class='display-flex-center-center'>
+            <view class='time'>{{hour}}</view>
+            <view class='time colon' hidden="{{isColonShow}}">:</view>
+            <view class='time colon' hidden="{{!isColonShow}}"></view>
+            <view class='time'>{{minute}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+<!-- 模板  -->
+<!-- <view class='bg-white  padding-h-20 display-flex-center-between bottom-line height-80'>
+    <view class=''>选择模板 :</view>
+    <picker class='' bindchange="onPickerChangeOfTmpl" value="{{currentTmpl}}" range="{{tmpltNameList}}">
+      <view  class='{{currentTmpl == 0 ? "font-666" : ""}}'> {{tmpltNameList[currentTmpl]}}</view>
+    </picker>
+</view> -->
+
+
+
+
+<view class='bg-white'>
+
+<!-- 施工内容 -->
+  <view class='padding-h-20 padding-v-10 bottom-line  bg-white'>
+    <view>施工内容</view>
+    <view class=''>
+      <form bindsubmit="onInputSave" data-index="content" class='' wx:if="{{isContentEdit}}">
+           <textarea class='padding-v-10' placeholder="请输入" name="value"  style='height: 186px' cursor-spacing="100"/>
+            <!-- <input class='input' type='number' placeholder='请输入...'  cursor-spacing="30" name="value" value='' style='width:200rpx'></input> -->
+          <view class='display-flex-center-right' style='height: 34px'>
+            <text class='iconfont icon-17cuowu padding-l-5  margin-l-10' style='font-size:50rpx;color:red' bindtap='toDone' data-index="content"></text>
+            <button formType="submit" class='btn font-theme bg-white clear-btn-default margin-l-10'>
+              <text class='iconfont icon-dui1 padding-l-5' style='font-size:60rpx;'></text>
+            </button>
+          </view>
+      </form>
+
+      <view class='padding-v-10'  wx:else bindtap='toEdit' data-index="content" style='height: 240px'>
+        <view class='font-666' wx:if="{{content == null || content == ''}}">请输入</view>  
+        <view class='' wx:else>{{ content }}</view>  
+      </view>
+    </view>
+  </view>
+<!-- 发现或存在的问题 -->
+  <!-- <view class='padding-h-20 padding-v-10 bottom-line  bg-white'>
+    <view>发现或存在的问题</view>
+    <view class=''>
+      <form bindsubmit="onInputSave" data-index="problemContent" class='' wx:if="{{isProblemContentEdit}}">
+           <textarea class='padding-v-10' placeholder="请输入" name="value"  style='height: 186px' cursor-spacing="100"/>
+  
+          <view class='display-flex-center-right' style='height: 34px'>
+            <text class='iconfont icon-17cuowu padding-l-5  margin-l-10' style='font-size:50rpx;color:red' bindtap='toDone' data-index="problemContent"></text>
+            <button formType="submit" class='btn font-theme bg-white clear-btn-default margin-l-10'>
+              <text class='iconfont icon-dui1 padding-l-5' style='font-size:60rpx;'></text>
+            </button>
+          </view>
+      </form>
+
+      <view class='padding-v-10'  wx:else bindtap='toEdit' data-index="problemContent" style='height: 240px'>
+        <view class='font-666' wx:if="{{problemContent == null || problemContent == ''}}">请输入</view>  
+        <view class='' wx:else>{{ problemContent }}</view>  
+      </view>
+    </view>
+  </view> -->
+
+  <!-- 钢筋笼拍照上传5 -->
+  <!-- <view class='padding-h-20 bottom-line'>
+    <view class='padding-v-10 display-flex-center-between'>
+      <view>钢筋笼照片采集：( 1~{{result.barCageCount > 2 ? result.barCageCount-1 : 1}}张 )</view>
+      <view>
+        <button class='btn bg-theme font-white clear-btn-default font-14  padding-v-5 padding-h-20 margin-t-15' bindtap='updateImagesOrSave'>上传</button>
+      </view>
+    </view>
+    <view class='padding-v-10 ng-fl' style=''>
+      <view class='margin-t-10 ng-fl-l position-r'  wx:for="{{tempImagesOfCage }}" wx:key="{{index}}" style='margin-left:37rpx;background-color:#ccc;'>
+        <image src='{{item}}' style='width:200rpx;height:200rpx;' bindtap='preview' data-index="{{index}}"></image>
+        <text class='iconfont icon-bad position-a font-ccc' data-index="{{index}}" bindtap='deletePic' style='font-size:50rpx;top:-26rpx;right:-26rpx;'></text>
+      </view>
+      
+      <image class='margin-t-10' wx:if="{{tempImagesOfCage.length < (result.barCageCount > 2 ? result.barCageCount-1 : 1)}}" src='../../../res/upload.png' style='width:200rpx;height:200rpx;margin-left:37rpx;' bindtap='uploadImages'></image>
+    </view>
+  </view> -->
+  
+  <!-- 拍照上传8 -->
+  <!-- <view class='padding-h-20 bottom-line'>
+    <view class='padding-v-10 display-flex-center-between'>
+      <view>孔深照片采集( 1张 )</view>
+      <view>
+        <button class='btn bg-theme font-white clear-btn-default font-14 padding-v-5 padding-h-10  margin-t-15' bindtap='updateImagesOrSave' >上传</button>
+      </view>
+    </view>
+    <view class='padding-v-10 ng-fl' style=''>
+      <view class='margin-t-10 ng-fl-l position-r'  wx:for="{{tempImagesOfHoleDepth }}" wx:key="{{index}}"  style='margin-left:37rpx;background-color:#ccc;'>
+        <image src='{{item}}' style='width:200rpx;height:200rpx;' bindtap='preview' data-index="{{index}}"></image>
+        <text class='iconfont icon-bad position-a font-ccc' data-index="{{index}}" bindtap='deletePic' style='font-size:50rpx;top:-26rpx;right:-26rpx;'></text>
+      </view>
+    
+      <image class='margin-t-10' wx:if="{{tempImagesOfHoleDepth.length < 1}}" src='../../../res/upload.png' style='width:200rpx;height:200rpx;margin-left:37rpx;' bindtap='uploadImages'></image>
+    </view>
+    
+  </view>    -->
+    <!--9  -->
+
+  <view class=' margin-h-auto bg-white padding-v-30' style='width:80%'>
+    <button class='btn bg-theme margin-h-auto font-white' style='width:60%;' bindtap='submitToCheck'>提交审核</button>
+  </view>
+
+</view>

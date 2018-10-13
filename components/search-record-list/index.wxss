@@ -1,0 +1,51 @@
+@font-face {
+  font-family: 'iconfont';  /* project id 508260 */
+  src: url('//at.alicdn.com/t/font_508260_qtzt41s5w6u5wmi.eot');
+  src: url('//at.alicdn.com/t/font_508260_qtzt41s5w6u5wmi.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_508260_qtzt41s5w6u5wmi.woff') format('woff'),
+  url('//at.alicdn.com/t/font_508260_qtzt41s5w6u5wmi.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_508260_qtzt41s5w6u5wmi.svg#iconfont') format('svg');
+}
+
+.iconfont {
+  font-family:"iconfont" !important;
+  font-size:16px;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.icon-delete1:before { content: "\e613"; }
+
+.item{
+  line-height: 60rpx;
+  padding: 0 20rpx;
+  min-width: 110rpx;
+  border-radius: 35rpx;
+  margin-right: 20rpx;
+  text-align: center;
+  background-color: #ededed;
+  color: #000;
+}
+
+
+.ng-fl{
+  width: 100%;
+}
+.ng-fl::after{
+  display: table;
+  content: "";
+  clear:both;
+}
+.ng-fl-l{
+  float: left;
+}
+.ng-fl-r{
+  float: right;
+}
+
+.padding-10-20{
+  padding: 20rpx 40rpx;
+}
+.margin-t-10{
+  margin-top: 20rpx;
+}

@@ -1,0 +1,11 @@
+<view class="modal-mask"  wx:if="{{ isShow }}"></view>
+<view class="login-modal bg-white" wx:if="{{ isShow }}">
+  <view class='' style='width:100%;height:95%;border-radius:10rpx;padding:40rpx 0'>
+    <view class='text-c' style=''>
+      <!-- <image src='../../res/logo.jpg' style='width:120rpx;height:120rpx; border-radius:60rpx;' mode='aspectFill'></image> -->
+      <view class='font-16 padding-10-20' style='color:black'>华瓯监理</view>
+    </view>
+    <view><slot></slot></view>
+    <!-- <button class='ok-btn' >登录</button> -->
+  </view>
+</view>

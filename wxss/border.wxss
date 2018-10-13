@@ -1,0 +1,18 @@
+.border-top-seg{
+  border-top: 16rpx solid #F4F5F9;
+}
+.border-bottom-seg{
+  border-bottom: 16rpx solid #F4F5F9;
+}
+.bottom-line{
+ border-bottom: 1px solid #ccc;
+}
+.top-line{
+ border-top: 1px solid #efefef;
+}
+.left-line{
+ border-left: 1px solid #efefef;
+}
+.bottom-bold-line{
+ border-bottom: 10px solid #FBEFE1;
+}

@@ -1,0 +1,27 @@
+<wxs src="../wxs/tools.wxs" module="tools" />
+
+<wxs module="wxs">
+  var concatStr = function(obj) {
+    var des = "物品名称: " + obj.name + " 转让价格:" + obj.sell_price + " 数量:" + obj.num + " 新旧程度:" + obj.new_percent + " 购买日期:" + obj.buy_date + " 保质/保修" + obj.is_guarantee + " 保质/保修期限:" + obj.guarantee_date + " 联系方式:" + obj.contact_way + " 地点:" + obj.address;
+    return des;
+  }
+
+  module.exports.concatStr = concatStr;
+</wxs>
+
+<template name="sellGoodListTemplate">
+  <view class='bottom-line padding-v-10' wx:for="{{list}}" wx:key="{{index}}" data-id="{{item.id}}">
+    <navigator url='../detail/detail?id={{item.id}}'>
+      <view class='ng-textAuto2'>{{ item.title }}</view>
+      <view class='font-15 ng-textAuto3 margin-t-10'>{{ wxs.concatStr(item) }}</view>
+      <view class='padding-v-5'>
+        <image wx:for="{{ tools.str2Array(item.imgs) }}" wx:for-item="imgItem" wx:for-index="imgIndex" wx:key="{{ imgIndex }}" src='{{imgItem}}' style='width:230rpx; height:180rpx;{{ imgIndex == 1? "margin:0 10rpx":""}}' mode="aspectFill" wx:if="{{ imgIndex < 3 }}"></image>
+      </view>
+      <view class='font-13 font-ccc'>
+        <text>{{ item.view }}人阅读</text>
+        <text class='margin-l-10'>{{ item.create_time }}</text>
+      </view>
+    </navigator>
+
+  </view>
+</template>

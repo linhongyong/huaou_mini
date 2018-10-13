@@ -1,0 +1,12 @@
+<template name="essayEditFooterTemplate">
+  <view style='height:180rpx'></view>
+  <view class='bg-white top-line display-flex-center-between font-666' style='padding:10rpx 20rpx; position:fixed; bottom:0;width:100%; z-index:999;'>
+    <text class='iconfont icon-tupian' style='font-size:60rpx;' bindtap='uploadImg'></text>
+    <view class='display-flex-center-between'>
+      <text wx:if="{{ !isPreview }}" class='font-theme margin-r-10' bindtap='topreview' style='font-size:30rpx;'>预览</text>
+      <text wx:if="{{ isPreview }}" class='font-theme margin-r-10' bindtap='topreview' style='font-size:30rpx;'>编辑</text>
+      <button class='font-theme font-14' style='width:100rpx;padding:10rpx 0;margin-left:0;margin-right:0;line-height:2;'  formType="submit">提交</button>
+    </view>
+  </view>
+  <view style='height:300px'></view>
+</template>

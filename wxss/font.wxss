@@ -1,0 +1,101 @@
+.font-8{
+  font-size: 16rpx;
+}
+.font-9{
+  font-size: 18rpx;
+}
+.font-10{
+  font-size: 20rpx;
+}
+.font-11{
+  font-size: 22rpx;
+}
+.font-12{
+  font-size: 24rpx;
+}
+.font-13{
+  font-size: 26rpx;
+  line-height: 32rpx;
+}
+.font-14{
+  font-size: 28rpx;
+}
+.font-15{
+  font-size: 30rpx;
+}
+.font-16{
+  font-size: 32rpx;
+  line-height: 42rpx;
+}
+.font-17{
+  font-size: 34rpx;
+}
+.font-18{
+  font-size: 36rpx;
+}
+.font-24{
+  font-size: 48rpx;
+}
+.font-ccc{
+  color: #ccc;
+}
+.font-999{
+  color: #999;
+}
+.font-white{
+  color: #ffffff;
+}
+.font-4d{
+  color: #4d4d4d;
+}
+.font-black{
+  color: #000;
+}
+.font-999{
+  color: #999;
+}
+.font-666{
+  color: #666;
+}
+.font-small{
+  font-size: small;
+}
+.font-smaller{
+  font-size: smaller;
+}
+.font-bold{
+  font-weight:bold;
+}
+.font-italic{
+  font-style:italic;
+}
+.line-through{
+  text-decoration: line-through;
+}
+.old-price{
+  color:#ccc;
+  font-size: 32rpx;
+  text-decoration: line-through;
+}
+.ng-textAuto{white-space:nowrap; overflow:hidden; text-overflow:ellipsis;-webkit-line-clamp:1}/*限制文字为两行，多余的用
+“.ng-.ng-.ng-”代替*/
+/*word-break:break-all;可以不要  */
+.ng-textAuto1{word-break:break-all;display:-webkit-box; -webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;}
+.ng-textAuto2{
+  word-break:break-all;
+  display:-webkit-box; 
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+  }
+.ng-textAuto3{
+  word-break:break-all;
+  display:-webkit-box; 
+  -webkit-line-clamp:3;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+  }
+
+.text-indent{
+  text-indent: 2em;
+}

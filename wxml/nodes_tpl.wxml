@@ -1,0 +1,10 @@
+
+<!--基础元素-->
+<template name="nodesTemplate">
+  <block wx:for="{{ nodes }}" wx:key="{{index}}">
+    <view class='padding-5 bg-white'>
+     <view class='' wx:if="{{ item.type=='view' }}">{{ item.value }}</view>
+      <image  wx:if="{{item.type=='img'}}" src="{{ item.value }}" mode="widthFix" style="width:100%"></image>
+    </view>
+  </block>
+</template>

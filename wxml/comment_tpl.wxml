@@ -1,0 +1,16 @@
+<template name="commentsTemplate">
+  <view class='padding-v-5' wx:for="{{ list }}" wx:key="{{index}}">
+    <view class='ng-fl'>
+      <view class='ng-fl-l text-c' style='width:16%'>
+        <image class='' src='{{item.avatar_url}}' style='width:70rpx;height:70rpx;border-radius:35rpx;'></image>
+      </view>
+      <view class='ng-fl-r' style='width:84%'>
+        <view class='font-16'><text>{{ item.nick_name }}</text></view>
+        <view class='padding-v-5 font-17'>{{ item.content }}</view>
+        <view class='font-14 font-ccc'>
+         {{ item.create_time }}
+        </view>
+      </view>
+    </view>
+  </view>
+</template>

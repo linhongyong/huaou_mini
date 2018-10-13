@@ -1,0 +1,28 @@
+
+  <slot name="before"></slot>
+  <!--编辑  -->
+  <view class="bg-white  padding-t-10">
+    <block wx:for="{{ nodes }}" wx:key="{{ index }}">
+      <textarea 
+        style='width:100%;' 
+        auto-height placeholder='' 
+        placeholder='{{index == 0 ? "请输入内容！":"可输入行"}}'
+        maxlength="500" name="content"
+        wx:if="{{ item.type == 'view' }}" 
+        data-index="{{ index }}"
+        value="{{ item.value }}"
+        bindinput="oninput" 
+        bindfocus="onfocus"
+        bindlinechange='onlinechange'></textarea>
+
+      <view class='position-r margin-t-20 margin-l-20 display-ib' wx:if="{{ item.type == 'img' }}" style='width:200rpx'>
+        <text class='iconfont icon-removecircle position-a font-ccc'  data-index="{{index}}" bindtap='deletePic' style='font-size:50rpx;top:-26rpx;right:-26rpx;'></text>
+        <image style='width:100%' src='{{ item.value }}'  mode='widthFix'></image>
+      </view>
+        
+    </block>
+  </view>
+  <slot name="after"></slot>
+
+
+

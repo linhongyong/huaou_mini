@@ -1,0 +1,28 @@
+/*弹窗主体*/
+.modal-content {
+	position: fixed;
+	/* bottom: -700px; */
+	left: 0;
+	width: 100%;
+	/* height: 700px; */
+	/*box-shadow: 10rpx 0 30rpx rgba(0,0,0,.9);*/
+	margin-top: 5px;
+	background: #fff;
+	z-index: 999;
+}
+
+/*遮罩层*/
+.modal-mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    opacity: .2;
+    z-index: 99;
+}
+/*初始隐藏*/
+.hidden {
+	display: none;
+}

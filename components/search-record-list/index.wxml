@@ -1,0 +1,15 @@
+  <!-- <view class="zan-toptips {{ isShow ? 'zan-toptips--show' : '' }}">{{ content }}</view> -->
+  <view class='padding-10-20' wx:if="{{recordList.length > 0}}">
+    <view class='ng-fl'>
+      <text class='ng-fl-l'>历史搜索</text>
+      <text class='ng-fl-r iconfont icon-delete1' bindtap='deleteRecordList'></text>
+    </view>
+    <view class='ng-fl'>
+      <view class='ng-fl-l  margin-t-10 item' 
+      wx:for="{{ recordList }}" 
+      wx:key="index" 
+      data-keyword="{{ item }}" 
+      bindtap='getItem'
+      >{{ item }}</view>
+    </view>
+  </view>

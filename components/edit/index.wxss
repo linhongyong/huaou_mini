@@ -1,0 +1,6 @@
+@import "../../wxss/icon.wxss";
+@import "../../wxss/pd-mg.wxss";
+@import "../../wxss/display.wxss";
+@import "../../wxss/font.wxss";
+@import "../../wxss/border.wxss";
+@import "../../wxss/theme.wxss";

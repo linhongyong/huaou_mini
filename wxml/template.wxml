@@ -1,0 +1,97 @@
+<!--购物车  -->
+<template name="goodChiefInfo">
+  <view class='display-flex-center position-r'>
+    <navigator url="../detail/index?id={{goods_id}}" hover-class="none">
+        <image class="good-img1" src="{{spec_img}}" mode="aspectFill"></image>
+    </navigator>
+    <view class='display-flex-between-left' style='height: 180rpx; padding:10rpx 20rpx 0rpx'>
+      <navigator url="../detail/index?id={{goods_id}}" hover-class="none">
+        <view class='good-name1 font-16'>{{goods_title}}</view>
+      </navigator>
+       <view class='spec-str1' wx:if="{{ goods_spec != 'default:default' }}">规格: {{ goods_spec }} </view> 
+      <view class='font-18 font-theme'>￥{{ selling_price }}</view>
+    </view>
+  </view>
+</template>
+ 
+<!--订单  -->
+<template name="goodChiefInfo2">
+  <view class='display-flex-center position-r'>
+    <navigator url='../detail/detail?id={{goods_id}}'  hover-class="none">
+      <image class="good-img1" src="{{spec_img}}" mode="aspectFill"></image>
+    </navigator>
+    <view class='display-flex-between-left' style='height: 180rpx; padding:10rpx 20rpx 0rpx'>
+      <navigator url='../detail/detail?id={{goods_id}}'  hover-class="none">
+        <view class='good-name1 font-16'>{{ goods_title }}</view>
+      </navigator>
+      <view class='spec-str1'>数量: {{ goods_nums }}; <text wx:if="{{ goods_spec != 'default:default' }}">{{ goods_spec }} </text></view> 
+      <view class='font-18 font-theme'>￥{{ real_price }}</view>
+    </view>
+  </view>
+</template>
+  <!--评论商品列表  -->
+<template name="goodChiefInfoCom">
+  <view class='display-flex-center position-r'>
+    <navigator url='../detail/detail?id={{goods_id}}'  hover-class="none">
+      <image class="good-img1" src="{{img}}" mode="aspectFill"></image>
+    </navigator>
+    <view class='display-flex-between-left' style='height: 180rpx; padding:10rpx 20rpx 0rpx;width:430rpx;'>
+      <navigator url='../detail/detail?id={{goods_id}}'  hover-class="none">
+        <view class='good-name1 font-16'>{{ goods_title }}</view>
+      </navigator>
+      <view class='spec-str1'><text wx:if="{{ goods_spec != 'default:default' }}">{{ goods_spec }} </text></view> 
+      <view class='font-18 font-theme'>￥{{ selling_price }}</view>
+    </view>
+    <navigator url='../comment/comment?id={{id}}&order_id={{order_id}}'  hover-class="none">
+      <view class='comment-btn' style='right: 20rpx; top: 6rpx;'  data-id="{{id}}">评价</view>
+    </navigator>
+  </view>
+</template>
+
+
+
+<!--订单详情  -->
+<template name="goodChiefInfo3">
+  <view class='display-flex-center position-r'>
+    <image class="good-img1" src="{{spec_img}}" mode="aspectFill"></image>
+    <view class='display-flex-between-left' style='height: 180rpx; padding:10rpx 20rpx 0rpx'>
+      <view class='good-name1 font-16'>{{ goods_title }}</view>
+      <view class='spec-str1'>
+        <text class='margin-r-5'>数量 : {{ goods_nums }} ;</text>
+        <text class=''  wx:if="{{ goods_spec != 'default:default' }}">规格: {{ goods_spec }}</text>
+      </view> 
+      <view class='price1 font-theme'>￥{{ real_price }}</view>
+    </view>
+  </view>
+</template>
+
+<!--收货地址  -->
+<template name="address">
+  <view class='bg-white padding-10-20 display-flex-center'>
+    <text class='iconfont icon-location' style='font-size:36rpx'></text>
+    <view class='margin-l-10'>
+      <view class='ng-fl'>
+        <view class='ng-fl-l font-18'>{{accept_name}}</view>
+        <view class='ng-fl-r'>{{phone}}</view>
+      </view>
+      <view class='ng-textAuto2'>收货地址：{{province}} {{city}} {{area}} {{ address }}</view>
+    </view>
+  </view>
+</template>
+
+<!--商品列表项  -->
+<template name="product">
+
+  <navigator url="{{'../detail/detail?id='+goods_id}}"  hover-class="none">  
+    <image class='good-img1' src="{{ img }}" style="width:320rpx;height:320rpx"/>
+    <view class='good-name1'>{{name}}</view>
+  </navigator>
+
+  <view class='display-flex-center-between'>
+    <view class='font-18'>￥{{ sell_price }}</view>
+        <!-- <view class='old-price'>￥{{ item.market_price }}</view> -->
+         <view bindtap='toBuyNow' data-id="{{goods_id}}">
+      <image data-id="{{goods_id}}" src="https://jyqh.if16.com/static/theme/miniapp/img/buy-button.png"  style="width:100rpx"  mode="widthFix"/>
+    </view> 
+  </view>
+</template>
