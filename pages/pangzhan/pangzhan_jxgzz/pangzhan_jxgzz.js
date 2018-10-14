@@ -7,10 +7,6 @@ Page({
   data: {
     
     isColonShow : false,
-
-    currentBuilding: 0,
-    buildingList: ['请选择', '1', '2', '3', '4'],
-
     currentSedimentHeight: 0,
     sedimentHeightList: ['请选择', 40, 45, 50, 80, 90, 100, 280, 290, 300],
 
@@ -65,7 +61,7 @@ Page({
     if (options.pileCode){
       this.setData({
         ['pang.pileCode']: options.pileCode,
-        ['pang.building']: wx.getStorageSync("currentBuildingCode")
+        ['buildingCode']: wx.getStorageSync("currentBuildingCode")
       })
       this.getOrCreate();
     }
@@ -83,15 +79,6 @@ Page({
 
 
   //------------------------------------------------------ff
-  /**
- * 监听楼栋号变化
- */
-  // onPickerChangeOfBuilding: function (e) {
-  //   let that = this;
-  //   this.setData({
-  //     currentBuilding: e.detail.value,
-  //     building: e.detail.value != 0 ? that.data.buildingList[e.detail.value] : null
-  //   })
 
   // },
   /**
@@ -424,7 +411,7 @@ Page({
   onInputSave: function (e) {
     console.log(e);
     //先输入楼号和桩号
-    if (e.currentTarget.dataset.index == 'pileCode' || e.currentTarget.dataset.index == 'building') {
+    if (e.currentTarget.dataset.index == 'pileCode' || e.currentTarget.dataset.index == 'buildingCode') {
     } else {
       // if (!this.data.id) {
       //   wx.showToast({
@@ -448,7 +435,7 @@ Page({
       })  
     }
     // 输入楼号桩号决定旁站
-    if (e.currentTarget.dataset.index == 'pileCode' || e.currentTarget.dataset.index == 'building'){
+    if (e.currentTarget.dataset.index == 'pileCode' || e.currentTarget.dataset.index == 'buildingCode'){
       this.getOrCreate();
       return
     }
@@ -474,8 +461,47 @@ Page({
     }
     this.updatePangzhan();
   },
+  /**
+   * 确认完成
+   */
+  submitToCheck: function () {
+    let that = this;
+    let data = {
+      type: "0001",
+      title: "温州机场重建项目 1号楼120号桩机械灌注旁站完成",
+      fromId: 77,
+      fromName: "1111",
+      toIds: [
+        55,
+        77,
+        78
+      ],
+      parameter: {
+        pangzhanId: 1
+      }
+    }
+    util.getDataByAjax({//--首页商品列表
+      url: "/message/addJxgzz",
+      method: "Post",
+      data,
+      success: function (res) {
+        Toptips({
+          duration: 1000,
+          content: "成功提交",
+          backgroundColor: "#06A940"
+        });
+        setTimeout(function () {
+          wx.navigateBack({
+            delta: -1
+          })
+        }, 2000)
+      },
+      error: function () { }
+    });
+  }
+})  
   getOrCreate: function(){
-    if (!this.data.pang.building || !this.data.pang.pileCode){
+    if (!this.data.buildingCode || !this.data.pang.pileCode){
       return;
     }
     let that = this;
@@ -537,5 +563,4 @@ Page({
       error: function () { }
     });
   },
-
-})  
+  

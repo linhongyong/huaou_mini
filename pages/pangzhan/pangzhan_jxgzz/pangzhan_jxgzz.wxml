@@ -3,7 +3,7 @@
 <zan-dialog id="zan-base-dialog"></zan-dialog>
 
 <view class='bg-theme font-white text-c toptipbar' style='height:30px;line-height:30px' style='z-index:10'>
-  <text wx:if="{{pang.building != null}}">{{pang.building}}幢</text>
+  <text wx:if="{{buildingCode != null}}">{{buildingCode}}幢</text>
   <text wx:if="{{pang.pile > 0 ? true : false}}">{{pang.pile}}#桩 </text>
   旁站数据采集
 </view>
@@ -13,18 +13,18 @@
 <view class='padding-h-20 display-flex-center-between bottom-line height-80  bg-white'>
   <view>楼栋号</view>
   <view class='display-flex-center-right'>
-    <form bindsubmit="onInputSave" data-index="building" class='' wx:if="{{ pang.isbuildingEdit}}">
+    <form bindsubmit="onInputSave" data-index="buildingCode" class='' wx:if="{{ isbuildingCodeEdit}}">
         <view class='display-flex-center'>
           <input  focus="true" class='input' type='number' placeholder='请输入...'  cursor-spacing="30" name="value" value='' ></input>
-          <text class='iconfont icon-17cuowu padding-l-5  margin-l-10' style='font-size:50rpx;color:red' bindtap='toDone' data-index="building"></text>
+          <text class='iconfont icon-17cuowu padding-l-5  margin-l-10' style='font-size:50rpx;color:red' bindtap='toDone' data-index="buildingCode"></text>
           <button formType="submit" class='btn font-theme bg-white clear-btn-default margin-l-10'>
             <text class='iconfont icon-dui1 padding-l-5' style='font-size:60rpx;'></text>
           </button>
         </view>
     </form>
-    <view class='display-flex-center-center'  wx:else bindtap='toEdit' data-index="building">
-      <view class='font-666' wx:if="{{pang.building == null}}">请输入楼栋号</view>  
-      <view class='' wx:else>{{ pang.building }}</view>  
+    <view class='display-flex-center-center'  wx:else bindtap='toEdit' data-index="buildingCode">
+      <view class='font-666' wx:if="{{buildingCode == null}}">请输入楼栋号</view>  
+      <view class='' wx:else>{{ buildingCode }}</view>  
     </view>
   </view>
 </view> 

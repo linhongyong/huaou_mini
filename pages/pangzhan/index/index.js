@@ -4,8 +4,6 @@ const Dialog = require('../../../components/dialog/dialog');
 const Toptips = require('../../../components/toptips/index.js');
 var login = require('../../../utils/login.js');
 Page({
-
-
   data: {
     projectList: [],
     currentProject: 0,
@@ -18,7 +16,7 @@ Page({
         title: '水泥旁站'
       }, {
         id: '3',
-        title: '通用旁站'
+        title: '预应力管桩'
       }, {
         id: '4',
         title: '混泥土浇筑'
@@ -95,7 +93,7 @@ Page({
     this.setData({
       currentPzIndex: e.detail-1
     })
-    // this.getPangzhanList();
+    this.getPangzhanList();
   },
   onFormSubmit: function(e){
     console.log(e);
@@ -116,9 +114,12 @@ Page({
       }, {
           text: '水泥旁站',
         type: '2'
-      }, {
-          text: '通用旁站',
+      },{
+        text: '预应力管桩',
         type: '3',
+      }, {
+        text: '通用旁站',
+        type: '4',
       }, {
         text: '取消',
         type: 'cancel'
@@ -135,6 +136,10 @@ Page({
         })
       } else if (type == 3){
         wx.navigateTo({
+          url: '../pangzhan_yylgz/pangzhan_yylgz',
+        })
+      } else if (type == 4) {
+        wx.navigateTo({
           url: '../pangzhan_tongyong/pangzhan_tongyong',
         })
       }
@@ -145,27 +150,6 @@ Page({
   /**
    * 获得所属项目列表
    */
-  // getProjectList: function (type) {
-  //   let that = this;
-  //   util.getDataByAjax({
-  //     url: "/project/listOwn",
-  //     method: "Get",
-  //     success: function (res) {
-  //       let projectNameList = [];
-  //       for (let i = 0; i < res.data.result.length; i++) {
-  //         projectNameList.push(res.data.result[i].projectName);
-  //       }
-  //       that.setData({
-  //         projectList: res.data.result,
-  //         projectNameList: projectNameList
-  //       })
-  //       wx.setStorageSync("currentProjectId", res.data.result.length > 0 && res.data.result[0].projectId)
-  //       that.getProjectStaffs();
-
-  //     },
-  //     error: function () {}
-  //   });
-  // },
   getJoinedList: function () {
     let that = this;
     util.getDataByAjax({
@@ -261,6 +245,21 @@ Page({
   },
   getPangzhanList: function () {
     let that = this;
+    let currentPzIndex = wx.getStorageSync("currentPzIndex");
+    let url;
+    if (currentPzIndex == 0) {
+      url = "/building/jxgzzProgress";
+    } else if (currentPzIndex == 1) {
+      url = "/snJbjPzjl/listProject";
+    } else if (currentPzIndex == 2) {
+      url = "/commonPzjl/list";
+    } else {
+      Toptips({
+      duration: 2000,
+      content: "该旁站类型尚未开放",
+    });
+      return;
+    }
     util.getDataByAjax({//
       url: "/building/jxgzzProgress",
       method: "Get",
