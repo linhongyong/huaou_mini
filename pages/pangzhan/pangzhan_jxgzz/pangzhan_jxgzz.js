@@ -498,8 +498,8 @@ Page({
       },
       error: function () { }
     });
-  }
-})  
+  },
+
   getOrCreate: function(){
     if (!this.data.buildingCode || !this.data.pang.pileCode){
       return;
@@ -533,34 +533,33 @@ Page({
       }
     });
   },
-  updatePangzhan: function () {
-    
-    
-    let that = this;
-    if (!this.data.pang.mainBarNum || !this.data.pang.mainBarType) {
-      this.setData({
-        ['pang.mainBar']:null
-      })
-    }
-    let obj = this.data;
-    let data = this.data.pang;
-    util.getDataByAjax({
-      url: '/jxZkGzzPzjl/update',
-      method: "Post",
-      data,
-      success: function (res) {
-        Toptips({
-          duration: 1000,
-          content: "成功采集！",
-          backgroundColor: "#06A940"
-        });
-        // wx.showToast({
-        //   title: '成功采集！',
-        //   success: function () {
-        //   }
-        // })
-      },
-      error: function () { }
-    });
-  },
+  // updatePangzhan: function () {
+      //   let that = this;
+  //   if (!this.data.pang.mainBarNum || !this.data.pang.mainBarType) {
+  //     this.setData({
+  //       ['pang.mainBar']:null
+  //     })
+  //   }
+  //   let obj = this.data;
+  //   let data = this.data.pang;
+  //   util.getDataByAjax({
+  //     url: '/jxZkGzzPzjl/update',
+  //     method: "Post",
+  //     data,
+  //     success: function (res) {
+  //       Toptips({
+  //         duration: 1000,
+  //         content: "成功采集！",
+  //         backgroundColor: "#06A940"
+  //       });
+  //       // wx.showToast({
+  //       //   title: '成功采集！',
+  //       //   success: function () {
+  //       //   }
+  //       // })
+  //     },
+  //     error: function () { }
+  //   });
+  // },
+  })
   
