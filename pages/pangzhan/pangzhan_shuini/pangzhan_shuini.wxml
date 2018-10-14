@@ -9,16 +9,6 @@
 </view>
 <view style='height:30px;line-height:30px'></view>
  
-<!-- 工序 -->
-  <!-- <view class='padding-h-20 bottom-line display-flex-center-between height-80 bg-white'>
-    <view class=''>工序 </view>
-    <picker class='' bindchange="onPickerChangeOfProcedure" value="{{currentProcedure}}" range="{{procedureList}}">
-      <view class="display-flex-center-between">
-        <view class='{{currentProcedure == 0 ? "font-666" : ""}}'> {{procedureList[currentProcedure]}}</view>
-      </view>
-    </picker>
-  </view> -->
-
 <!-- 桩号 -->
 <view class='padding-h-20 display-flex-center-between bottom-line height-80  bg-white'>
   <view>桩号</view>

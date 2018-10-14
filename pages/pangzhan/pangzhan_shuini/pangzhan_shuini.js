@@ -40,9 +40,9 @@ Page({
     // this.getShuiniTmpl();
     
     this.makeColonGlint(); 
-    if (options.pileStartNum) {
+    if (options.pileCode) {
       this.setData({
-        ['pang.pileStartNum']: options.pileStartNum,
+        ['pang.pileStartNum']: options.pileCode,
       })
       this.getOrCreate();
     }   

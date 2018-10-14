@@ -56,6 +56,8 @@ Page({
       minute: minute,
       zongjian: wx.getStorageSync("zongjian"),
       shigongfang: wx.getStorageSync("shigongfang"),
+      buildingCode: wx.getStorageSync("currentBuildingCode"),
+      currentProjectName: wx.getStorageSync("currentProjectName"),
     })
     this.makeColonGlint();
     if (options.pileCode){
@@ -63,6 +65,13 @@ Page({
         ['pang.pileCode']: options.pileCode,
       })
       this.getOrCreate();
+    }
+    //审核旁站数据情况
+    if (options.pangzhanId){
+      this.setData({
+        pangzhanId: options.pangzhanId
+      })
+      this.getPangzhanById();
     }
   },
   onShow: function () {
@@ -547,6 +556,34 @@ Page({
         });
       },
       error: function () { }
+    });
+  },
+  getPangzhanById: function(){
+    let that = this;
+    util.getDataByAjax({//--首页商品列表
+      url: "/jxZkGzzPzjl/getJxZkGzzPzjl",
+      method: "Get",
+      data: {
+        id: this.data.pangzhanId
+      },
+      success: function (res) {
+        let obj = res.data.result ? res.data.result : {};
+        that.setData({
+          pang: obj,
+          abc1: math.accSub(math.accAdd(obj.platformElevation, obj.designPileLength), (obj.pileTopHeight)),
+          abc2: math.accSub(math.accSub(obj.platformElevation, obj.pileTopHeight), 0.5),
+          ['pang.actualDeepImg']: obj.actualDeepImg ? JSON.parse(obj.actualDeepImg) : [],
+          ['pang.barCageCountImg']: obj.barCageCountImg ? JSON.parse(obj.barCageCountImg) : [],
+          ['pang.deptRockUrl']: obj.deptRockUrl ? JSON.parse(obj.deptRockUrl) : [],
+          ['pang.mainBarNum']: obj.mainBar ? obj.mainBar.split('φ')[0] : null,
+          ['pang.mainBarType']: obj.mainBar ? obj.mainBar.split('φ')[1] : null,
+          ['pang.fe']: math.accDiv(obj.actualVolume, obj.theoryVolume, 2)
+        })
+
+      },
+      error: function () {
+
+      }
     });
   }
 })  

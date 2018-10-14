@@ -3,8 +3,8 @@
 <zan-dialog id="zan-base-dialog"></zan-dialog>
 
 <view class='bg-theme font-white text-c toptipbar' style='height:30px;line-height:30px' style='z-index:10'>
-  <text wx:if="{{buildingCode != null}}">{{buildingCode}}幢</text>
-  <text wx:if="{{pang.pile > 0 ? true : false}}">{{pang.pile}}#桩 </text>
+  <text wx:if="{{currentProjectName}}">{{currentProjectName}} </text>
+  <text wx:if="{{buildingCode}}">{{buildingCode}}幢</text>
   旁站数据采集
 </view>
 <view style='height:30px;line-height:30px'></view>

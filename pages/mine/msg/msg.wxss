@@ -1,0 +1,9 @@
+/* pages/user_center/msg/msg.wxss */
+.status{
+  border: 1px solid #ccc;
+  position: absolute;
+  right: 10rpx;
+  top: 20rpx;
+  border-radius: 5rpx;
+  font-size: 24rpx;
+}

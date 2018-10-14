@@ -1,0 +1,16 @@
+
+<view class='bg-theme font-white text-c padding-v-5 toptipbar'>消息</view>
+<view>
+  <view class='padding-10-20 bottom-line bg-white position-r' wx:for="{{list}}" wx:key="{{ index }}" bindtap='toDetail' data-index="{{index}}">
+    <view class='ng-textAuto2 padding-v-10' style='width:92%'>{{ item.title }}</view>
+    <view class='ng-textAuto2 text-indent margin-t-10' wx:if="{{item.content}}">{{ item.content }}</view>        
+    <view class='display-flex-center-between font-666'>
+      <view class=' font-14'>时间: {{item.modifyTime}}</view>
+      <view class=' font-14'>发送者：{{item.fromName}}</view>
+    </view>
+    <view class='status' style='color:#3B94F1' wx:if="{{ item.status }}">已读</view>
+    <view class='status' style='color:red' wx:else>未读</view>
+  </view>
+
+  <view class='padding-10-20 text-c' wx:if="{{ isNone }}">暂无相关数据</view>
+</view>

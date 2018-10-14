@@ -38,11 +38,11 @@
 <view  style="height:188rpx;"></view>
 
 <!-- 机械灌注桩 -->
-<view class="bg-white" wx:if="{{currentPzIndex == 0}}" >
-<!-- 楼栋列表 -->
+<view class="bg-white">
+  <!-- 楼栋列表 -->
   <view class='between'>
     <block wx:for="{{pangzhanList}}" wx:key="{{index}}">
-      <navigator url='{{"../pangzhan_jxgzz/pangzhan_jxgzz?pileCode="+item.pileCode}}'>
+      <view bindtap='toDetail' data-index="{{index}}">
         <button class='building-btn undo' wx:if='{{ item.status == 0 }}'>
           {{ item.pileCode }}
         </button>
@@ -52,14 +52,14 @@
         <button class='building-btn finished' wx:if='{{ item.status == 2 }}'>
           {{ item.pileCode }}
         </button>
-      </navigator>
+      </view>
      </block>
   </view>
 </view>
 
 <!-- 水泥搅拌桩 -->
-<view class="bg-white margin-t-10"  wx:if="{{currentPzIndex == 1}}">
-  <view wx:for="{{shuiniList}}" wx:key="{{index}}">
+<!-- <view class="bg-white margin-t-10"  wx:if="{{currentPzIndex == 1}}">
+  <view wx:for="{{pangzhanList}}" wx:key="{{index}}">
     <navigator url='../pangzhan_shuini/pangzhan_shuini?pileStartNum={{item.pileStartNum}}'>
       <view class='padding-v-20 padding-h-20 top-line display-flex-center-between'>
         <text class='flex-6'>{{item.pileStartNum}}号桩</text>
@@ -69,23 +69,22 @@
       </view>   
     </navigator>
   </view>
-</view>
+</view> -->
 
 
 <!-- 通用 -->
-<view class="bg-white margin-t-10"  wx:if="{{currentPzIndex == 2}}">
+<!-- <view class="bg-white margin-t-10"  wx:if="{{currentPzIndex == 2}}">
   <view wx:for="{{tongyongList}}" wx:key="{{index}}">
     <navigator url='../pangzhan_tongyong/pangzhan_tongyong?id={{item.id}}'>
       <view class='padding-v-20 padding-h-20 top-line display-flex-center-between'>
         <text class='flex-2'>{{item.building}}幢</text>
         <text class='margin-l-20 flex-3'>{{item.workProcedure}}</text>
         <!-- <text class='margin-l-20 flex-6' wx:if="{{item.status < 16}}">No:{{item.status < 10 && item.status > 0  ? "0"+item.status : item.status }} 阶段</text>
-        <text class='margin-l-20 flex-6' wx:else>已完成</text> -->
         <text class='iconfont icon-chakangengduo flex-1' ></text>
       </view>   
     </navigator>
   </view>
-</view>
+</view> -->
 <view class="bg-white margin-t-10"  wx:if="{{tabId > 3}}">
   <view class='padding-10'>暂未开放此功能</view>
 </view>

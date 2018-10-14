@@ -1,2 +1,7 @@
-<!--pages/check/index/index.wxml-->
-<text>pages/check/index/index.wxml</text>
+<view class="">
+  <block wx:if="list" wx:key="{{index}}">
+    <view>
+    
+    </view>
+  </block>
+</view>

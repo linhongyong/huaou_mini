@@ -100,6 +100,23 @@ Page({
     console.log(e);
     login.getUserInfo(e.detail.value);
   },
+  toDetail: function(e){
+    let currentPzIndex = wx.getStorageSync("currentPzIndex");
+    let pileCode = this.data.pangzhanList[e.currentTarget.dataset.index].pileCode;
+    if (currentPzIndex == 0){
+      wx.navigateTo({
+        url: `../pangzhan_jxgzz/pangzhan_jxgzz?pileCode=${pileCode}`,
+      })
+    } else if (currentPzIndex == 1){
+      wx.navigateTo({
+        url: `../pangzhan_shuini/pangzhan_shuini?pileCode=${pileCode}`,
+      })
+    } else if (currentPzIndex == 2) {
+      wx.navigateTo({
+        url: `../pangzhan_yylgz/pangzhan_yylgz?pileCode${pileCode}`,
+      })
+    }
+  },
   /**
    * 显示新增菜单
    */
@@ -253,7 +270,7 @@ Page({
     if (currentPzIndex == 0) {
       url = "/building/jxgzzProgress";
     } else if (currentPzIndex == 1) {
-      url = "/snJbjPzjl/listProject";
+      url = "/building/yylgzProgress";
     } else if (currentPzIndex == 2) {
       url = "/commonPzjl/list";
     } else {
@@ -264,10 +281,9 @@ Page({
       return;
     }
     util.getDataByAjax({//
-      url: "/building/jxgzzProgress",
+      url,
       method: "Get",
       data: {
-        projectId: wx.getStorageSync('currentProjectId'),
         buildingId: wx.getStorageSync('currentBuildingId')
       },
       success: function (res) {
@@ -300,50 +316,6 @@ Page({
   /**
    * 获得当前项目下的旁站
    */
-  // getPangzhanList: function () {
-  //   let currentPzIndex = wx.getStorageSync("currentPzIndex");
-  //   let url;
-  //   if (currentPzIndex == 1) {
-  //     url = "/jxZkGzzPzjl/listProject";
-  //   } else if (currentPzIndex == 2) {
-  //     url = "/snJbjPzjl/listProject";
-  //   } else if (currentPzIndex == 3) {
-  //     url = "/commonPzjl/list";
-  //   } else {
-  //     wx.showToast({
-  //       title: '暂无',
-  //     })
-  //     return;
-  //   }
-  //   let that = this;
-  //   util.getDataByAjax({//--首页商品列表
-  //     url,
-  //     method: "Post",
-  //     data: {
-  //       data: wx.getStorageSync('currentProjectId')
-  //     },
-  //     success: function (res) {
-  //       if (currentPzIndex == 1) {
-  //         that.setData({
-  //           jxgzzList: res.data.result
-  //         })
-  //       } else if (currentPzIndex == 2) {
-  //         that.setData({
-  //           shuiniList: res.data.result
-  //         })
-  //       } else if (currentPzIndex == 3) {
-  //         that.setData({
-  //           tongyongList: res.data.result.list
-  //         })
-  //       } else {
-          
-  //       }
-  //     },
-  //     error: function () {
-
-  //     }
-  //   });
-  // },
   //------------------------------------------------------ff3
   getPageContentData: function () {//登录后才能获取的数据写在这里
     // if (wx.getStorageSync('currentProjectId') && wx.getStorageSync('currentBuildingId')) {//返回后刷新
