@@ -10,7 +10,7 @@
 <view style='height:30px;line-height:30px'></view>
 <view class='text-c'>-----------请先输入楼号和桩号-----------</view>
 <!--楼栋号  -->
-<view class='padding-h-20 display-flex-center-between bottom-line height-80  bg-white'>
+<!-- <view class='padding-h-20 display-flex-center-between bottom-line height-80  bg-white'>
   <view>楼栋号</view>
   <view class='display-flex-center-right'>
     <form bindsubmit="onInputSave" data-index="buildingCode" class='' wx:if="{{ isbuildingCodeEdit}}">
@@ -27,7 +27,7 @@
       <view class='' wx:else>{{ buildingCode }}</view>  
     </view>
   </view>
-</view> 
+</view>  -->
 <!--桩号  -->
 <view class='padding-h-20 display-flex-center-between bottom-line height-80  bg-white'>
   <view>桩号</view>

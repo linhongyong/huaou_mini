@@ -42,15 +42,14 @@ Page({
       console.log("重新登录");
       login.getUserInfo();
     }
-    // this.getJoinedList();
   },
   onShow: function () {
     this.setData({
       currentPzIndex: wx.getStorageSync("currentPzIndex")
     })
-    if (!!wx.getStorageSync('currentProjectId')){
-      // this.getPangzhanList();
-    }
+    // if (wx.getStorageSync('currentProjectId') && wx.getStorageSync('currentBuildingId') && wx.getStorageSync('currentBuildingPileNum')){//返回后刷新
+    //   this.getPangzhanList();
+    // }
   },
 
   onReady: function () { },
@@ -73,6 +72,7 @@ Page({
     })
     wx.setStorageSync("currentBuildingId", this.data.buildingList.length && this.data.buildingList[e.detail.value[1]].id)
     wx.setStorageSync("currentBuildingCode", this.data.buildingList.length && this.data.buildingList[e.detail.value[1]].buildingCode)
+    wx.setStorageSync("currentBuildingPileNum", res.data.result.length > 0 && res.data.result[0].pileNum)
     this.getPangzhanList();
   },
   bindMultiPickerColumnChange: function (e) {
@@ -80,6 +80,7 @@ Page({
     switch (e.detail.column) {
       case 0:
         wx.setStorageSync("currentProjectId", this.data.projectList[e.detail.value].id)
+        wx.setStorageSync("currentProjectName", this.data.projectList[e.detail.value].projectName)
         this.getBuildingList();
         this.getProjectStaffs();
         break;
@@ -162,6 +163,7 @@ Page({
         }
         //初始化当前项目当前楼栋
         wx.setStorageSync("currentProjectId", res.data.result.length && res.data.result[0].id)
+        wx.setStorageSync("currentProjectName", res.data.result.length && res.data.result[0].projectName)
         that.getProjectStaffs();
         that.setData({
           projectList: res.data.result,
@@ -237,6 +239,7 @@ Page({
         })
         wx.setStorageSync("currentBuildingId", res.data.result.length > 0 && res.data.result[0].id)
         wx.setStorageSync("currentBuildingCode", res.data.result.length > 0 && res.data.result[0].buildingCode)
+        wx.setStorageSync("currentBuildingPileNum", res.data.result.length > 0 && res.data.result[0].pileNum)
         that.getPangzhanList();
        
       },
@@ -268,10 +271,12 @@ Page({
         buildingId: wx.getStorageSync('currentBuildingId')
       },
       success: function (res) {
-        let pangzhanList = [], pileCode;
-        let pileNum = that.data.buildingList[that.data.currentBuildingIndex].pileNum ;
+        let pangzhanList = [];
+        let pileCode;
+        let pileNum = wx.getStorageSync("currentBuildingPileNum");
         for (pileCode = 1; pileCode <= pileNum; pileCode++) {
-          let count = 0, status;
+          let count = 0;
+          let status;
           for (let j = 0;  j < res.data.result.length; j++ ){
             if (pileCode == res.data.result[j].pileCode){
               status = res.data.result[j].status
@@ -341,7 +346,10 @@ Page({
   // },
   //------------------------------------------------------ff3
   getPageContentData: function () {//登录后才能获取的数据写在这里
-    // this.getProjectList();
+    // if (wx.getStorageSync('currentProjectId') && wx.getStorageSync('currentBuildingId')) {//返回后刷新
+    // }else{
+    //   this.getJoinedList();
+    // }
     this.getJoinedList();
   },
   // util调用

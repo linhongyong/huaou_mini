@@ -61,7 +61,6 @@ Page({
     if (options.pileCode){
       this.setData({
         ['pang.pileCode']: options.pileCode,
-        ['buildingCode']: wx.getStorageSync("currentBuildingCode")
       })
       this.getOrCreate();
     }
@@ -410,16 +409,6 @@ Page({
    */
   onInputSave: function (e) {
     console.log(e);
-    //先输入楼号和桩号
-    if (e.currentTarget.dataset.index == 'pileCode' || e.currentTarget.dataset.index == 'buildingCode') {
-    } else {
-      // if (!this.data.id) {
-      //   wx.showToast({
-      //     title: '旁站不存在',
-      //   })
-      //   return;
-      // }
-    }
     let porp = `pang.${e.currentTarget.dataset.index}`
     let isEdit = `pang.is${e.currentTarget.dataset.index}Edit`
     //为空时不设置
@@ -435,7 +424,7 @@ Page({
       })  
     }
     // 输入楼号桩号决定旁站
-    if (e.currentTarget.dataset.index == 'pileCode' || e.currentTarget.dataset.index == 'buildingCode'){
+    if (e.currentTarget.dataset.index == 'pileCode'){
       this.getOrCreate();
       return
     }
@@ -466,18 +455,18 @@ Page({
    */
   submitToCheck: function () {
     let that = this;
+    this.setData({
+      ['pang.status']: 2
+    })
+    this.updatePangzhan();
     let data = {
       type: "0001",
-      title: "温州机场重建项目 1号楼120号桩机械灌注旁站完成",
-      fromId: 77,
-      fromName: "1111",
+      title: `${wx.getStorageSync('currentProjectName')} ${wx.getStorageSync('currentBuildingCode')}号楼 ${wx.getStorageSync('currentBuildingCode')}号机械灌注桩旁站完成`,
       toIds: [
-        55,
-        77,
-        78
+        wx.getStorageSync('zongjian').id,
       ],
       parameter: {
-        pangzhanId: 1
+        "pangzhanId": this.data.pang.id
       }
     }
     util.getDataByAjax({//--首页商品列表
@@ -499,9 +488,8 @@ Page({
       error: function () { }
     });
   },
-
-  getOrCreate: function(){
-    if (!this.data.buildingCode || !this.data.pang.pileCode){
+  getOrCreate: function () {
+    if (!this.data.pang.pileCode) {
       return;
     }
     let that = this;
@@ -509,7 +497,7 @@ Page({
       url: "/jxZkGzzPzjl/add",
       method: "Post",
       data: {
-        projectId: wx.getStorageSync("currentProjectId")-0,
+        projectId: wx.getStorageSync("currentProjectId") - 0,
         buildingId: wx.getStorageSync("currentBuildingId") - 0,
         pileCode: that.data.pang.pileCode - 0,
       },
@@ -517,7 +505,7 @@ Page({
         let obj = res.data.result ? res.data.result : {};
         that.setData({
           pang: obj,
-          abc1: math.accSub(math.accAdd(obj.platformElevation , obj.designPileLength) , (obj.pileTopHeight)),
+          abc1: math.accSub(math.accAdd(obj.platformElevation, obj.designPileLength), (obj.pileTopHeight)),
           abc2: math.accSub(math.accSub(obj.platformElevation, obj.pileTopHeight), 0.5),
           ['pang.actualDeepImg']: obj.actualDeepImg ? JSON.parse(obj.actualDeepImg) : [],
           ['pang.barCageCountImg']: obj.barCageCountImg ? JSON.parse(obj.barCageCountImg) : [],
@@ -533,33 +521,34 @@ Page({
       }
     });
   },
-  // updatePangzhan: function () {
-      //   let that = this;
-  //   if (!this.data.pang.mainBarNum || !this.data.pang.mainBarType) {
-  //     this.setData({
-  //       ['pang.mainBar']:null
-  //     })
-  //   }
-  //   let obj = this.data;
-  //   let data = this.data.pang;
-  //   util.getDataByAjax({
-  //     url: '/jxZkGzzPzjl/update',
-  //     method: "Post",
-  //     data,
-  //     success: function (res) {
-  //       Toptips({
-  //         duration: 1000,
-  //         content: "成功采集！",
-  //         backgroundColor: "#06A940"
-  //       });
-  //       // wx.showToast({
-  //       //   title: '成功采集！',
-  //       //   success: function () {
-  //       //   }
-  //       // })
-  //     },
-  //     error: function () { }
-  //   });
-  // },
-  })
+  updatePangzhan: function () {
+    let that = this;
+    if (!this.data.pang.mainBarNum || !this.data.pang.mainBarType) {
+      this.setData({
+        ['pang.mainBar']: null
+      })
+    }
+    if(this.data.pang.status == 0){
+      this.setData({
+        ['pang.status']: 1
+      })
+    }
+    let obj = this.data;
+    let data = this.data.pang;
+    util.getDataByAjax({
+      url: '/jxZkGzzPzjl/update',
+      method: "Post",
+      data,
+      success: function (res) {
+        Toptips({
+          duration: 1000,
+          content: "成功采集！",
+          backgroundColor: "#06A940"
+        });
+      },
+      error: function () { }
+    });
+  }
+})  
+  
   
