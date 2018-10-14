@@ -1,9 +1,10 @@
 {
   "pages":[
+   
     "pages/pangzhan/index/index",
     "pages/pangzhan/pangzhan_jxgzz/pangzhan_jxgzz",
     "pages/pangzhan/pangzhan_tongyong/pangzhan_tongyong",
-    "pages/pangzhan/pangzhan_yylgz/pangzhan_yylgz",
+    "pages/pangzhan/pangzhan_yylgz/pangzhan_yylgz", 
     "pages/pangzhan/pangzhan_shuini/pangzhan_shuini",
     "pages/mine/index/index",
     "pages/check/index/index",

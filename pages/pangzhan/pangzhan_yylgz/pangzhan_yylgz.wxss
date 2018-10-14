@@ -31,7 +31,7 @@
   /* border:1px solid #ccc; */
   padding: 10rpx;
   border-radius: 4rpx;
-  width: 200rpx;
+  width: 220rpx;
 }
 .height-80{
   height: 80px;
@@ -44,4 +44,9 @@
 }
 #zan-toptips{
   z-index: 99999
+}
+
+.avatar{
+  width: 120rpx;
+  height: 120rpx;
 }
