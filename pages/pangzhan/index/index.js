@@ -3,6 +3,7 @@ var util = require('../../../utils/util.js')
 const Dialog = require('../../../components/dialog/dialog');
 const Toptips = require('../../../components/toptips/index.js');
 var login = require('../../../utils/login.js');
+let app = getApp();
 Page({
   data: {
     projectList: [],
@@ -42,18 +43,15 @@ Page({
       console.log("授权登录");
       login.getUserInfo();
     }
-    this.setData({
-      isOnLoad : true
-    })
   },
   onShow: function () {
     this.setData({
       currentPzIndex: wx.getStorageSync("currentPzIndex")
     })
-    if (this.data.isOnLoad){//返回后刷新
-      this.setData({
-        isOnLoad: false
-      })
+
+    //返回后刷新
+    if (app.globalData.isFirst){
+      app.globalData.isFirst = false;
     }else{
       this.getPangzhanList();
     }
