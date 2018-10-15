@@ -3,6 +3,7 @@ var util = require('../../../utils/util.js')
 var math = require('../../../utils/math.js')
 const Toptips = require('../../../components/toptips/index.js');
 const Dialog = require('../../../components/dialog/dialog');
+var app = getApp();
 Page({
   data: {
     
@@ -36,7 +37,7 @@ Page({
       shigongfang: wx.getStorageSync("shigongfang"),
       buildingCode: wx.getStorageSync("currentBuildingCode"),
       currentProjectName: wx.getStorageSync("currentProjectName"),
-      administrator: wx.getStorageSync("zongjian")
+      administrator: app.globalData.administrator
     })
     this.makeColonGlint();
     // var options = {pileCode:1}

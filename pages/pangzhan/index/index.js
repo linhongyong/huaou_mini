@@ -232,6 +232,8 @@ Page({
           }
         }
         wx.setStorageSync('zongjian', zongjian);
+        app.globalData.administrator = zongjian;
+        console.log('globalData',app.globalData)
         wx.setStorageSync('shigongfang', shigongfang);
       },
       error: function () { }
