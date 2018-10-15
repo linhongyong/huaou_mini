@@ -1,4 +1,9 @@
 // pages/mine/index/index.js
+var util = require('../../../utils/util.js')
+var math = require('../../../utils/math.js')
+const Toptips = require('../../../components/toptips/index.js');
+const Dialog = require('../../../components/dialog/dialog');
+var self;
 Page({
 
   /**
@@ -12,7 +17,15 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-  
+    var self = this;
+    var info = {
+      nickname: wx.getStorageSync('nickname'),
+      headpic: wx.getStorageSync('headpic'),
+      account: wx.getStorageSync('account'),
+    }
+    self.setData({
+      info: info
+    })
   },
 
   /**
@@ -62,5 +75,33 @@ Page({
    */
   onShareAppMessage: function () {
   
-  }
+  },
+
+  // 退出登录
+  logout: function(){
+    wx.showModal({
+      title: util.appName,
+      content: '是否要退出登录？',
+      success: function(res){
+        if (res.confirm){
+         
+          util.getDataByAjax({
+            url: '/logout',
+            success: function (res) {
+              wx.clearStorage();
+              wx.reLaunch({
+                url: '../../pangzhan/index/index',
+              })
+            },
+            error: function (error) {
+              console.log(error);
+            },
+          });
+        }
+      },
+      fail: function(error){
+        console.log(error);
+      }
+    })
+  } 
 })

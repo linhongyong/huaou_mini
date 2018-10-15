@@ -37,6 +37,7 @@ Page({
       shigongfang: wx.getStorageSync("shigongfang"),
       buildingCode: wx.getStorageSync("currentBuildingCode"),
       currentProjectName: wx.getStorageSync("currentProjectName"),
+      administrator: wx.getStorageSync("zongjian")
     })
     this.makeColonGlint();
     if (options.pileCode){
@@ -72,6 +73,10 @@ Page({
    * 天气选择
    */
   radioChangeOfWeather: function (e) {
+    if (this.data.pang.status >= 2) {
+      Toptips('请在管理后台进行修改');
+      return
+    }
     if (!this.data.pang.id) {
       wx.showToast({
         title: '旁站不存在',
@@ -86,6 +91,10 @@ Page({
 
   //------------------------------------------------------ff
   makeColonGlint:function(){
+    if (this.data.pang.status >= 2) {
+      Toptips('请在管理后台进行修改');
+      return
+    }
     let that = this;
     setInterval(function(){
       that.setData({
@@ -112,6 +121,10 @@ Page({
    * case index,表示顺序序号
    */
   getTime:function(e){
+    if (this.data.pang.status >= 2) {
+      Toptips('请在管理后台进行修改');
+      return
+    }
     // if (!this.data.id) {
     //   wx.showToast({
     //     title: '旁站不存在',
@@ -192,6 +205,10 @@ Page({
    * 上传照片
    */
   uploadImages: function (e) {
+    if (this.data.pang.status >= 2) {
+      Toptips('请在管理后台进行修改');
+      return
+    }
     if (!this.data.pang.id) {
       wx.showToast({
         title: '旁站不存在',
@@ -247,6 +264,10 @@ Page({
   },
 
   updateImagesOrSave:function(e){
+    if (this.data.pang.status >= 2) {
+      Toptips('请在管理后台进行修改');
+      return
+    }
     let that = this;
     console.log(e);
     if (e.currentTarget.dataset.index == "barCageCountImg") {
@@ -280,6 +301,10 @@ Page({
   },
 
   deletePic: function (e) {
+    if (this.data.pang.status >= 2) {
+      Toptips('请在管理后台进行修改');
+      return
+    }
     console.log(e);
     let index = e.currentTarget.dataset.index;
     let stepindex = e.currentTarget.dataset.stepindex;
@@ -306,6 +331,10 @@ Page({
   }, 
 
   bindTimeChange: function (e) {
+    if (this.data.pang.status >= 2) {
+      Toptips('请在管理后台进行修改');
+      return
+    }
     if (!this.data.pang.id) {
       wx.showToast({
         title: '旁站不存在',
@@ -376,6 +405,10 @@ Page({
    * 切换成可编辑状态
    */
   toEdit: function (e) {
+    if (this.data.pang.status >= 2) {
+      Toptips('请在管理后台进行修改');
+      return
+    }
     let isEdit = `pang.is${e.currentTarget.dataset.index}Edit`
     this.setData({
       [isEdit]: true
@@ -448,13 +481,13 @@ Page({
     })
     this.updatePangzhan();
     let toIds = [];
-    for (let i = 0; i < this.data.zongjian.length; i++){
-      toIds.push(this.data.zongjian[i].userId);
+    for (let i = 0; i < this.data.administrator.length; i++){
+      toIds.push(this.data.administrator[i].userId);
     }
     let data = {
       type: "0001",
       title: `${wx.getStorageSync('currentProjectName')} ${wx.getStorageSync('currentBuildingCode')}号楼 ${this.data.pang.pileCode}号机械灌注桩旁站完成`,
-      toIds: [76],
+      toIds: toIds,
       parameter: {
         "pangzhanId": this.data.pang.id
       }

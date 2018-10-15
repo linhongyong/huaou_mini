@@ -1,2 +1,13 @@
 <!--pages/mine/index/index.wxml-->
-<text>pages/mine/index/index.wxml</text>
+<view class='header'>
+  <view class='head-pic'>
+    <image class='' src='{{info.headpic}}'></image>
+  </view>
+  <view class='info'>
+    <view class='padding-b-10'>
+      <text class='nickname'>{{info.nickname}}</text>
+      <text class='accout'>{{info.accout}}</text>
+    </view>
+    <view class='logout-btn' bindtap='logout'>退出登录</view>
+  </view>
+</view>

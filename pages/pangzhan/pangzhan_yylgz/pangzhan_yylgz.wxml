@@ -1,6 +1,8 @@
 <wxs src="./../../../wxs/tools.wxs" module="tools" />
 <zan-toptips id="zan-toptips" content="{{ content }}" is-show="{{ $zanui.toptips.show }}" />
 <zan-dialog id="zan-base-dialog"></zan-dialog>
+<import src="../../../wxml/administrator_tpl.wxml" />
+
 
 <view class='bg-theme font-white text-c toptipbar' style='height:30px;line-height:30px; z-index:10'>
   <text wx:if="{{currentProjectName}}">{{currentProjectName}} </text>
@@ -34,11 +36,11 @@
   <view class='display-flex-center-right'>
     <radio-group class="radio-group" bindchange="radioChangeOfWeather">
       <label class="radio">
-        <radio value="晴" color="#3B94F1" checked='{{ pang.weather =="晴" }}' />晴 </label>
+        <radio value="晴" color="#3B94F1" checked='{{ pang.weather =="晴" }}' disabled='{{pang.status>=2?true:false}}' />晴 </label>
       <label class="radio margin-h-20">
-        <radio value="阴" color="#3B94F1" checked='{{ pang.weather =="阴" }}' />阴 </label>
+        <radio value="阴" color="#3B94F1" checked='{{ pang.weather =="阴" }}'  disabled='{{pang.status>=2?true:false}}' />阴 </label>
       <label class="radio">
-        <radio value="雨" color="#3B94F1" checked='{{ pang.weather =="雨" }}' />雨 </label>
+        <radio value="雨" color="#3B94F1" checked='{{ pang.weather =="雨" }}'  disabled='{{pang.status>=2?true:false}}' />雨 </label>
     </radio-group>
   </view>
 </view>
@@ -264,7 +266,7 @@
   <view>开始时间</view>
   <view class='display-flex-center-right'>
     <view class='display-flex-center-right' wx:if="{{pang.pangzhan_starttime != null}}">
-      <picker mode="time" value="{{tools.formatTimeTerse(pang.pangzhan_starttime)}}" start="00:00" end="23:59" bindchange="bindTimeChange" data-index="pangzhan_starttime">
+      <picker mode="time" value="{{tools.formatTimeTerse(pang.pangzhan_starttime)}}" start="00:00" end="23:59" bindchange="bindTimeChange" data-index="pangzhan_starttime" disabled='{{pang.status>=2?true:false}}'>
         <view class="picker">{{tools.formatTimeTerse(pang.pangzhan_starttime)}}</view>
       </picker>
     </view>
@@ -401,18 +403,8 @@
 
 
 <view class=' bg-white'>
-  <view class='padding-t-20 padding-h-20 ng-fl'>
-    <view class='text-c ng-fl-l' wx:if="{{zongjian.length}}" wx:for="{{zongjian}}" wx:key="{{index}}">
-      <view>{{item.roleName}}</view>
-      <image class='avatar' src="{{item.avatar ? item.avatar : 'https://csbucket.oss-cn-shanghai.aliyuncs.com/huaou/900e2571-e396-424b-8643-8f7dc99799f4.png'}}"></image>
-    </view>
-    <!-- <view class='text-c ng-fl-l' wx:if="{{shigongfang}}">
-      <view>{{shigongfang.roleName}}</view>
-      <image class='avatar' src="{{shigongfang.avatar ? shigongfang.avatar : 'https://csbucket.oss-cn-shanghai.aliyuncs.com/huaou/900e2571-e396-424b-8643-8f7dc99799f4.png'}}"></image>
-    </view> -->
-  </view>
-
+  <template is='administrator' data='{{administrator}}'/>
   <view class=' margin-h-auto padding-v-30' style='width:80%'>
-    <button class='btn bg-theme margin-h-auto font-white' style='width:60%;' bindtap='submitToCheck'>确认完成</button>
+    <button class='btn bg-theme margin-h-auto font-white' style='width:60%;' bindtap='submitToCheck' disabled='{{pang.status>=2?true:false}}'>确认完成</button>
   </view>
 </view>
