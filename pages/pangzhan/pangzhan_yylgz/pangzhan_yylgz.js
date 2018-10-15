@@ -16,32 +16,10 @@ Page({
     currentActualSlump:0,
     actualSlumpList: ['请选择', 180, 190, 200, 210, 220],
     pang:{
-      // id: 0,
-      // status: null,
-      // startTime: null,//监理开始时间
-      // building: null,
-      // pile: null,
-      // weather: null,
-      // endTime: null,//监理结束时间
-      // dropCageStartTime: null,//下钢筋笼时间起
-      // dropCageEndTime: null,//下钢筋笼时间止
-      // barCageCountImg: null,//钢筋笼照片
-      // secondCleanStartTime: null,//二次清孔时间起
-      // secondCleanEndTime: null,//二次清孔时间止
-      // actualDeepImg: null,//孔深照片
-      // actualDeep: null,//实际孔深
-      // sedimentHeight: null,//沉渣厚度
-      // slurryProp: null,//泥浆比重
-      // perfusionStartTime: null,//灌注时间起
-      // perfusionEndTime: null,//灌注时间止
-      // fillingCoefficient: null,//充盈系数
-      // actualVolume: null,//砼实灌方量
-      // actualSlump: null,//设计坍落度
     },
     tempImagesOfCage: [],
     tempImagesOfHoleDepth: [],
     result:{
-      barCageCount: 2,
     }
   },
   onLoad: function (options) {
@@ -56,15 +34,23 @@ Page({
       minute: minute,
       zongjian: wx.getStorageSync("zongjian"),
       shigongfang: wx.getStorageSync("shigongfang"),
+      buildingCode: wx.getStorageSync("currentBuildingCode"),
+      currentProjectName: wx.getStorageSync("currentProjectName"),
     })
     this.makeColonGlint();
     // var options = {pileCode:1}
-    if (options.pileCode){
+    if (options.pileCode) {
       this.setData({
         ['pang.pileCode']: options.pileCode,
-        ['buildingCode']: wx.getStorageSync("currentBuildingCode")
       })
       this.getOrCreate();
+    }
+    //审核旁站数据情况
+    if (options.pangzhanId) {
+      this.setData({
+        pangzhanId: options.pangzhanId
+      })
+      this.getPangzhanById();
     }
   },
   onShow: function () {
@@ -402,20 +388,27 @@ Page({
   /**
    * 确认完成
    */
+  /**
+ * 确认完成
+ */
   submitToCheck: function () {
     let that = this;
+    this.setData({
+      ['pang.status']: 2
+    })
+    this.updatePangzhan();
+    let toIds = [];
+    for (let i = 0; i < this.data.zongjian.length; i++) {
+      toIds.push(this.data.zongjian[i].userId);
+    }
     let data = {
-      type: "0001",
-      title: "温州机场重建项目 1号楼120号桩机械灌注旁站完成",
-      fromId: 77,
-      fromName: "1111",
+      type: "0003",
+      title: `${wx.getStorageSync('currentProjectName')} ${wx.getStorageSync('currentBuildingCode')}号楼 ${this.data.pang.pileCode}号预应力管桩旁站完成`,
       toIds: [
-        55,
-        77,
-        78
+       76
       ],
       parameter: {
-        pangzhanId: 1
+        "pangzhanId": this.data.pang.id
       }
     }
     util.getDataByAjax({//--首页商品列表
@@ -474,6 +467,11 @@ Page({
         ['pang.mainBar']:null
       })
     }
+    if (!this.data.pang.status) {
+      this.setData({
+        ['pang.status']: 1
+      })
+    }
     let obj = this.data;
     let data = this.data.pang;
     util.getDataByAjax({
@@ -495,5 +493,25 @@ Page({
       error: function () { }
     });
   },
+  // getPangzhanById: function () {
+  //   let that = this;
+  //   util.getDataByAjax({//--首页商品列表
+  //     url: "/snJbjPzjl/getSnJbjPzjl",
+  //     method: "Get",
+  //     data: {
+  //       id: this.data.pangzhanId
+  //     },
+  //     success: function (res) {
+  //       let obj = res.data.result;
+  //       that.setData({
+  //         pang: res.data.result,
+  //         ['pang.tryDataUrl']: obj.tryDataUrl ? JSON.parse(obj.tryDataUrl) : [],
+  //       })
+  //     },
+  //     error: function () {
+
+  //     }
+  //   });
+  // }
   })
   

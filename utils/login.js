@@ -72,6 +72,7 @@ function getTime13() {
 }
 function loginApi(userInfo) {
   console.log(userInfo);
+  delete userInfo.nickName
   wx.request({
     url: util.website +`/loginWeixin`,
     data: userInfo,

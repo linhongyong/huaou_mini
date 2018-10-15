@@ -16,27 +16,6 @@ Page({
     currentActualSlump:0,
     actualSlumpList: ['请选择', 180, 190, 200, 210, 220],
     pang:{
-      // id: 0,
-      // status: null,
-      // startTime: null,//监理开始时间
-      // building: null,
-      // pile: null,
-      // weather: null,
-      // endTime: null,//监理结束时间
-      // dropCageStartTime: null,//下钢筋笼时间起
-      // dropCageEndTime: null,//下钢筋笼时间止
-      // barCageCountImg: null,//钢筋笼照片
-      // secondCleanStartTime: null,//二次清孔时间起
-      // secondCleanEndTime: null,//二次清孔时间止
-      // actualDeepImg: null,//孔深照片
-      // actualDeep: null,//实际孔深
-      // sedimentHeight: null,//沉渣厚度
-      // slurryProp: null,//泥浆比重
-      // perfusionStartTime: null,//灌注时间起
-      // perfusionEndTime: null,//灌注时间止
-      // fillingCoefficient: null,//充盈系数
-      // actualVolume: null,//砼实灌方量
-      // actualSlump: null,//设计坍落度
     },
     tempImagesOfCage: [],
     tempImagesOfHoleDepth: [],
@@ -468,12 +447,14 @@ Page({
       ['pang.status']: 2
     })
     this.updatePangzhan();
+    let toIds = [];
+    for (let i = 0; i < this.data.zongjian.length; i++){
+      toIds.push(this.data.zongjian[i].userId);
+    }
     let data = {
       type: "0001",
-      title: `${wx.getStorageSync('currentProjectName')} ${wx.getStorageSync('currentBuildingCode')}号楼 ${wx.getStorageSync('currentBuildingCode')}号机械灌注桩旁站完成`,
-      toIds: [
-        wx.getStorageSync('zongjian').id,
-      ],
+      title: `${wx.getStorageSync('currentProjectName')} ${wx.getStorageSync('currentBuildingCode')}号楼 ${this.data.pang.pileCode}号机械灌注桩旁站完成`,
+      toIds: [76],
       parameter: {
         "pangzhanId": this.data.pang.id
       }
@@ -537,7 +518,7 @@ Page({
         ['pang.mainBar']: null
       })
     }
-    if(this.data.pang.status == 0){
+    if(!this.data.pang.status){
       this.setData({
         ['pang.status']: 1
       })

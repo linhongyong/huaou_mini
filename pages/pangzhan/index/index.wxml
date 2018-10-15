@@ -17,7 +17,7 @@
   <!-- 15381432412 -->
 </login-modal>
 
-<view class='position-f' >
+<view class='position-f' style='width:100%;'>
   <!-- 项目楼栋选择 -->
   <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
     <view class='bg-theme font-white text-c toptipbar padding-v-10' wx:if="{{projectList.length > 0}}">
@@ -33,6 +33,7 @@
       scroll="{{ tab.scroll }}"
       height="{{ tab.height }}"/>
   </view>
+  
 </view>
 
 <view  style="height:188rpx;"></view>

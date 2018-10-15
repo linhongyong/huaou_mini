@@ -2,31 +2,12 @@
 <zan-toptips id="zan-toptips" content="{{ content }}" is-show="{{ $zanui.toptips.show }}" />
 <zan-dialog id="zan-base-dialog"></zan-dialog>
 
-<view class='bg-theme font-white text-c toptipbar' style='height:30px;line-height:30px' style='z-index:10'>
-  <text wx:if="{{buildingCode != null}}">{{buildingCode}}幢</text>
-  <text wx:if="{{pang.pile > 0 ? true : false}}">{{pang.pile}}#桩 </text> 旁站数据采集
+<view class='bg-theme font-white text-c toptipbar' style='height:30px;line-height:30px; z-index:10'>
+  <text wx:if="{{currentProjectName}}">{{currentProjectName}} </text>
+  <text wx:if="{{buildingCode}}">{{buildingCode}}幢</text>
 </view>
 <view style='height:30px;line-height:30px'></view>
-<view class='text-c'>-----------请先输入楼栋号和桩号-----------</view>
-<!-- 楼栋号   -->
- <view class='padding-h-20 display-flex-center-between bottom-line height-80  bg-white'>
-  <view>楼栋号</view>
-  <view class='display-flex-center-right'>
-    <form bindsubmit="onInputSave" data-index="buildingCode" class='' wx:if="{{ isbuildingCodeEdit}}">
-        <view class='display-flex-center'>
-          <input  focus="true" class='input' type='number' placeholder='请输入...'  cursor-spacing="30" name="value" value='' ></input>
-          <text class='iconfont icon-17cuowu padding-l-5  margin-l-10' style='font-size:50rpx;color:red' bindtap='toDone' data-index="buildingCode"></text>
-          <button formType="submit" class='btn font-theme bg-white clear-btn-default margin-l-10'>
-            <text class='iconfont icon-dui1 padding-l-5' style='font-size:60rpx;'></text>
-          </button>
-        </view>
-    </form>
-    <view class='display-flex-center-center'  wx:else bindtap='toEdit' data-index="buildingCode">
-      <view class='font-666' wx:if="{{buildingCode == null}}">请输入楼栋号</view>  
-      <view class='' wx:else>{{ buildingCode }}</view>  
-    </view>
-  </view>
-</view> 
+<view class='text-c'>-----------请先输入楼桩号-----------</view>
 <!-- 桩号  -->
 <view class='padding-h-20 display-flex-center-between bottom-line height-80  bg-white'>
   <view>桩号</view>
@@ -421,14 +402,14 @@
 
 <view class=' bg-white'>
   <view class='padding-t-20 padding-h-20 ng-fl'>
-    <view class='text-c ng-fl-l' wx:if="{{zongjian}}">
-      <view>{{zongjian.roleName}}</view>
-      <image class='avatar' src="{{zongjian.avatar ? zongjian.avatar : 'https://csbucket.oss-cn-shanghai.aliyuncs.com/huaou/900e2571-e396-424b-8643-8f7dc99799f4.png'}}"></image>
+    <view class='text-c ng-fl-l' wx:if="{{zongjian.length}}" wx:for="{{zongjian}}" wx:key="{{index}}">
+      <view>{{item.roleName}}</view>
+      <image class='avatar' src="{{item.avatar ? item.avatar : 'https://csbucket.oss-cn-shanghai.aliyuncs.com/huaou/900e2571-e396-424b-8643-8f7dc99799f4.png'}}"></image>
     </view>
-    <view class='text-c ng-fl-l' wx:if="{{shigongfang}}">
+    <!-- <view class='text-c ng-fl-l' wx:if="{{shigongfang}}">
       <view>{{shigongfang.roleName}}</view>
       <image class='avatar' src="{{shigongfang.avatar ? shigongfang.avatar : 'https://csbucket.oss-cn-shanghai.aliyuncs.com/huaou/900e2571-e396-424b-8643-8f7dc99799f4.png'}}"></image>
-    </view>
+    </view> -->
   </view>
 
   <view class=' margin-h-auto padding-v-30' style='width:80%'>

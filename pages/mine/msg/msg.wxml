@@ -8,7 +8,7 @@
       <view class=' font-14'>时间: {{item.modifyTime}}</view>
       <view class=' font-14'>发送者：{{item.fromName}}</view>
     </view>
-    <view class='status' style='color:#3B94F1' wx:if="{{ item.status }}">已读</view>
+    <view class='status' style='color:#3B94F1' wx:if="{{ item.status == 1 }}">已读</view>
     <view class='status' style='color:red' wx:else>未读</view>
   </view>
 

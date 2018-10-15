@@ -38,7 +38,7 @@
         "text": "材料"
       },
       {
-        "pagePath": "pages/check/index/index",
+        "pagePath": "pages/mine/msg/msg",
         "iconPath": "res/005.png",
         "selectedIconPath": "res/006.png",
         "text": "验收"

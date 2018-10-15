@@ -39,17 +39,24 @@ Page({
     if (!util.isAuthorize()) {
       return;//弹出授权框
     } else {
-      console.log("重新登录");
+      console.log("授权登录");
       login.getUserInfo();
     }
+    this.setData({
+      isOnLoad : true
+    })
   },
   onShow: function () {
     this.setData({
       currentPzIndex: wx.getStorageSync("currentPzIndex")
     })
-    // if (wx.getStorageSync('currentProjectId') && wx.getStorageSync('currentBuildingId') && wx.getStorageSync('currentBuildingPileNum')){//返回后刷新
-    //   this.getPangzhanList();
-    // }
+    if (this.data.isOnLoad){//返回后刷新
+      this.setData({
+        isOnLoad: false
+      })
+    }else{
+      this.getPangzhanList();
+    }
   },
 
   onReady: function () { },
@@ -72,9 +79,10 @@ Page({
     })
     wx.setStorageSync("currentBuildingId", this.data.buildingList.length && this.data.buildingList[e.detail.value[1]].id)
     wx.setStorageSync("currentBuildingCode", this.data.buildingList.length && this.data.buildingList[e.detail.value[1]].buildingCode)
-    wx.setStorageSync("currentBuildingPileNum", res.data.result.length > 0 && res.data.result[0].pileNum)
+    wx.setStorageSync("currentBuildingPileNum", this.data.buildingList.length && this.data.buildingList[e.detail.value[1]].pileNum)
     this.getPangzhanList();
   },
+
   bindMultiPickerColumnChange: function (e) {
     console.log('修改的列为', e.detail.column, '，值为', e.detail.value);
     switch (e.detail.column) {
@@ -83,6 +91,8 @@ Page({
         wx.setStorageSync("currentProjectName", this.data.projectList[e.detail.value].projectName)
         this.getBuildingList();
         this.getProjectStaffs();
+        this.getPangzhanList();
+        
         break;
     }
   },
@@ -98,6 +108,7 @@ Page({
   },
   onFormSubmit: function(e){
     console.log(e);
+    console.log("登录框");
     login.getUserInfo(e.detail.value);
   },
   toDetail: function(e){
@@ -113,7 +124,7 @@ Page({
       })
     } else if (currentPzIndex == 2) {
       wx.navigateTo({
-        url: `../pangzhan_yylgz/pangzhan_yylgz?pileCode${pileCode}`,
+        url: `../pangzhan_yylgz/pangzhan_yylgz?pileCode=${pileCode}`,
       })
     }
   },
@@ -213,14 +224,17 @@ Page({
         that.setData({
           projectStaffs: res.data.result
         })
+        let zongjian = [], shigongfang=[];
         for (let i = 0; i < res.data.result.length; i++){
           if (res.data.result[i].roleName == "总监"){
-            wx.setStorageSync('zongjian', res.data.result[i]);
+            zongjian.push(res.data.result[i]);
           }
           if (res.data.result[i].roleName == "施工方") {
-            wx.setStorageSync('shigongfang', res.data.result[i]);
+            shigongfang.push(res.data.result[i]);
           }
         }
+        wx.setStorageSync('zongjian', zongjian);
+        wx.setStorageSync('shigongfang', shigongfang);
       },
       error: function () { }
     });
@@ -270,9 +284,9 @@ Page({
     if (currentPzIndex == 0) {
       url = "/building/jxgzzProgress";
     } else if (currentPzIndex == 1) {
-      url = "/building/yylgzProgress";
+      url = "/building/snjbzProgress";
     } else if (currentPzIndex == 2) {
-      url = "/commonPzjl/list";
+      url = "/building/yylgzProgress";
     } else {
       Toptips({
       duration: 2000,
@@ -352,6 +366,7 @@ Page({
     var that = this;
     if (e.detail.errMsg == "getUserInfo:ok") {
       wx.setStorageSync("isAuthorize", true);
+      console.log("授权的登录")
       login.getUserInfo();
     }
     else {
@@ -363,21 +378,41 @@ Page({
       this.setData({
         isHasAccount: true
       })
+      Toptips({
+        duration: 2000,
+        content: res.data.message,
+      });
     } else if (res.data.code == "Fail_Code"){
       console.log("Fail_Code");
       this.setData({
         isHasAccount: false
       })
-      wx.showToast({
-        title: res.data.code.message,
-      })
+      Toptips({
+        duration: 2000,
+        content: res.data.message,
+      });
     }
-    else{
+    else if (res.data.code == "Success") {
+      console.log("登录成功");
       this.setData({
         isHasAccount: false
       })
-      wx.setStorageSync("token", res.data.result)
+      Toptips({
+        duration: 2000,
+        content: "授权成功",
+        backgroundColor: "#06A940"
+      });
+      wx.setStorageSync("token",res.data.result);
       this.getPageContentData();
+    }
+    else{
+      this.setData({
+        isHasAccount: true
+      })
+      Toptips({
+        duration: 2000,
+        content: res.data.message,
+      });
     }
     // Toptips({
     //   duration: 2000,

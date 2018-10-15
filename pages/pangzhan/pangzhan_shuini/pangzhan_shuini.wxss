@@ -45,3 +45,8 @@
 #zan-toptips{
   z-index: 99999
 }
+
+.avatar{
+  width: 120rpx;
+  height: 120rpx;
+}

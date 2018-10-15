@@ -9,7 +9,7 @@
   padding-right: 0rpx;
 }
 .position-f{
-  z-index: 999;
+  z-index: 2;
 }
 .add-buttom{
   position: fixed;
@@ -32,7 +32,7 @@
 }
 
 .doing{
-  background-color: rgb(21, 216, 47)
+  background-color: rgb(34, 248, 62)
 }
 .finished{
   background-color: #3B94F1

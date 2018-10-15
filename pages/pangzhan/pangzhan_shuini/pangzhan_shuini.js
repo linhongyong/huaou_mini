@@ -35,7 +35,11 @@ Page({
     if (minute < 10) { minute = "0" + minute }
     this.setData({
       hour: hour,
-      minute: minute
+      minute: minute,
+      zongjian: wx.getStorageSync("zongjian"),
+      shigongfang: wx.getStorageSync("shigongfang"),
+      buildingCode: wx.getStorageSync("currentBuildingCode"),
+      currentProjectName: wx.getStorageSync("currentProjectName"),
     })
     // this.getShuiniTmpl();
     
@@ -46,6 +50,13 @@ Page({
       })
       this.getOrCreate();
     }   
+    //审核旁站数据情况
+    if (options.pangzhanId) {
+      this.setData({
+        pangzhanId: options.pangzhanId
+      })
+      this.getPangzhanById();
+    }
   },
   onShow: function () {
 
@@ -351,8 +362,52 @@ Page({
       this.updatePangzhan();
     }
   },
-
+  /**
+     * 确认完成
+     */
+  submitToCheck: function () {
+    let that = this;
+    this.setData({
+      ['pang.status']: 2
+    })
+    this.updatePangzhan();
+    let toIds = [];
+    for (let i = 0; i < this.data.zongjian.length; i++) {
+      toIds.push(this.data.zongjian[i].userId);
+    }
+    let data = {
+      type: "0002",
+      title: `${wx.getStorageSync('currentProjectName')} ${wx.getStorageSync('currentBuildingCode')}号楼 ${this.data.pang.pileStartNum}号水泥搅拌桩旁站完成`,
+      toIds: [76],
+      parameter: {
+        "pangzhanId": this.data.pang.id
+      }
+    }
+    util.getDataByAjax({//--首页商品列表
+      url: "/message/addJxgzz",
+      method: "Post",
+      data,
+      success: function (res) {
+        Toptips({
+          duration: 1000,
+          content: "成功提交",
+          backgroundColor: "#06A940"
+        });
+        setTimeout(function () {
+          wx.navigateBack({
+            delta: -1
+          })
+        }, 2000)
+      },
+      error: function () { }
+    });
+  },
   updatePangzhan: function () {
+    if (!this.data.pang.status) {
+      this.setData({
+        ['pang.status']: 1
+      })
+    }
     let data = this.data.pang;
     let that = this;
     util.getDataByAjax({
@@ -395,8 +450,9 @@ Page({
       url: "/snJbjPzjl/add",
       method: "Post",
       data: {
-        pileStartNum: that.data.pang.pileStartNum,
-        projectId: wx.getStorageSync('currentProjectId'),
+        projectId: wx.getStorageSync("currentProjectId") - 0,
+        buildingId: wx.getStorageSync("currentBuildingId") - 0,
+        pileStartNum: that.data.pang.pileStartNum - 0,
       },
       success: function (res) {
         let obj = res.data.result;
@@ -412,4 +468,24 @@ Page({
       }
     });
   },
+  getPangzhanById: function(){
+    let that = this;
+    util.getDataByAjax({//--首页商品列表
+      url: "/snJbjPzjl/getSnJbjPzjl",
+      method: "Get",
+      data: {
+        id: this.data.pangzhanId
+      },
+      success: function (res) {
+        let obj = res.data.result;
+        that.setData({
+          pang: res.data.result,
+          ['pang.tryDataUrl']: obj.tryDataUrl ? JSON.parse(obj.tryDataUrl) : [],
+        })
+      },
+      error: function () {
+
+      }
+    });
+  }
 })  
