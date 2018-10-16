@@ -2,7 +2,7 @@
 <template name='administrator'>
   <view class='padding-t-20 padding-h-20 ng-fl'>
     <view class='text-c ng-fl-l' wx:if="{{administrator.length}}" wx:for="{{administrator}}" wx:key="{{index}}">
-      <view>{{item.roleName}}</view>
+      <view>{{item.userName}}</view>
       <image class='avatar' src="{{item.avatar ? item.avatar : 'https://csbucket.oss-cn-shanghai.aliyuncs.com/huaou/900e2571-e396-424b-8643-8f7dc99799f4.png'}}"></image>
     </view>
     <!-- <view class='text-c ng-fl-l' wx:if="{{shigongfang}}">

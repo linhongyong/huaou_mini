@@ -283,6 +283,27 @@
     </view>
   </view>
 </view>
+
+  <!-- 施焊照片：照片路径和时间 -->
+  <view class='bottom-line bg-white'>
+    <view class='padding-v-10 display-flex-center-between padding-h-20 '>
+      <view>施焊照片采集（一节一张）</view>
+      <view>
+        <button class='btn bg-theme font-white clear-btn-default font-14 padding-v-5 padding-h-10  margin-t-15' bindtap='updateImagesOrSave' data-index="weldingUrlAndTime" >上传</button>
+      </view>
+    </view>
+    <view class='padding-v-10 ng-fl ' style=''>
+      <view class='margin-t-10 ng-fl-l position-r'  wx:for="{{pang.weldingUrlAndTime }}" wx:key="{{index}}"  style='margin-left:37rpx;background-color:#ccc;font-size:0px'>
+        <view class='bg-white' style='width:200rpx;height:50rpx;text-align:center;'>第{{index+1}}节施焊</view>
+        <image src='{{item.url}}' style='width:200rpx;height:200rpx;' bindtap='preview' data-index="{{index}}" data-stepindex='weldingUrlAndTime'></image>
+        <view class='bg-white' style='width:200rpx;text-align:center;font-size:28rpx;'>{{item.time}}</view>
+        <!-- <text class='iconfont icon-bad position-a font-ccc' data-index="{{index}}" bindtap='deletePic' style='font-size:50rpx;top:-26rpx;right:-26rpx;' data-stepindex="weldingUrlAndTime"></text> -->
+      </view>
+      <view class='bg-white' style='width:200rpx;height:50rpx;text-align:center;'></view>
+      <image class='margin-t-10' wx:if="{{pang.weldingUrlAndTime.length < 10 || !pang.weldingUrlAndTime}}" src='../../../res/upload.png' style='width:200rpx;height:200rpx;margin-left:37rpx;' data-index="weldingUrlAndTime" bindtap='uploadImages' ></image>
+    </view>
+  </view> 
+
 <!-- 最后压力值  -->
 <view class='padding-h-20 display-flex-center-between bottom-line height-80  bg-white'>
   <view>最后压力值（pa）</view>
@@ -381,25 +402,6 @@
   </view>
 </view>
 
-<!-- 施焊照片：照片路径和时间 -->
- <view class='bottom-line bg-white'>
-    <view class='padding-v-10 display-flex-center-between padding-h-20 '>
-      <view>施焊照片：照片路径和时间</view>
-      <view>
-        <button class='btn bg-theme font-white clear-btn-default font-14 padding-v-5 padding-h-10  margin-t-15' bindtap='updateImagesOrSave' data-index="weldingUrlAndTime" >上传</button>
-      </view>
-    </view>
-    <view class='padding-v-10 ng-fl ' style=''>
-      <view class='margin-t-10 ng-fl-l position-r'  wx:for="{{pang.weldingUrlAndTime }}" wx:key="{{index}}"  style='margin-left:37rpx;background-color:#ccc;font-size:0px'>
-        <view class='bg-white' style='width:200rpx;height:50rpx;text-align:center;'>第{{index+1}}节施焊</view>
-        <image src='{{item.url}}' style='width:200rpx;height:200rpx;' bindtap='preview' data-index="{{index}}" data-stepindex='weldingUrlAndTime'></image>
-        <view class='bg-white' style='width:200rpx;text-align:center;font-size:28rpx;'>{{item.time}}</view>
-        <!-- <text class='iconfont icon-bad position-a font-ccc' data-index="{{index}}" bindtap='deletePic' style='font-size:50rpx;top:-26rpx;right:-26rpx;' data-stepindex="weldingUrlAndTime"></text> -->
-      </view>
-      <view class='bg-white' style='width:200rpx;height:50rpx;text-align:center;'></view>
-      <image class='margin-t-10' wx:if="{{pang.weldingUrlAndTime.length < 10 || !pang.weldingUrlAndTime}}" src='../../../res/upload.png' style='width:200rpx;height:200rpx;margin-left:37rpx;' data-index="weldingUrlAndTime" bindtap='uploadImages' ></image>
-    </view>
-  </view> 
 
 
 <view class=' bg-white'>
