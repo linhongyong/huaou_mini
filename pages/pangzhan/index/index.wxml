@@ -17,26 +17,68 @@
   <!-- 15381432412 -->
 </login-modal>
 
-<view class='position-f' style='width:100%;'>
-  <!-- 项目楼栋选择 -->
-  <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
-    <view class='bg-theme font-white text-c toptipbar padding-v-10' wx:if="{{projectList.length > 0}}">
-      {{multiArray[0][multiIndex[0]]}}<text wx:if="{{multiArray[1].length}}">，{{multiArray[1][multiIndex[1]]}}号楼</text>
-    </view>
-  </picker>
-  <!-- 旁站菜单 -->
-  <view>
-    <zan-tab
+<!-- <view class='position-f' style='width:100%;'> -->
+<!-- 项目楼栋选择 -->
+<!-- <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}"> -->
+<view class='position-f bg-theme font-white text-c toptipbar padding-v-10' style='width:100%;' wx:if="{{projectList.length > 0}}">
+  <view class='iconfont icon-caidan menu-icon' bindtap='toggleLeftPopup'></view>
+  {{buildingList[currentBuildingIndex].buildingName}}，{{pangzhanType[currentPzIndex]}}
+</view>
+<!-- </picker> -->
+<!-- 旁站菜单 -->
+<!-- <view> -->
+<!-- <zan-tab
       bind:tabchange="onTabchange"
       list="{{ tab.list }}"
       selected-id="{{ currentPzIndex+1 }}"
       scroll="{{ tab.scroll }}"
       height="{{ tab.height }}"/>
-  </view>
-  
-</view>
+  </view> -->
+<!-- </view>  -->
+<view style="height:84rpx;"></view>
 
-<view  style="height:188rpx;"></view>
+<!-- 左侧弹出框 -->
+<zan-popup show="{{ showLeftPopup }}" type="left" bindclose="toggleLeftPopup">
+  <view class="pop-container-left">
+    <view class='building-area'>
+      <view class='s-title'>楼栋</view>
+      <view class='s-list'>
+        <radio-group class="radio-group" bindchange="changeBuilding">
+          <label class="radio" wx:for="{{buildingList}}">
+            <radio style='' value="{{index}}" color="#3B94F1" checked='{{ index==currentBuildingIndex }}' />{{item.buildingName}}
+          </label>
+        </radio-group>
+      </view>
+    </view>
+    <view class='pangzhantype-area'>
+      <view class='s-title'>旁站类型</view>
+      <view class='s-list'>
+        <radio-group class="radio-group" bindchange="changePangzhan">
+          <label class="radio">
+            <radio style='' value="0" color="#3B94F1" checked='{{ currentPzIndex == 0 }}' />机械灌注桩 </label>
+          <label class="radio">
+            <radio style='' value="1" color="#3B94F1" checked='{{ currentPzIndex == 1 }}' />水泥搅拌桩 </label>
+          <label class="radio">
+            <radio style='' value="2" color="#3B94F1" checked='{{ currentPzIndex == 2 }}' />预应力管桩 </label>
+          <label class="radio">
+            <radio style='' value="3" color="#3B94F1" checked='{{ currentPzIndex == 3 }}' />混泥土浇筑 </label>
+          <label class="radio">
+            <radio style='' value="4" color="#3B94F1" checked='{{ currentPzIndex == 4 }}' />塔吊安装 </label>
+        </radio-group>
+      </view>
+    </view>
+    <view class='project-area'>
+      <view class='s-title'>项目</view>
+      <view class='s-list'>
+        <radio-group class="radio-group" bindchange="changeProject">
+          <label class="radio" wx:for="{{projectList}}">
+            <radio style='' value="{{index}}" color="#3B94F1" checked='{{ index==currentProject }}' />{{item.projectName}}
+          </label>
+        </radio-group>
+      </view>
+    </view>
+  </view>
+</zan-popup>
 
 <!-- 机械灌注桩 -->
 <view class="bg-white">
@@ -54,7 +96,7 @@
           {{ item.pileCode }}
         </button>
       </view>
-     </block>
+    </block>
   </view>
 </view>
 
@@ -86,11 +128,11 @@
     </navigator>
   </view>
 </view> -->
-<view class="bg-white margin-t-10"  wx:if="{{tabId > 3}}">
+<!-- <view class="bg-white margin-t-10" wx:if="{{tabId > 3}}">
   <view class='padding-10'>暂未开放此功能</view>
-</view>
+</view> -->
 
 
 
 <!-- 添加按钮 -->
-<view class='add-buttom' bindtap='showAddMenu'><text class='iconfont icon-add font-theme'></text></view>
+<!-- <view class='add-buttom' bindtap='showAddMenu'><text class='iconfont icon-add font-theme'></text></view> -->

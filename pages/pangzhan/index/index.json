@@ -4,6 +4,7 @@
     "zan-dialog": "../../../components/dialog/index",
     "zan-button": "../../../components/btn/index",
     "login-modal": "../../../components/login-modal/login-modal",
-    "zan-tab": "../../../components/tab/index"
+    "zan-tab": "../../../components/tab/index",
+    "zan-popup": "../../../components/popup/index"
   }
 }
