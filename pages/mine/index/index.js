@@ -128,5 +128,12 @@ Page({
         console.log(error);
       },
     });  
+  },
+
+  // 跳转到修改密码页面
+  toPassword: function(){
+    wx.navigateTo({
+      url: '../password/password',
+    })
   }
 })

@@ -364,12 +364,28 @@ Page({
     });
   },
 
+  // 获得角色信息
+  getRoles: function () {
+    let that = this;
+    util.getDataByAjax({ //
+      url: '/user/getRoles',
+      method: "Get",
+      success: function (res) {
+        console.log('角色',res)
+        wx.setStorageSync("roles", res.data.result);
+      },
+      error: function () { }
+    });
+  },
+
+
   /**
    * 获得当前项目下的旁站
    */
   //------------------------------------------------------ff3
   getPageContentData: function() { //登录后才能获取的数据写在这里
     this.getJoinedList();
+    this.getRoles()
   },
   // util调用
   showAuthorizeDialog: function() { //未授权点击其他调用

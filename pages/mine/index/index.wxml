@@ -1,4 +1,5 @@
 <!--pages/mine/index/index.wxml-->
+<zan-toptips id="zan-toptips" content="{{ content }}" is-show="{{ $zanui.toptips.show }}" />
 <view class='header'>
   <view class='head-pic'>
     <image class='' src='{{info.headpic}}'></image>
@@ -6,6 +7,7 @@
   <view class='info'>
     <view class='padding-b-10'>
       <text class='nickname'>{{info.nickname}}</text>
+      <text class='iconfont icon-edit padding-l-10 font-16'  bindtap='toPassword'></text>
       <!-- <text>{{ user.mobile}}</text> -->
     </view>
     <view class='logout-btn' bindtap='logout'>退出登录</view>

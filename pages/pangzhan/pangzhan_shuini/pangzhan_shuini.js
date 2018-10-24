@@ -92,9 +92,8 @@ Page({
    * 水灰比
    */
   onPickerChangeOfHjshProp: function (e) {
-    if (this.data.pang.status >= 3) {
-      Toptips('请在管理后台进行修改');
-      return
+    if (!this.data.pang.pileCode) {
+      return;
     }
     // if (!this.data.pang.id) {
     //   wx.showToast({
@@ -124,10 +123,9 @@ Page({
    * 天气选择
    */
   radioChangeOfWeather: function (e) {
-    if (this.data.pang.status >= 3) {
-      Toptips('请在管理后台进行修改');
-      return
-    }
+    if (!this.isAllowEdit()) {
+      return false
+    };
     if (!this.data.pang.id) {
       wx.showToast({
         title: '旁站不存在',
@@ -142,10 +140,9 @@ Page({
   
   //------------------------------------------------------ff
   makeColonGlint: function () {
-    if (this.data.pang.status >= 3) {
-      Toptips('请在管理后台进行修改');
-      return
-    }
+    if (!this.isAllowEdit()) {
+      return false
+    };
     let that = this;
     setInterval(function () {
       that.setData({
@@ -172,10 +169,9 @@ Page({
    * case index,表示顺序序号
    */
   getTime: function (e) {
-    if (this.data.pang.status >= 3) {
-      Toptips('请在管理后台进行修改');
-      return
-    }
+    if (!this.isAllowEdit()) {
+      return false
+    };
     let prop = `pang.${e.currentTarget.dataset.index}`
     this.setData({
       [prop]: util.formatTime(new Date())
@@ -200,10 +196,9 @@ Page({
    * 上传照片
    */
   uploadImages: function (e) {
-    if (this.data.pang.status >= 3) {
-      Toptips('请在管理后台进行修改');
-      return
-    }
+    if (!this.isAllowEdit()) {
+      return false
+    };
     // if (!this.data.pang.id) {
     //   wx.showToast({
     //     title: '旁站不存在',
@@ -234,10 +229,9 @@ Page({
     })
   },
   updateImagesOrSave: function (e) {
-    if (this.data.pang.status >=3) {
-      Toptips('请在管理后台进行修改');
-      return
-    }
+    if (!this.isAllowEdit()) {
+      return false
+    };
     let that = this;
     console.log(e);
     if (e.currentTarget.dataset.index == "tryDataUrl") {
@@ -252,10 +246,9 @@ Page({
     }
   },
   deletePic: function (e) {
-    if (this.data.pang.status >= 3) {
-      Toptips('请在管理后台进行修改');
-      return
-    }
+    if (!this.isAllowEdit()) {
+      return false
+    };
     console.log(e);
     let index = e.currentTarget.dataset.index;
     let stepindex = e.currentTarget.dataset.stepindex;
@@ -271,10 +264,9 @@ Page({
   }, 
 
   bindTimeChange: function (e) {
-    if (this.data.pang.status >= 3) {
-      Toptips('请在管理后台进行修改');
-      return
-    }
+    if (!this.isAllowEdit()) {
+      return false
+    };
     // if (!this.data.pang.id) {
     //   wx.showToast({
     //     title: '旁站不存在',
@@ -346,10 +338,9 @@ Page({
    * 切换成可编辑状态
    */
   toEdit: function (e) {
-    if (this.data.pang.status >= 3) {
-      Toptips('请在管理后台进行修改');
-      return
-    }
+    if (!this.isAllowEdit()) {
+      return false
+    };
     let isEdit = `pang.is${e.currentTarget.dataset.index}Edit`
     this.setData({
       [isEdit]: true
@@ -536,5 +527,26 @@ Page({
 
       }
     });
+  },
+
+  // 是否可以修改
+  isAllowEdit: function () {  
+    if (this.data.pang.status >= 3) {
+      console.log('旁站状态，不允许修改');
+      return false;
+    }
+    var roles = wx.getStorageSync('roles');
+    var currentProjectId = wx.getStorageSync('currentProjectId');
+    var isAllowRole = false;
+    roles.forEach(function (v) {
+      if ((v.roleName == '专监' || v.roleName == '监理员') && v.projectId == currentProjectId) {
+        isAllowRole = true;
+        return false;
+      }
+    })
+    if (!isAllowRole) {
+      console.log('身份不是专监或监理员，不允许修改');
+      return false
+    }
   }
 })  

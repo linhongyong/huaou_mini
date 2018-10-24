@@ -552,5 +552,7 @@ Page({
       status: 1
     })
     this.getOrCreate();
-  }
+  },
+
+  
 })  
