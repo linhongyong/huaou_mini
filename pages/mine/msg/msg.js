@@ -10,6 +10,7 @@ Page({
   },
   onShow: function () {
     this.getMessageList();
+    this.getUnreadNum();
   },
 
   onReady: function () { },
@@ -50,7 +51,7 @@ Page({
       data: {
       },
       success: function (res) {
-        
+        that.getUnreadNum();
       },
       error: function (error) {
        
@@ -70,6 +71,20 @@ Page({
         that.setData({
           list: res.data.result
         })
+      },
+      error: function (error) {
+        console.log(error);
+      },
+    });
+  },
+  getUnreadNum: function () {
+    let that = this;
+    util.getDataByAjax({
+      url: '/message/getUnreadNum',
+      method: "get",
+      data: {},
+      success: function (res) {
+       console.log(res)
       },
       error: function (error) {
         console.log(error);

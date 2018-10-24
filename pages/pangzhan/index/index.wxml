@@ -20,9 +20,9 @@
 <!-- <view class='position-f' style='width:100%;'> -->
 <!-- 项目楼栋选择 -->
 <!-- <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}"> -->
-<view class='position-f bg-theme font-white text-c toptipbar padding-v-10' style='width:100%;' wx:if="{{projectList.length > 0}}">
-  <view class='iconfont icon-caidan menu-icon' bindtap='toggleLeftPopup'></view>
-  {{buildingList[currentBuildingIndex].buildingName}}，{{pangzhanType[currentPzIndex]}}
+<view class='position-f bg-theme font-white text-c' style='width:100%;line-height:80rpx' wx:if="{{projectList.length > 0}}">
+  <view class='iconfont icon-caidan2 menu-icon' bindtap='toggleLeftPopup'></view>
+  <view>{{buildingList[currentBuildingIndex].buildingName}}，{{pangzhanType[currentPzIndex]}}</view>
 </view>
 <!-- </picker> -->
 <!-- 旁站菜单 -->
@@ -44,8 +44,9 @@
       <view class='s-title'>楼栋</view>
       <view class='s-list'>
         <radio-group class="radio-group" bindchange="changeBuilding">
-          <label class="radio" wx:for="{{buildingList}}">
-            <radio style='' value="{{index}}" color="#3B94F1" checked='{{ index==currentBuildingIndex }}' />{{item.buildingName}}
+          <label class="radio ng-textAuto1" wx:for="{{buildingList}}" wx:key="{{index}}">
+            <radio style='' value="{{index}}" color="#3B94F1" checked='{{ index==currentBuildingIndex }}' />
+           {{item.buildingName}}
           </label>
         </radio-group>
       </view>
@@ -71,7 +72,7 @@
       <view class='s-title'>项目</view>
       <view class='s-list'>
         <radio-group class="radio-group" bindchange="changeProject">
-          <label class="radio" wx:for="{{projectList}}">
+          <label class="radio" wx:for="{{projectList}}" wx:key="{{index}}">
             <radio style='' value="{{index}}" color="#3B94F1" checked='{{ index==currentProject }}' />{{item.projectName}}
           </label>
         </radio-group>
@@ -79,7 +80,7 @@
     </view>
   </view>
 </zan-popup>
-
+<view class="padding-h-10 font-12">注：橙色代表已开始、绿色代表待审核、蓝色代表已完成</view>
 <!-- 机械灌注桩 -->
 <view class="bg-white">
   <!-- 楼栋列表 -->
@@ -89,10 +90,13 @@
         <button class='building-btn undo' wx:if='{{ item.status == 0 }}'>
           {{ item.pileCode }}
         </button>
-        <button class='building-btn doing' wx:if='{{ item.status == 1 }}'>
+        <button class='building-btn doing font-white' wx:if='{{ item.status == 1 }}'>
           {{ item.pileCode }}
         </button>
-        <button class='building-btn finished' wx:if='{{ item.status == 2 }}'>
+        <button class='building-btn finished font-white' wx:if='{{ item.status == 2 }}'>
+          {{ item.pileCode }}
+        </button>
+        <button class='building-btn checked font-white' wx:if='{{ item.status == 3 }}'>
           {{ item.pileCode }}
         </button>
       </view>

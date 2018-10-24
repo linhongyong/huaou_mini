@@ -53,9 +53,9 @@
     <view>天气</view>
     <view class='display-flex-center-right'>
      <radio-group class="radio-group" bindchange="radioChangeOfWeather">
-      <label class="radio"> <radio value="晴" color="#3B94F1" checked='{{ pang.weather =="晴" }}' disabled='{{pang.status>=2?true:false}}'/>晴 </label>
-      <label class="radio margin-h-20"> <radio value="阴"  color="#3B94F1" checked='{{ pang.weather =="阴" }}' disabled='{{pang.status>=2?true:false}}'/>阴 </label>
-      <label class="radio"> <radio value="雨"  color="#3B94F1" checked='{{ pang.weather =="雨" }}' disabled='{{pang.status>=2?true:false}}'/>雨 </label>
+      <label class="radio"> <radio value="晴" color="#3B94F1" checked='{{ pang.weather =="晴" }}' disabled='{{pang.status>=3?true:false}}'/>晴 </label>
+      <label class="radio margin-h-20"> <radio value="阴"  color="#3B94F1" checked='{{ pang.weather =="阴" }}' disabled='{{pang.status>=3?true:false}}'/>阴 </label>
+      <label class="radio"> <radio value="雨"  color="#3B94F1" checked='{{ pang.weather =="雨" }}' disabled='{{pang.status>=3?true:false}}'/>雨 </label>
      </radio-group> 
     </view>
 </view>
@@ -805,7 +805,8 @@
     <template is='administrator' data='{{administrator}}'/>
 
   <view class=' margin-h-auto padding-v-30' style='width:80%'>
-    <button class='btn bg-theme margin-h-auto font-white' style='width:60%;' bindtap='submitToCheck' disabled='{{pang.status>=2?true:false}}'>确认完成</button>
+    <button wx:if="{{pang.status==1}}" class='btn bg-theme margin-h-auto font-white' style='width:60%;' bindtap='submitToCheck' >确认完成</button>
+    <button  wx:if="{{pang.status==2 && isWaitCheck}}" class='btn bg-theme margin-h-auto font-white' style='width:60%;' bindtap='submitToCheck'>确认验收</button>
   </view>
 </view>
 

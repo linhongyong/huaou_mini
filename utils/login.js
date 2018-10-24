@@ -80,15 +80,9 @@ function loginApi(userInfo) {
     header: {},
     success: function (res) {
       console.log(res);
-      // app.globalData.userId = res.data.data.user_id;
-      // app.globalData.referenceInfo = res.data.data.user_refer;
-      // wx.setStorageSync("token", res.data.data.token);
-      // wx.setStorageSync("userId", res.data.data.userId);
-      // wx.setStorageSync("agentLayer", res.data.data.agent_layer);
       let pages = getCurrentPages();
       let ctx = pages[pages.length - 1];
       !!ctx.onLogin && ctx.onLogin(res);
-
     },
     error: function (res) {
       console.log(res);

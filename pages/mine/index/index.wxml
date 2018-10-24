@@ -6,8 +6,12 @@
   <view class='info'>
     <view class='padding-b-10'>
       <text class='nickname'>{{info.nickname}}</text>
-      <text class='accout'>{{info.accout}}</text>
+      <!-- <text>{{ user.mobile}}</text> -->
     </view>
     <view class='logout-btn' bindtap='logout'>退出登录</view>
   </view>
 </view>
+<view class='padding-10'>
+    <view class='accout'>当前账户：{{user.mobile}}</view>
+</view>
+<view class="text-c padding-v-20">期待新功能上线</view>

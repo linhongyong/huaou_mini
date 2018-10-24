@@ -12,5 +12,5 @@
     <view class='status' style='color:red' wx:else>未读</view>
   </view>
 
-  <view class='padding-10-20 text-c' wx:if="{{ isNone }}">暂无相关数据</view>
+  <view class='padding-10-20 text-c' wx:if="{{ list.length == 0 }}">暂无相关消息</view>
 </view>

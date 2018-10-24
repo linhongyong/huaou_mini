@@ -59,7 +59,6 @@ function wxRequest(obj, time13, start) {
     method: !!obj.method ? obj.method : "Get",
     header: {
       token: wx.getStorageSync("token"),
-      apptype: 'wechat-site',
     },
     success: function (res) {
       isRequesting = false;
@@ -86,15 +85,7 @@ function wxRequest(obj, time13, start) {
         })
       }
       else {
-        obj.success(res);
         obj.error && obj.error(res);
-        // !!isDataCommon(res.data.message) && Toptips({
-        //   duration: 3000,
-        //   content: res.data.message,
-        // });
-        // wx.showToast({
-        //   title: '500错误',
-        // })
       }
     },
     error: function (res) {
@@ -291,7 +282,6 @@ const formatNumber = n => {
 module.exports = {
   appName: appName,
   formatTime: formatTime,
-  getDataByAjax: getDataByAjax,
   getDataByAjax: getDataByAjax,
   uploadImgPromise,//图片上传
   uploadImgPromises,//图片上传

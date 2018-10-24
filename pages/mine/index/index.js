@@ -10,7 +10,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-  
+    user:{}
   },
 
   /**
@@ -26,6 +26,7 @@ Page({
     self.setData({
       info: info
     })
+    this.getUserInfo();
   },
 
   /**
@@ -76,7 +77,6 @@ Page({
   onShareAppMessage: function () {
   
   },
-
   // 退出登录
   logout: function(){
     wx.showModal({
@@ -84,24 +84,45 @@ Page({
       content: '是否要退出登录？',
       success: function(res){
         if (res.confirm){
-         
-          util.getDataByAjax({
-            url: '/logout',
-            success: function (res) {
-              wx.clearStorage();
-              wx.reLaunch({
-                url: '../../pangzhan/index/index',
-              })
-            },
-            error: function (error) {
-              console.log(error);
-            },
-          });
+          wx.clearStorage();
+          wx.reLaunch({
+            url: '../../pangzhan/index/index',
+          })
+          // util.getDataByAjax({
+          //   url: '/signOutWeiXin',
+          //   method: "Post",
+          //   success: function (res) {
+          //     console.log("----------------------------------")
+          //     wx.clearStorage();
+          //     wx.reLaunch({
+          //       url: '../../pangzhan/index/index',
+          //     })
+          //   },
+          //   error: function (error) {
+          //     console.log(error);
+          //   },
+          // });  
         }
       },
       fail: function(error){
         console.log(error);
       }
     })
-  } 
+  },
+  getUserInfo(){
+    let that = this;
+    util.getDataByAjax({
+      url: '/user/getUserLogin',
+      method: "get",
+      success: function (res) {
+        console.log(res)
+        that.setData({
+          user: res.data.result
+        })
+      },
+      error: function (error) {
+        console.log(error);
+      },
+    });  
+  }
 })

@@ -6,10 +6,10 @@ Page({
   data: {
   },
   onLoad: function (options) {
-    this.getMessageList();
+    
   },
   onShow: function () {
-
+    this.getMessageList();
   },
 
   onReady: function () { },

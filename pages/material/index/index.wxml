@@ -1,2 +1,1 @@
-<!--pages/material/index/index.wxml-->
-<text>pages/material/index/index.wxml</text>
+<view class="text-c padding-v-20">期待新功能上线</view>

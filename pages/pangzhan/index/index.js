@@ -100,6 +100,7 @@ Page({
     })
     wx.setStorageSync("currentProjectId", this.data.projectList[index].id)
     wx.setStorageSync("currentProjectName", this.data.projectList[index].projectName)
+    app.globalData.project = this.data.projectList[index];
     this.getBuildingList();
     this.getProjectStaffs();
     this.getPangzhanList();
@@ -223,6 +224,7 @@ Page({
         //初始化当前项目当前楼栋
         wx.setStorageSync("currentProjectId", res.data.result.length && res.data.result[0].id)
         wx.setStorageSync("currentProjectName", res.data.result.length && res.data.result[0].projectName)
+        app.globalData.project = res.data.result[0];
         that.getProjectStaffs();
         that.setData({
           projectList: res.data.result,
@@ -366,10 +368,6 @@ Page({
    */
   //------------------------------------------------------ff3
   getPageContentData: function() { //登录后才能获取的数据写在这里
-    // if (wx.getStorageSync('currentProjectId') && wx.getStorageSync('currentBuildingId')) {//返回后刷新
-    // }else{
-    //   this.getJoinedList();
-    // }
     this.getJoinedList();
   },
   // util调用
@@ -410,33 +408,16 @@ Page({
     }
   },
   onLogin: function(res) { //监听登录
-    if (res.data.code == "NeedBind") {
-      this.setData({
-        isHasAccount: true
-      })
-      Toptips({
-        duration: 2000,
-        content: res.data.message,
-      });
-    } else if (res.data.code == "Fail_Code") {
-      console.log("Fail_Code");
-      this.setData({
-        isHasAccount: false
-      })
-      Toptips({
-        duration: 2000,
-        content: res.data.message,
-      });
-    } else if (res.data.code == "Success") {
+    if (res.data.code == "Success") {
       console.log("登录成功");
       this.setData({
         isHasAccount: false
       })
-      Toptips({
-        duration: 2000,
-        content: "授权成功",
-        backgroundColor: "#06A940"
-      });
+      // Toptips({
+      //   duration: 2000,
+      //   content: "授权成功",
+      //   backgroundColor: "#06A940"
+      // });
       wx.setStorageSync("token", res.data.result);
       this.getPageContentData();
     } else {
@@ -448,11 +429,5 @@ Page({
         content: res.data.message,
       });
     }
-    // Toptips({
-    //   duration: 2000,
-    //   content: "授权成功，欢迎选购",
-    //   backgroundColor: "#06A940"
-    // });
-
   }
 })

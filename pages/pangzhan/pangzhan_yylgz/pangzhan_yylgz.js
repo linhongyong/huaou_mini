@@ -50,7 +50,8 @@ Page({
     //审核旁站数据情况
     if (options.pangzhanId) {
       this.setData({
-        pangzhanId: options.pangzhanId
+        pangzhanId: options.pangzhanId,
+        isWaitCheck: true
       })
       this.getPangzhanById();
     }
@@ -74,7 +75,7 @@ Page({
    * 天气选择
    */
   radioChangeOfWeather: function (e) {
-    if (this.data.pang.status >= 2) {
+    if (this.data.pang.status >= 3) {
       Toptips('请在管理后台进行修改');
       return
     }
@@ -92,7 +93,7 @@ Page({
 
   //------------------------------------------------------ff
   makeColonGlint:function(){
-    if (this.data.pang.status >= 2) {
+    if (this.data.pang.status >= 3) {
       Toptips('请在管理后台进行修改');
       return
     }
@@ -122,7 +123,7 @@ Page({
    * case index,表示顺序序号
    */
   getTime:function(e){
-    if (this.data.pang.status >= 2) {
+    if (this.data.pang.status >= 3) {
       Toptips('请在管理后台进行修改');
       return
     }
@@ -156,7 +157,7 @@ Page({
    * 上传照片
    */
   uploadImages: function (e) {
-    if (this.data.pang.status >= 2) {
+    if (this.data.pang.status >= 3) {
       Toptips('请在管理后台进行修改');
       return
     }
@@ -215,7 +216,7 @@ Page({
   },
 
   updateImagesOrSave:function(e){
-    if (this.data.pang.status >= 2) {
+    if (this.data.pang.status >= 3) {
       Toptips('请在管理后台进行修改');
       return
     }
@@ -252,7 +253,7 @@ Page({
   },
 
   deletePic: function (e) {
-    if (this.data.pang.status >= 2) {
+    if (this.data.pang.status >= 3) {
       Toptips('请在管理后台进行修改');
       return
     }
@@ -282,7 +283,7 @@ Page({
   }, 
 
   bindTimeChange: function (e) {
-    if (this.data.pang.status >= 2) {
+    if (this.data.pang.status >= 3) {
       Toptips('请在管理后台进行修改');
       return
     }
@@ -356,7 +357,7 @@ Page({
    * 切换成可编辑状态
    */
   toEdit: function (e) {
-    if(this.data.pang.status>=2){
+    if(this.data.pang.status>=3){
       Toptips('请在管理后台进行修改');
       return
     }
@@ -427,10 +428,18 @@ Page({
  */
   submitToCheck: function () {
     let that = this;
-    this.setData({
-      ['pang.status']: 2
-    })
+    if (this.data.pang.status == 1) {
+      this.setData({
+        ['pang.status']: 2,
+        ['pang.endTime']: new Date,
+      })
+    } else if (this.data.pang.status == 2) {
+      this.setData({
+        ['pang.status']: 3,
+      })
+    }
     this.updatePangzhan();
+    if (this.data.isWaitCheck) { return; }
     let toIds = [];
     for (let i = 0; i < this.data.administrator.length; i++) {
       toIds.push(this.data.administrator[i].userId);
@@ -501,7 +510,9 @@ Page({
     }
     if (!this.data.pang.status) {
       this.setData({
-        ['pang.status']: 1
+        ['pang.status']: 1,
+        ['pang.projectName']: app.globalData.project.projectName,
+        ['pang.startTime']: new Date,
       })
     }
     let obj = this.data;
