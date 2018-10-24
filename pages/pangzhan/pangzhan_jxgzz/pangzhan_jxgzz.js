@@ -621,13 +621,14 @@ Page({
     roles.forEach(function(v){
       if ((v.roleName == '专监' || v.roleName == '监理员') && v.projectId == currentProjectId){
         isAllowRole = true;
-        return false;
+        return;
       }
     })
     if (!isAllowRole) {
       console.log('身份不是专监或监理员，不允许修改');
       return false
     }
+    return true; 
   }
 
 })  

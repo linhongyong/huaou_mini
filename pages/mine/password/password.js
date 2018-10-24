@@ -110,12 +110,14 @@ Page({
       return
     }
 
+    var data = {
+      passwordNew: newPsd,
+      passwordOld: oldPsd
+    }
+    console.log('修改密码',data)
     util.getDataByAjax({
-      url: '/user/changePassword',
-      data: {
-        passwordNew:newPsd, 
-        passwordOld: oldPsd
-      },
+      url: '/user/changePassword?passwordNew=',
+      data,
       method: "Post",
       success: function (res) {
         wx.showToast({
