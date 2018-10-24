@@ -22,7 +22,8 @@ Page({
     multiIndex: [0, 0],
     jxgzzList: [],
     shuiniList: [],
-    tongyongList: []
+    tongyongList: [],
+    height:667
   },
   onLoad: function(options) {
 

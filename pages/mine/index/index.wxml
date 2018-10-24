@@ -14,4 +14,4 @@
 <view class='padding-10'>
     <view class='accout'>当前账户：{{user.mobile}}</view>
 </view>
-<view class="text-c padding-v-20">期待新功能上线</view>
+<!-- <view class="text-c padding-v-20">期待新功能上线</view> -->

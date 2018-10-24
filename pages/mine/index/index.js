@@ -85,23 +85,27 @@ Page({
       success: function(res){
         if (res.confirm){
           wx.clearStorage();
+          // wx.reLaunch({
+          //   url: '../../pangzhan/index/index',
+          // })
+          util.getDataByAjax({
+            url: '/signOutWeiXin',
+            method: "Post",
+            success: function (res) {
+              console.log("----------------------------------")
+              wx.clearStorage();
+              wx.reLaunch({
+                url: '../../pangzhan/index/index',
+              })
+            },
+            error: function (error) {
+              console.log(error);
+            },
+          });  
+          wx.clearStorage();
           wx.reLaunch({
             url: '../../pangzhan/index/index',
           })
-          // util.getDataByAjax({
-          //   url: '/signOutWeiXin',
-          //   method: "Post",
-          //   success: function (res) {
-          //     console.log("----------------------------------")
-          //     wx.clearStorage();
-          //     wx.reLaunch({
-          //       url: '../../pangzhan/index/index',
-          //     })
-          //   },
-          //   error: function (error) {
-          //     console.log(error);
-          //   },
-          // });  
         }
       },
       fail: function(error){

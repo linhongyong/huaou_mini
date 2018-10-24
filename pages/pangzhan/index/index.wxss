@@ -1,3 +1,6 @@
+page{
+  height: 100%;
+}
 .menu-icon{
   position: absolute;
   left: 20rpx;

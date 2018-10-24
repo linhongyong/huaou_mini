@@ -351,13 +351,13 @@
   <view class='padding-h-20 display-flex-center-between bottom-line height-80 bg-white'>
     <view>开孔时间</view>
     <view class='display-flex-center-right'>
-      <view class='display-flex-center-right' wx:if="{{pang.startTime != null}}">
-        <picker mode="time" value="{{tools.formatTimeTerse(pang.startTime)}}" start="00:00" end="23:59" bindchange="bindTimeChange" data-index="startTime" disabled='{{pang.status>=2?true:false}}'>
-          <view class="picker">{{tools.formatTimeTerse(pang.startTime)}}</view>
+      <view class='display-flex-center-right' wx:if="{{pang.openTime != null}}">
+        <picker mode="time" value="{{tools.formatTimeTerse(pang.openTime)}}" start="00:00" end="23:59" bindchange="bindTimeChange" data-index="openTime" disabled='{{pang.status>=2?true:false}}'>
+          <view class="picker">{{tools.formatTimeTerse(pang.openTime)}}</view>
         </picker>
       </view>
       <!-- <text class='padding-r-10 font-666' wx:else>点击记录时间</text> -->
-      <view class='display-flex-center-center'  wx:if="{{ pang.startTime == null }}" bindtap='getTime' data-index="startTime">
+      <view class='display-flex-center-center'  wx:if="{{ pang.openTime == null }}" bindtap='getTime' data-index="openTime">
         <view class='clock margin-h-auto display-flex-center-center'>
           <view  class='display-flex-center-center'>
             <view class='time'>{{hour}}</view>
@@ -566,13 +566,13 @@
   <view class='padding-h-20 display-flex-center-between bottom-line height-80 bg-white'>
     <view>终孔时间</view>
     <view class='display-flex-center-right'>
-      <view class='display-flex-center-right' wx:if="{{pang.endTime != null}}">
-        <picker mode="time" value="{{tools.formatTimeTerse(pang.endTime)}}" start="00:00" end="23:59" bindchange="bindTimeChange" data-index="endTime" disabled='{{pang.status>=2?true:false}}'>
-          <view class="picker">{{tools.formatTimeTerse(pang.endTime)}}</view>
+      <view class='display-flex-center-right' wx:if="{{pang.stopTime != null}}">
+        <picker mode="time" value="{{tools.formatTimeTerse(pang.stopTime)}}" start="00:00" end="23:59" bindchange="bindTimeChange" data-index="stopTime" disabled='{{pang.status>=2?true:false}}'>
+          <view class="picker">{{tools.formatTimeTerse(pang.stopTime)}}</view>
         </picker>
       </view>
       <!-- <text class='padding-r-10 font-666' wx:else>点击记录时间</text> -->
-      <view class='display-flex-center-center'  wx:if="{{ pang.endTime == null }}" bindtap='getTime' data-index="endTime">
+      <view class='display-flex-center-center'  wx:if="{{ pang.stopTime == null }}" bindtap='getTime' data-index="stopTime">
         <view class='clock margin-h-auto display-flex-center-center'>
           <view  class='display-flex-center-center'>
             <view class='time'>{{hour}}</view>

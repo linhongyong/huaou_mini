@@ -39,6 +39,7 @@
 
 <!-- 左侧弹出框 -->
 <zan-popup show="{{ showLeftPopup }}" type="left" bindclose="toggleLeftPopup">
+<scroll-view class="scroll-view_H" scroll-y style="height: {{height}}px">
   <view class="pop-container-left">
     <view class='building-area'>
       <view class='s-title'>楼栋</view>
@@ -79,6 +80,7 @@
       </view>
     </view>
   </view>
+</scroll-view>
 </zan-popup>
 <view class="padding-h-10 font-12">注：橙色代表已开始、绿色代表待审核、蓝色代表已完成</view>
 <!-- 机械灌注桩 -->
