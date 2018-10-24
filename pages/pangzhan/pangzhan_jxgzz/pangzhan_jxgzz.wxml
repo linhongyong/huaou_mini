@@ -53,9 +53,9 @@
     <view>天气</view>
     <view class='display-flex-center-right'>
      <radio-group class="radio-group" bindchange="radioChangeOfWeather">
-      <label class="radio"> <radio value="晴" color="#3B94F1" checked='{{ pang.weather =="晴" }}' disabled='{{pang.status>=3?true:false}}'/>晴 </label>
-      <label class="radio margin-h-20"> <radio value="阴"  color="#3B94F1" checked='{{ pang.weather =="阴" }}' disabled='{{pang.status>=3?true:false}}'/>阴 </label>
-      <label class="radio"> <radio value="雨"  color="#3B94F1" checked='{{ pang.weather =="雨" }}' disabled='{{pang.status>=3?true:false}}'/>雨 </label>
+      <label class="radio"> <radio value="晴" color="#3B94F1" checked='{{ pang.weather =="晴" }}' disabled='{{isAllowEdit?false:true}}'/>晴 </label>
+      <label class="radio margin-h-20"> <radio value="阴"  color="#3B94F1" checked='{{ pang.weather =="阴" }}' disabled='{{isAllowEdit?false:true}}'/>阴 </label>
+      <label class="radio"> <radio value="雨"  color="#3B94F1" checked='{{ pang.weather =="雨" }}' disabled='{{isAllowEdit?false:true}}'/>雨 </label>
      </radio-group> 
     </view>
 </view>
@@ -352,7 +352,7 @@
     <view>开孔时间</view>
     <view class='display-flex-center-right'>
       <view class='display-flex-center-right' wx:if="{{pang.openTime != null}}">
-        <picker mode="time" value="{{tools.formatTimeTerse(pang.openTime)}}" start="00:00" end="23:59" bindchange="bindTimeChange" data-index="openTime" disabled='{{pang.status>=2?true:false}}'>
+        <picker mode="time" value="{{tools.formatTimeTerse(pang.openTime)}}" start="00:00" end="23:59" bindchange="bindTimeChange" data-index="openTime" disabled='{{isAllowEdit?false:true}}'>
           <view class="picker">{{tools.formatTimeTerse(pang.openTime)}}</view>
         </picker>
       </view>
@@ -413,7 +413,7 @@
     <view>下钢筋笼开始时间</view>
     <view class='display-flex-center-right'>
       <view class='display-flex-center-right' wx:if="{{pang.dropCageStartTime != null}}">
-        <picker mode="time" value="{{tools.formatTimeTerse(pang.dropCageStartTime)}}" start="00:00" end="23:59" bindchange="bindTimeChange" data-index="dropCageStartTime" disabled='{{pang.status>=2?true:false}}'>
+        <picker mode="time" value="{{tools.formatTimeTerse(pang.dropCageStartTime)}}" start="00:00" end="23:59" bindchange="bindTimeChange" data-index="dropCageStartTime" disabled='{{isAllowEdit?false:true}}'>
           <view class="picker">{{tools.formatTimeTerse(pang.dropCageStartTime)}}</view>
         </picker>
       </view>
@@ -435,7 +435,7 @@
     <view>下钢筋笼结束时间</view>
     <view class='display-flex-center-right'>
       <view class='display-flex-center-right' wx:if="{{pang.dropCageEndTime != null}}">
-        <picker mode="time" value="{{tools.formatTimeTerse(pang.dropCageEndTime)}}" start="00:00" end="23:59" bindchange="bindTimeChange" data-index="dropCageEndTime" disabled='{{pang.status>=2?true:false}}'>
+        <picker mode="time" value="{{tools.formatTimeTerse(pang.dropCageEndTime)}}" start="00:00" end="23:59" bindchange="bindTimeChange" data-index="dropCageEndTime" disabled='{{isAllowEdit?false:true}}'>
           <view class="picker">{{tools.formatTimeTerse(pang.dropCageEndTime)}}</view>
         </picker>
       </view>
@@ -474,7 +474,7 @@
     <view>二次清空开始时间</view>
     <view class='display-flex-center-right'>
       <view class='display-flex-center-right' wx:if="{{pang.secondCleanStartTime != null}}">
-        <picker mode="time" value="{{tools.formatTimeTerse(pang.secondCleanStartTime)}}" start="00:00" end="23:59" data-index="secondCleanStartTime" bindchange="bindTimeChange" disabled='{{pang.status>=2?true:false}}'>
+        <picker mode="time" value="{{tools.formatTimeTerse(pang.secondCleanStartTime)}}" start="00:00" end="23:59" data-index="secondCleanStartTime" bindchange="bindTimeChange" disabled='{{isAllowEdit?false:true}}'>
           <view class="picker">{{tools.formatTimeTerse(pang.secondCleanStartTime)}}</view>
         </picker>
       </view>
@@ -496,7 +496,7 @@
     <view>二次清空结束时间</view>
     <view class='display-flex-center-right'>
       <view class='display-flex-center-right' wx:if="{{pang.secondCleanEndTime != null}}">
-        <picker mode="time" value="{{tools.formatTimeTerse(pang.secondCleanEndTime)}}" start="00:00" end="23:59" data-index="secondCleanEndTime" bindchange="bindTimeChange" disabled='{{pang.status>=2?true:false}}'>
+        <picker mode="time" value="{{tools.formatTimeTerse(pang.secondCleanEndTime)}}" start="00:00" end="23:59" data-index="secondCleanEndTime" bindchange="bindTimeChange" disabled='{{isAllowEdit?false:true}}'>
           <view class="picker">{{tools.formatTimeTerse(pang.secondCleanEndTime)}}</view>
         </picker>
       </view>
@@ -567,7 +567,7 @@
     <view>终孔时间</view>
     <view class='display-flex-center-right'>
       <view class='display-flex-center-right' wx:if="{{pang.stopTime != null}}">
-        <picker mode="time" value="{{tools.formatTimeTerse(pang.stopTime)}}" start="00:00" end="23:59" bindchange="bindTimeChange" data-index="stopTime" disabled='{{pang.status>=2?true:false}}'>
+        <picker mode="time" value="{{tools.formatTimeTerse(pang.stopTime)}}" start="00:00" end="23:59" bindchange="bindTimeChange" data-index="stopTime" disabled='{{isAllowEdit?false:true}}'>
           <view class="picker">{{tools.formatTimeTerse(pang.stopTime)}}</view>
         </picker>
       </view>
@@ -648,7 +648,7 @@
     <view>灌注开始时间</view>
     <view class='display-flex-center-right'>
       <view class='display-flex-center-right' wx:if="{{pang.perfusionStartTime != null}}">
-        <picker mode="time" value="{{tools.formatTimeTerse(pang.perfusionStartTime)}}" start="00:00" end="23:59" bindchange="bindTimeChange" data-index="perfusionStartTime" disabled='{{pang.status>=2?true:false}}'>
+        <picker mode="time" value="{{tools.formatTimeTerse(pang.perfusionStartTime)}}" start="00:00" end="23:59" bindchange="bindTimeChange" data-index="perfusionStartTime" disabled='{{isAllowEdit?false:true}}'>
           <view class="picker">{{tools.formatTimeTerse(pang.perfusionStartTime)}}</view>
         </picker>
       </view>

@@ -63,9 +63,9 @@
 <view class='padding-h-20 display-flex-center-between bottom-line height-80 bg-white' wx:if="{{ pang.id != null }}">    <view>天气</view>
     <view class='display-flex-center-right'>
      <radio-group class="radio-group" bindchange="radioChangeOfWeather">
-      <label class="radio"> <radio value="晴" color="#3B94F1" checked='{{ pang.weather =="晴" }}' disabled='{{pang.status>=3?true:false}}'/>晴 </label>
-      <label class="radio margin-h-20"> <radio value="阴"  color="#3B94F1" checked='{{ pang.weather =="阴" }}' disabled='{{pang.status>=3?true:false}}'/>阴 </label>
-      <label class="radio"> <radio value="雨"  color="#3B94F1" checked='{{ pang.weather =="雨" }}' disabled='{{pang.status>=3?true:false}}'/>雨 </label>
+      <label class="radio"> <radio value="晴" color="#3B94F1" checked='{{ pang.weather =="晴" }}' disabled='{{isAllowEdit?false:true}}'/>晴 </label>
+      <label class="radio margin-h-20"> <radio value="阴"  color="#3B94F1" checked='{{ pang.weather =="阴" }}' disabled='{{isAllowEdit?false:true}}'/>阴 </label>
+      <label class="radio"> <radio value="雨"  color="#3B94F1" checked='{{ pang.weather =="雨" }}' disabled='{{isAllowEdit?false:true}}'/>雨 </label>
      </radio-group> 
     </view>
 </view>
@@ -248,7 +248,7 @@
 <!-- 灰浆水灰比 -->
   <view class='padding-h-20 bottom-line display-flex-center-between height-80 bg-white'>
     <view class=''>灰浆水灰比 </view>
-    <picker mode="multiSelector" bindchange="onPickerChangeOfHjshProp" value="{{currentHjshPropList}}" range="{{hjshPropList}}"  disabled='{{pang.status>=2?true:false}}'>
+    <picker mode="multiSelector" bindchange="onPickerChangeOfHjshProp" value="{{currentHjshPropList}}" range="{{hjshPropList}}"  disabled='{{isAllowEdit?false:true}}'>
       <view class="display-flex-center-between">
         <view> {{ hjshPropList[0][currentHjshPropList[0]] }} : {{ hjshPropList[1][currentHjshPropList[1]] }} : {{ hjshPropList[2][currentHjshPropList[2]] }} </view>
       </view>
@@ -259,7 +259,7 @@
     <view>成桩开始时间</view>
     <view class='display-flex-center-right'>
       <view class='display-flex-center-right' wx:if="{{pang.finishPileStartTime != null}}">
-        <picker mode="time" value="{{tools.formatTimeTerse(pang.finishPileStartTime)}}" start="00:00" end="23:59" bindchange="bindTimeChange" data-index="finishPileStartTime" disabled='{{pang.status>=2?true:false}}'>
+        <picker mode="time" value="{{tools.formatTimeTerse(pang.finishPileStartTime)}}" start="00:00" end="23:59" bindchange="bindTimeChange" data-index="finishPileStartTime" disabled='{{isAllowEdit?false:true}}'>
           <view class="picker">{{tools.formatTimeTerse(pang.finishPileStartTime)}}</view>
         </picker>
       </view>
@@ -281,7 +281,7 @@
     <view>成桩结束时间</view>
     <view class='display-flex-center-right'>
       <view class='display-flex-center-right' wx:if="{{pang.finishPileEndTime != null}}">
-        <picker mode="time" value="{{tools.formatTimeTerse(pang.finishPileEndTime)}}" start="00:00" end="23:59" bindchange="bindTimeChange" data-index="finishPileEndTime" disabled='{{pang.status>=2?true:false}}'>
+        <picker mode="time" value="{{tools.formatTimeTerse(pang.finishPileEndTime)}}" start="00:00" end="23:59" bindchange="bindTimeChange" data-index="finishPileEndTime" disabled='{{isAllowEdit?false:true}}'>
           <view class="picker">{{tools.formatTimeTerse(pang.finishPileEndTime)}}</view>
         </picker>
       </view>

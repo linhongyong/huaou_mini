@@ -36,11 +36,11 @@
   <view class='display-flex-center-right'>
     <radio-group class="radio-group" bindchange="radioChangeOfWeather">
       <label class="radio">
-        <radio value="晴" color="#3B94F1" checked='{{ pang.weather =="晴" }}' disabled='{{pang.status>=3?true:false}}' />晴 </label>
+        <radio value="晴" color="#3B94F1" checked='{{ pang.weather =="晴" }}' disabled='{{isAllowEdit?false:true}}' />晴 </label>
       <label class="radio margin-h-20">
-        <radio value="阴" color="#3B94F1" checked='{{ pang.weather =="阴" }}'  disabled='{{pang.status>=3?true:false}}' />阴 </label>
+        <radio value="阴" color="#3B94F1" checked='{{ pang.weather =="阴" }}'  disabled='{{isAllowEdit?false:true}}' />阴 </label>
       <label class="radio">
-        <radio value="雨" color="#3B94F1" checked='{{ pang.weather =="雨" }}'  disabled='{{pang.status>=3?true:false}}' />雨 </label>
+        <radio value="雨" color="#3B94F1" checked='{{ pang.weather =="雨" }}'  disabled='{{isAllowEdit?false:true}}' />雨 </label>
     </radio-group>
   </view>
 </view>
@@ -266,7 +266,7 @@
   <view>开始时间</view>
   <view class='display-flex-center-right'>
     <view class='display-flex-center-right' wx:if="{{pang.pangzhan_starttime != null}}">
-      <picker mode="time" value="{{tools.formatTimeTerse(pang.pangzhan_starttime)}}" start="00:00" end="23:59" bindchange="bindTimeChange" data-index="pangzhan_starttime" disabled='{{pang.status>=2?true:false}}'>
+      <picker mode="time" value="{{tools.formatTimeTerse(pang.pangzhan_starttime)}}" start="00:00" end="23:59" bindchange="bindTimeChange" data-index="pangzhan_starttime" disabled='{{isAllowEdit?false:true}}'>
         <view class="picker">{{tools.formatTimeTerse(pang.pangzhan_starttime)}}</view>
       </picker>
     </view>

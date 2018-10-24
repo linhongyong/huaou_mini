@@ -22,7 +22,9 @@ Page({
     tempImagesOfHoleDepth: [],
     result:{
       barCageCount: 2,
-    }
+    },
+    // 是否允许修改
+    isAllowEdit: false,
   },
   onLoad: function (options) {
     let that = this;
@@ -55,6 +57,11 @@ Page({
       })
       this.getPangzhanById();
     }
+
+    // 是否允许修改
+    this.setData({
+      isAllowEdit: this.isAllowEdit()
+    })
   },
   onShow: function () {
 
@@ -75,7 +82,7 @@ Page({
    * 天气选择
    */
   radioChangeOfWeather: function (e) {
-    if (!this.isAllowEdit()){
+    if (!this.data.isAllowEdit){
       return false
     };
     if (!this.data.pang.id) {
@@ -120,7 +127,7 @@ Page({
    * case index,表示顺序序号
    */
   getTime:function(e){
-    if (!this.isAllowEdit()) {
+    if (!this.data.isAllowEdit){
       return false
     };
     // if (!this.data.id) {
@@ -203,7 +210,7 @@ Page({
    * 上传照片
    */
   uploadImages: function (e) {
-    if (!this.isAllowEdit()) {
+    if (!this.data.isAllowEdit){
       return false
     };
     if (!this.data.pang.id) {
@@ -261,7 +268,7 @@ Page({
   },
 
   updateImagesOrSave:function(e){
-    if (!this.isAllowEdit()) {
+    if (!this.data.isAllowEdit){
       return false
     };
     let that = this;
@@ -297,7 +304,7 @@ Page({
   },
 
   deletePic: function (e) {
-    if (!this.isAllowEdit()) {
+    if (!this.data.isAllowEdit){
       return false
     };
     console.log(e);
@@ -326,7 +333,7 @@ Page({
   }, 
 
   bindTimeChange: function (e) {
-    if (!this.isAllowEdit()) {
+    if (!this.data.isAllowEdit){
       return false
     };
     if (!this.data.pang.id) {
@@ -399,7 +406,7 @@ Page({
    * 切换成可编辑状态
    */
   toEdit: function (e) {
-    if (!this.isAllowEdit()) {
+    if (!this.data.isAllowEdit){
       return false
     };
     let isEdit = `pang.is${e.currentTarget.dataset.index}Edit`
