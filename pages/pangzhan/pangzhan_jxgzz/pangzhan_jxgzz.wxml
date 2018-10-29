@@ -8,7 +8,7 @@
   <text wx:if="{{buildingCode}}">{{buildingCode}}幢</text>
 </view>
 <view style='height:30px;line-height:30px'></view>
-<view class='text-c'>-----------请先输入楼号和桩号-----------</view>
+<!-- <view class='text-c'>-----------请先输入楼号和桩号-----------</view> -->
 <!--楼栋号  -->
 <!-- <view class='padding-h-20 display-flex-center-between bottom-line height-80  bg-white'>
   <view>楼栋号</view>
@@ -42,12 +42,52 @@
         </view>
     </form>
 
-    <view class='display-flex-center-center'  wx:else bindtap='toEdit' data-index="pileCode">
+    <view class='display-flex-center-center'  wx:else data-index="pileCode">
       <view class='font-666' wx:if="{{pang.pileCode == null}}">请输入</view>  
       <view class='' wx:else>{{ pang.pileCode }}</view>  
     </view>
   </view>
 </view> 
+<view class='padding-h-20 display-flex-center-between bottom-line height-80  bg-white'>
+  <view>桩机号</view>
+  <view class='display-flex-center-right'>
+    <form bindsubmit="onInputSave" data-index="pilingMachine" class='' wx:if="{{ pang.ispilingMachineEdit}}">
+        <view class='display-flex-center'>
+          <input  focus="true" class='input' type='text' placeholder='请输入...'  cursor-spacing="30" name="value" value='' ></input>
+          <text class='iconfont icon-17cuowu padding-l-5  margin-l-10' style='font-size:50rpx;color:red' bindtap='toDone' data-index="pilingMachine"></text>
+          <button formType="submit" class='btn font-theme bg-white clear-btn-default margin-l-10'>
+            <text class='iconfont icon-dui1 padding-l-5' style='font-size:60rpx;'></text>
+          </button>
+        </view>
+    </form>
+
+    <view class='display-flex-center-center'  wx:else bindtap='toEdit' data-index="pilingMachine">
+      <view class='font-666' wx:if="{{pang.pilingMachine == null}}">请输入</view>  
+      <view class='' wx:else>{{ pang.pilingMachine }}</view>  
+    </view>
+  </view>
+</view>
+<!-- 备注 -->
+<view class='padding-h-20 display-flex-center-between bottom-line height-80  bg-white'>
+  <view>备注</view>
+  <view class='display-flex-center-right'>
+    <form bindsubmit="onInputSave" data-index="remarks" class='' wx:if="{{ pang.isremarksEdit}}">
+        <view class='display-flex-center'>
+          <input  focus="true" class='input' type='text' placeholder='请输入...'  cursor-spacing="30" name="value" value='' ></input>
+          <text class='iconfont icon-17cuowu padding-l-5  margin-l-10' style='font-size:50rpx;color:red' bindtap='toDone' data-index="remarks"></text>
+          <button formType="submit" class='btn font-theme bg-white clear-btn-default margin-l-10'>
+            <text class='iconfont icon-dui1 padding-l-5' style='font-size:60rpx;'></text>
+          </button>
+        </view>
+    </form>
+
+    <view class='display-flex-center-center'  wx:else bindtap='toEdit' data-index="remarks">
+      <view class='font-666' wx:if="{{pang.remarks == null}}">请输入</view>  
+      <view class='' wx:else>{{ pang.remarks }}</view>  
+    </view>
+  </view>
+</view>
+
 <!-- 天气 -->
 <view class='padding-h-20 display-flex-center-between bottom-line height-80 bg-white' wx:if="{{ pang.id != null}}">
     <view>天气</view>
@@ -84,19 +124,19 @@
 <view class='padding-h-20 display-flex-center-between bottom-line height-80  bg-white'>
   <view>主筋数量</view>
   <view class='display-flex-center-right'>
-    <form bindsubmit="onInputSave" data-index="mainBarNum" class='' wx:if="{{ pang.ismainBarNumEdit}}">
+    <form bindsubmit="onInputSave" data-index="mainBarCount" class='' wx:if="{{ pang.ismainBarCountEdit}}">
         <view class='display-flex-center'>
           <input  focus="true" class='input' type='text' placeholder='请输入...'  cursor-spacing="30" name="value" value='' ></input>
-          <text class='iconfont icon-17cuowu padding-l-5  margin-l-10' style='font-size:50rpx;color:red' bindtap='toDone' data-index="mainBarNum"></text>
+          <text class='iconfont icon-17cuowu padding-l-5  margin-l-10' style='font-size:50rpx;color:red' bindtap='toDone' data-index="mainBarCount"></text>
           <button formType="submit" class='btn font-theme bg-white clear-btn-default margin-l-10'>
             <text class='iconfont icon-dui1 padding-l-5' style='font-size:60rpx;'></text>
           </button>
         </view>
     </form>
 
-    <view class='display-flex-center-center'  wx:else bindtap='toEdit' data-index="mainBarNum">
-      <view class='font-666' wx:if="{{pang.mainBarNum == null}}">请输入</view>  
-      <view class='' wx:else>{{ pang.mainBarNum }}</view>  
+    <view class='display-flex-center-center'  wx:else bindtap='toEdit' data-index="mainBarCount">
+      <view class='font-666' wx:if="{{pang.mainBarCount == null}}">请输入</view>  
+      <view class='' wx:else>{{ pang.mainBarCount }}</view>  
     </view>
   </view>
 </view>
@@ -106,7 +146,7 @@
   <view class='display-flex-center-right'>
     <form bindsubmit="onInputSave" data-index="mainBarType" class='' wx:if="{{ pang.ismainBarTypeEdit}}">
         <view class='display-flex-center'>
-          Φ<input focus="true" class='input' type='text' placeholder='请输入...'  cursor-spacing="30" name="value" value='' ></input>
+          <input focus="true" class='input' type='text' placeholder='请输入...'  cursor-spacing="30" name="value" value='' ></input>
           <text class='iconfont icon-17cuowu padding-l-5  margin-l-10' style='font-size:50rpx;color:red' bindtap='toDone' data-index="mainBarType"></text>
           <button formType="submit" class='btn font-theme bg-white clear-btn-default margin-l-10'>
             <text class='iconfont icon-dui1 padding-l-5' style='font-size:60rpx;'></text>
@@ -116,7 +156,7 @@
 
     <view class='display-flex-center-center'  wx:else bindtap='toEdit' data-index="mainBarType">
       <view class='font-666' wx:if="{{pang.mainBarType == null}}">请输入</view>  
-      <view class='' wx:else>Φ{{ pang.mainBarType }}</view>  
+      <view class='' wx:else>{{ pang.mainBarType }}</view>  
     </view>
   </view>
 </view>
@@ -126,7 +166,7 @@
   <view class='display-flex-center-right'>
     <form bindsubmit="onInputSave" data-index="circularBar" class='' wx:if="{{ pang.iscircularBarEdit}}">
         <view class='display-flex-center'>
-          Φ<input focus="true" class='input' type='text' placeholder='请输入...'  cursor-spacing="30" name="value" value='' ></input>
+          <input focus="true" class='input' type='text' placeholder='请输入...'  cursor-spacing="30" name="value" value='' ></input>
           <text class='iconfont icon-17cuowu padding-l-5  margin-l-10' style='font-size:50rpx;color:red' bindtap='toDone' data-index="circularBar"></text>
           <button formType="submit" class='btn font-theme bg-white clear-btn-default margin-l-10'>
             <text class='iconfont icon-dui1 padding-l-5' style='font-size:60rpx;'></text>
@@ -136,7 +176,7 @@
 
     <view class='display-flex-center-center'  wx:else bindtap='toEdit' data-index="circularBar">
       <view class='font-666' wx:if="{{pang.circularBar == null}}">请输入</view>  
-      <view class='' wx:else>Φ{{ pang.circularBar }}</view>  
+      <view class='' wx:else>{{ pang.circularBar }}</view>  
     </view>
   </view>
 </view>
@@ -147,7 +187,7 @@
   <view class='display-flex-center-right'>
     <form bindsubmit="onInputSave" data-index="strongBar" class='' wx:if="{{ pang.isstrongBarEdit}}">
         <view class='display-flex-center'>
-          Φ<input  focus="true" class='input' type='text' placeholder='请输入...'  cursor-spacing="30" name="value" value='' ></input>
+          <input  focus="true" class='input' type='text' placeholder='请输入...'  cursor-spacing="30" name="value" value='' ></input>
           <text class='iconfont icon-17cuowu padding-l-5  margin-l-10' style='font-size:50rpx;color:red' bindtap='toDone' data-index="strongBar"></text>
           <button formType="submit" class='btn font-theme bg-white clear-btn-default margin-l-10'>
             <text class='iconfont icon-dui1 padding-l-5' style='font-size:60rpx;'></text>
@@ -184,8 +224,8 @@
 </view>
 
 <!-- 长度 M -->
-<!-- <view class='padding-h-20 display-flex-center-between bottom-line height-80  bg-white'>
-  <view>长度（m）</view>
+<view class='padding-h-20 display-flex-center-between bottom-line height-80  bg-white'>
+  <view>钢筋笼长度（m）</view>
   <view class='display-flex-center-right'>
     <form bindsubmit="onInputSave" data-index="length" class='' wx:if="{{ pang.islengthEdit}}">
         <view class='display-flex-center'>
@@ -202,7 +242,7 @@
       <view class='' wx:else>{{ pang.length }}</view>  
     </view>
   </view>
-</view> -->
+</view>
 
 <!-- 钢筋及焊接结论  -->
 <view class='padding-h-20 display-flex-center-between bottom-line height-80  bg-white'>
@@ -227,7 +267,7 @@
 <view class='text-c'>----------------设计情况---------------</view> 
 <!-- 平台标高A  -->
 <view class='padding-h-20 display-flex-center-between bottom-line height-80  bg-white'>
-  <view>平台标高/护筒标高A（m）</view>
+  <view>平台标高A（m）</view>
   <view class='display-flex-center-right'>
     <form bindsubmit="onInputSave" data-index="platformElevation" class='' wx:if="{{ pang.isplatformElevationEdit}}">
         <view class='display-flex-center'>
@@ -273,7 +313,7 @@
   <view class='display-flex-center-right'>
     <form bindsubmit="onInputSave" data-index="pileTopHeight" class='' wx:if="{{ pang.ispileTopHeightEdit}}">
         <view class='display-flex-center'>
-          <input  focus="true" class='input' type='digit' placeholder='请输入...'  cursor-spacing="30" name="value" value=''  style='width:160rpx'></input>
+          <input  focus="true" class='input' type='text' placeholder='请输入...'  cursor-spacing="30" name="value" value=''  style='width:160rpx'></input>
           <text class='iconfont icon-17cuowu padding-l-5  margin-l-10' style='font-size:50rpx;color:red' bindtap='toDone' data-index="pileTopHeight"></text>
           <button formType="submit" class='btn font-theme bg-white clear-btn-default margin-l-10'>
             <text class='iconfont icon-dui1 padding-l-5' style='font-size:60rpx;'></text>
@@ -387,10 +427,9 @@
       <image class='margin-t-10' wx:if="{{pang.actualDeepImg.length < 10 || !pang.actualDeepImg}}" src='../../../res/upload.png' style='width:200rpx;height:200rpx;margin-left:37rpx;' data-index="actualDeepImg" bindtap='uploadImages'></image>
     </view>
   </view> 
-
-<!-- 实际孔深  -->
+  <!-- 实际孔深E  -->
   <view class='padding-h-20 display-flex-center-between bottom-line height-80 bg-white'>
-    <view>实际孔深（m）</view>
+    <view>实际孔深E（m）</view>
     <view class='display-flex-center-right'>
       <form bindsubmit="onInputSave" data-index="actualDeep" class='' wx:if="{{ pang.isactualDeepEdit}}">
           <view class='display-flex-center'>
@@ -403,11 +442,39 @@
           
       </form>
       <view class='display-flex-center-center'  wx:else bindtap='toEdit' data-index="actualDeep">
-        <view class='font-666' wx:if="{{pang.actualDeep == null}}">请输入孔深</view>  
-        <view class='' wx:else>{{ pang.actualDeep }} M</view>  
+        <view class='font-666' wx:if="{{pang.actualDeep == null}}">请输入</view>  
+        <view class='' wx:else>{{ pang.actualDeep }}</view>  
       </view>
     </view>
   </view>
+<!-- 地面标高 D  -->
+<view class='padding-h-20 display-flex-center-between bottom-line height-80  bg-white'>
+  <view>地面标高 D（m）</view>
+  <view class='display-flex-center-right'>
+    <form bindsubmit="onInputSave" data-index="groundElevation" class='' wx:if="{{ pang.isgroundElevationEdit}}">
+        <view class='display-flex-center'>
+          <input  focus="true" class='input' type='text' placeholder='请输入...'  cursor-spacing="30" name="value" value=''  style='width:160rpx'></input>
+          <text class='iconfont icon-17cuowu padding-l-5  margin-l-10' style='font-size:50rpx;color:red' bindtap='toDone' data-index="groundElevation"></text>
+          <button formType="submit" class='btn font-theme bg-white clear-btn-default margin-l-10'>
+            <text class='iconfont icon-dui1 padding-l-5' style='font-size:60rpx;'></text>
+          </button>
+        </view>
+    </form>
+
+    <view class='display-flex-center-center'  wx:else bindtap='toEdit' data-index="groundElevation">
+      <view class='font-666' wx:if="{{pang.groundElevation == null}}">请输入</view>  
+      <view class='' wx:else>{{ pang.groundElevation }}</view>  
+    </view>
+  </view>
+</view>
+
+  <view class='padding-h-20 display-flex-center-between bottom-line height-80' style='background-color:#F4F5F9'>
+  <view>有效桩长C+E-D（m）</view>
+  <view wx:if="{{pang.pileTopHeight && pang.groundElevation && pang.actualDeep}}">
+  <!-- {{ pang.platformElevation - pang.pileTopHeight - 0.5}} -->
+  {{ ecd }}
+  </view>
+</view>
   <!-- 下钢筋笼开始时间 -->
   <view class='padding-h-20 display-flex-center-between bottom-line height-80 bg-white'>
     <view>下钢筋笼开始时间</view>
@@ -537,8 +604,8 @@
 
 <!-- 成渣厚度10 sedimentHeight 沉渣厚度       （实际孔深 - 二次测量孔深）-->
 <view class='padding-h-20 display-flex-center-between bottom-line height-80  bg-white'>
-  <view>沉渣厚度（cm）</view>
-  <view wx:if="{{pang.actualDeep && pang.secondActualDeep}}">{{ pang.actualDeep - pang.secondActualDeep}}</view>
+  <view>沉渣厚度（mm）</view>
+  <view wx:if="{{pang.actualDeep && pang.secondActualDeep}}">{{ (pang.actualDeep - pang.secondActualDeep)*1000}}</view>
 </view>
 
 <!-- 泥浆比重  slurryProp-->
@@ -586,7 +653,7 @@
   </view>
 <!-- 入岩深度 -->
   <view class='padding-h-20 display-flex-center-between bottom-line height-80  bg-white'>
-    <view>入岩深度</view>
+    <view>入岩深度（m)</view>
     <view class='display-flex-center-right'>
       <form bindsubmit="onInputSave" data-index="deptRock" class='' wx:if="{{ pang.isdeptRockEdit}}">
           <view class='display-flex-center'>
@@ -601,6 +668,28 @@
       <view class='display-flex-center-center'  wx:else bindtap='toEdit' data-index="deptRock">
         <view class='font-666' wx:if="{{pang.deptRock == null}}">请输入</view>  
         <view class='' wx:else>{{ pang.deptRock }}</view>  
+      </view>
+    </view>
+  </view>
+<!-- 入岩时间 -->
+  <view class='padding-h-20 display-flex-center-between bottom-line height-80 bg-white'>
+    <view>入眼时间</view>
+    <view class='display-flex-center-right'>
+      <view class='display-flex-center-right' wx:if="{{pang.rockTime != null}}">
+        <picker mode="time" value="{{tools.formatTimeTerse(pang.rockTime)}}" start="00:00" end="23:59" bindchange="bindTimeChange" data-index="rockTime" disabled='{{pang.status>=2?true:false}}'>
+          <view class="picker">{{tools.formatTimeTerse(pang.rockTime)}}</view>
+        </picker>
+      </view>
+      <!-- <text class='padding-r-10 font-666' wx:else>点击记录时间</text> -->
+      <view class='display-flex-center-center'  wx:if="{{ pang.rockTime == null }}" bindtap='getTime' data-index="rockTime">
+        <view class='clock margin-h-auto display-flex-center-center'>
+          <view  class='display-flex-center-center'>
+            <view class='time'>{{hour}}</view>
+            <view class='time colon' hidden="{{isColonShow}}">:</view>
+            <view class='time colon' hidden="{{!isColonShow}}"></view>
+            <view class='time'>{{minute}}</view>
+          </view>
+        </view>
       </view>
     </view>
   </view>
@@ -801,12 +890,31 @@
   </view>
 </view>
 
-<view class=' bg-white'>
-    <template is='administrator' data='{{administrator}}'/>
+<view class='padding-h-20 padding-v-10 bottom-line  bg-white'>
+  <view>施工发现问题及解决方案</view>
+  <view class=''>
+    <form bindsubmit="onInputSave" data-index="problemContent" class='' wx:if="{{pang.isproblemContentEdit}}">
+          <textarea class='padding-v-10' placeholder="请输入" name="value"  style='height: 186px' cursor-spacing="100"/>
+        <view class='display-flex-center-right' style='height: 34px'>
+          <text class='iconfont icon-17cuowu padding-l-5  margin-l-10' style='font-size:50rpx;color:red' bindtap='toDone' data-index="problemContent"></text>
+          <button formType="submit" class='btn font-theme bg-white clear-btn-default margin-l-10'>
+            <text class='iconfont icon-dui1 padding-l-5' style='font-size:60rpx;'></text>
+          </button>
+        </view>
+    </form>
+    <view class='padding-v-10'  wx:else bindtap='toEdit' data-index="problemContent" style='height: 240px'>
+      <view class='font-666' wx:if="{{pang.problemContent == null || pang.problemContent == ''}}">请输入</view>  
+      <view class='' wx:else>{{ pang.problemContent }}</view>  
+    </view>
+  </view>
+</view>
 
+<view class=' bg-white'>
+  <template is='administrator' data='{{administrator}}'/>
   <view class=' margin-h-auto padding-v-30' style='width:80%'>
     <button wx:if="{{pang.status==1}}" class='btn bg-theme margin-h-auto font-white' style='width:60%;' bindtap='submitToCheck' >确认完成</button>
-    <button  wx:if="{{pang.status==2 && isWaitCheck}}" class='btn bg-theme margin-h-auto font-white' style='width:60%;' bindtap='submitToCheck'>确认验收</button>
+    <button  wx:if="{{(pang.status==2 || pang.status==4) && isCanCheck}}" class='btn bg-theme margin-h-auto font-white' style='width:60%;' bindtap='submitToCheck'>确认验收</button>
+    <button  wx:if="{{(pang.status==2 || pang.status==3) && isCanConfirm}}" class='btn bg-theme margin-h-auto font-white' style='width:60%;' bindtap='submitToCheck'>确认（施工方）</button>
   </view>
 </view>
 

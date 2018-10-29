@@ -1,14 +1,17 @@
 {
 	"description": "项目配置文件。",
 	"packOptions": {
-		"ignore": ["tast"]
+		"ignore": [
+			"tast"
+		]
 	},
 	"setting": {
 		"urlCheck": false,
 		"es6": true,
 		"postcss": true,
 		"minified": true,
-		"newFeature": true
+		"newFeature": true,
+		"nodeModules": false
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.2.2",

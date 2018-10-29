@@ -16,4 +16,10 @@
 <view class='padding-10'>
     <view class='accout'>当前账户：{{user.mobile}}</view>
 </view>
-<!-- <view class="text-c padding-v-20">期待新功能上线</view> -->
+<view class='padding-10'>
+  <view>
+    当前用户拥有的角色：
+    <text wx:for="{{roles}}" class='padding-5'>{{item.roleName}}</text>
+  </view>
+</view>
+<!-- <view class="text-c padding-v-20 margin-t-20">期待新功能上线</view> -->

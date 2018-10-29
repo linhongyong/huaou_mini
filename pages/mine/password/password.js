@@ -111,10 +111,9 @@ Page({
     }
 
     util.getDataByAjax({
-      url: '/user/changePassword',
+      url: `/user/changePassword?passwordNew=${newPsd}&passwordOld=${oldPsd}`,
       data: {
-        passwordNew:newPsd, 
-        passwordOld: oldPsd
+      
       },
       method: "Post",
       success: function (res) {

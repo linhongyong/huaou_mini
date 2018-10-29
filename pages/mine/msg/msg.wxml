@@ -1,5 +1,5 @@
 
-<view class='bg-theme font-white text-c padding-v-5 toptipbar'>消息</view>
+<view class='bg-theme font-white text-c padding-v-5 toptipbar'>消息({{unreadNum}})</view>
 <view>
   <view class='padding-10-20 bottom-line bg-white position-r' wx:for="{{list}}" wx:key="{{ index }}" bindtap='toDetail' data-index="{{index}}">
     <view class='ng-textAuto2 padding-v-10' style='width:92%'>{{ item.title }}</view>

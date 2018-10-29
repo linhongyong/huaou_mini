@@ -4,8 +4,8 @@ page{
   font-family: '微软雅黑'
 }
 view, image{
-   box-sizing: border-box;
-   font-size: 34rpx;
+   /* box-sizing: border-box;
+   font-size: 34rpx; */
    /* line-height: 44rpx; */
 }
 view{

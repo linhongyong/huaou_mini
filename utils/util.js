@@ -3,8 +3,8 @@ var Toptips = require('../components/toptips/toptips.js');
 
 //项目配置ff**********************************************************************************************************
 const appName = '华瓯监理';
-var website = "https://www.believeyou.top";
-// var website = "http://www.believeyou.top:3001/mock/11";
+// var website = "https://www.believeyou.top";
+var website = "https://www.therethey.com";
 const logo = 'logo.png';
 
 //请求函数封装ff********************************************************************************************************
@@ -234,6 +234,27 @@ function isDataCommon(data) {
   }
   console.log(data);
 }
+
+function isExistInArray(array, item){
+  let index = array.findIndex(function (elem) {
+    return elem == item
+  })
+  if(index > -1) {
+    console.log("存在", item);
+    return true;
+  }
+  else return false;
+}
+function isExistPropOfObjInArray(array, key, value) {
+  let index = array.findIndex(function (elem) {
+    return elem[key] == value
+  })
+  if (index > -1) {
+    console.log("存在", key);
+    return true;
+  }
+  else return false;
+}
 //格式化数据库时间********************************************************************************************
 function releaseTimeFormat(date){
   let date2 = new Date(date);
@@ -279,10 +300,13 @@ const formatNumber = n => {
 }
 // 向外暴露接***************************************************************************************************
 
+
 module.exports = {
   appName: appName,
   formatTime: formatTime,
   getDataByAjax: getDataByAjax,
+  isExistInArray: isExistInArray,
+  isExistPropOfObjInArray,
   uploadImgPromise,//图片上传
   uploadImgPromises,//图片上传
   decrypt: decrypt,

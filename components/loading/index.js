@@ -1,3 +1,5 @@
+'use strict';
+
 Component({
   properties: {
     type: {
@@ -6,10 +8,6 @@ Component({
     },
     color: {
       type: String
-    },
-    size: {
-      type: Number,
-      value: 14
     }
   }
 });

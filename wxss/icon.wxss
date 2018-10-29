@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'iconfont';  /* project id 854262 */
-  src: url('//at.alicdn.com/t/font_854262_izxq2l17oz.eot');
-  src: url('//at.alicdn.com/t/font_854262_izxq2l17oz.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_854262_izxq2l17oz.woff') format('woff'),
-  url('//at.alicdn.com/t/font_854262_izxq2l17oz.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_854262_izxq2l17oz.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_854262_ahflrbhkzrn.eot');
+  src: url('//at.alicdn.com/t/font_854262_ahflrbhkzrn.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_854262_ahflrbhkzrn.woff') format('woff'),
+  url('//at.alicdn.com/t/font_854262_ahflrbhkzrn.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_854262_ahflrbhkzrn.svg#iconfont') format('svg');
 }
 .iconfont {
   font-family:"iconfont" !important;
@@ -21,3 +21,4 @@
 .icon-add:before { content: "\e734"; } 
 .icon-caidan2:before { content: "\e668"; } 
 .icon-edit:before { content: "\e698"; } 
+.icon-xiaoxi:before { content: "\e610"; }

@@ -40,8 +40,20 @@ App({
       }
     })
   },
+  //旁站：1：已开始；2已完成；3已验收未确认；4已确认未验收；5已验收已确认
   globalData: {
-    userInfo: null,
-    isFirst: true
+    isFirst: true,
+    roles:[],//用户所拥有的角色,
+    projectRoleNames: [],//当前项目下用户的角色
+    isCanSeeAllProject: false,
+    administrator: [],
+    isCanCheck: false,//是否有审核权限
+    isCanConfirm: false,//是否有权确认
+    isCanWrite: false,//是否有修改权限
+    isCanWriteAfterCheck: false,//是否有审核后修改权限
+    currentPzIndex: 0,//旁站的类型
+    userInfo: {},//用户信息
+    project:{},//当前项目
+    building:{},//当前楼栋
   }
 })

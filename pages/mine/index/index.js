@@ -3,6 +3,7 @@ var util = require('../../../utils/util.js')
 var math = require('../../../utils/math.js')
 const Toptips = require('../../../components/toptips/index.js');
 const Dialog = require('../../../components/dialog/dialog');
+var app = getApp();
 var self;
 Page({
 
@@ -24,7 +25,8 @@ Page({
       account: wx.getStorageSync('account'),
     }
     self.setData({
-      info: info
+      info: info,
+      roles: app.globalData.roles
     })
     this.getUserInfo();
   },

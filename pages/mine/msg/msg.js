@@ -4,6 +4,7 @@ Page({
 
 
   data: {
+    unreadNum:0
   },
   onLoad: function (options) {
     
@@ -11,6 +12,7 @@ Page({
   onShow: function () {
     this.getMessageList();
     this.getUnreadNum();
+    setInterval(this.getMessageList, 60000)
   },
 
   onReady: function () { },
@@ -28,15 +30,15 @@ Page({
     let parameter = JSON.parse(obj.parameter);
     if (obj.type == "0001"){
       wx.navigateTo({
-        url: `../../pangzhan/pangzhan_jxgzz/pangzhan_jxgzz?pangzhanId=${parameter.pangzhanId}`,
+        url: `../../pangzhan/pangzhan_jxgzz/pangzhan_jxgzz?pangzhanId=${parameter.pangzhanId}&msgId=${obj.id}`,
       })
     } else if (obj.type == "0002"){
       wx.navigateTo({
-        url: `../../pangzhan/pangzhan_shuini/pangzhan_shuini?pangzhanId=${parameter.pangzhanId}`,
+        url: `../../pangzhan/pangzhan_shuini/pangzhan_shuini?pangzhanId=${parameter.pangzhanId}&msgId=${obj.id}`,
       })
     } else if (obj.type == "0003") {
       wx.navigateTo({
-        url: `../../pangzhan/pangzhan_yylgz/pangzhan_yylgz?pangzhanId=${parameter.pangzhanId}`,
+        url: `../../pangzhan/pangzhan_yylgz/pangzhan_yylgz?pangzhanId=${parameter.pangzhanId}&msgId=${obj.id}`,
       })
     }
   },
@@ -64,12 +66,22 @@ Page({
       url: '/message/getList',
       method: "Post",
       data: {
-        pageIndex: 1,
+        pageIndex: 0,
         pageSize: 100
       },
       success: function (res) {
-        that.setData({
-          list: res.data.result
+        // let list = [];
+        // res.data.result.forEach(function(item, index){
+        //   if (item.type == "0001" || item.type == "0002" || item.type == "0003"){
+        //     if(item.status == 0){
+        //       list.push(item);
+        //     }
+        //   }else{
+        //     list.push(item);
+        //   }
+        // })
+         that.setData({
+           list: res.data.result
         })
       },
       error: function (error) {
@@ -84,6 +96,9 @@ Page({
       method: "get",
       data: {},
       success: function (res) {
+        that.setData({
+          unreadNum: res.data.result
+        })
        console.log(res)
       },
       error: function (error) {

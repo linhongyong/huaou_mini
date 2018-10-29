@@ -22,7 +22,7 @@ Page({
     tempImagesOfHoleDepth: [],
     result:{
       barCageCount: 2,
-    }
+    },
   },
   onLoad: function (options) {
     let that = this;
@@ -34,11 +34,11 @@ Page({
     this.setData({
       hour: hour,
       minute: minute,
-      zongjian: wx.getStorageSync("zongjian"),
-      shigongfang: wx.getStorageSync("shigongfang"),
       buildingCode: wx.getStorageSync("currentBuildingCode"),
       currentProjectName: wx.getStorageSync("currentProjectName"),
-      administrator: app.globalData.administrator
+      administrator: app.globalData.administrator,
+      isCanCheck: app.globalData.isCanCheck,
+      isCanConfirm: app.globalData.isCanConfirm
     })
     this.makeColonGlint();
     if (options.pileCode){
@@ -329,70 +329,18 @@ Page({
     if (!this.isAllowEdit()) {
       return false
     };
-    if (!this.data.pang.id) {
-      wx.showToast({
-        title: '旁站不存在',
-      })
+    let whichTime = e.currentTarget.dataset.index
+    console.log("whichTime", whichTime);
+    if (!this.data.pang[whichTime]){
+      console.log("时间字段出错", this.data.pang[whichTime]);
       return;
     }
-    console.log(e);
-    let date;
-    let time = util.formatTime(new Date());
-    switch (e.currentTarget.dataset.index) {
-      case 'startTime':
-        date = this.data.startTime.split(' ')[0];
-        this.setData({
-          startTime: date + " " + e.detail.value + ":00"
-        })
-        break;
-      case 'endTime':
-        date = this.data.endTime.split(' ')[0];
-        this.setData({
-          endTime: date + " " + e.detail.value + ":00"
-        })
-        break;
-      case 'dropCageEndTime':
-        date = this.data.dropCageStartTime.split(' ')[0];
-        this.setData({
-          dropCageEndTime: date + " " + e.detail.value + ":00"
-        })
-        break;
-      case 'dropCageEndTime':
-        date = this.data.dropCageStartTime.split(' ')[0];
-        this.setData({
-          dropCageEndTime: date + " " + e.detail.value + ":00"
-        })
-        break;
-      case 'secondCleanStartTime':
-        date = this.data.secondCleanStartTime.split(' ')[0];
-        this.setData({
-          secondCleanStartTime: date + " " + e.detail.value + ":00"
-        })
-        break;
-      case 'secondCleanEndTime':
-        date = this.data.secondCleanEndTime.split(' ')[0];
-        this.setData({
-          secondCleanEndTime: date + " " + e.detail.value + ":00"
-        })
-        break;
-      case 'perfusionStartTime':
-        date = this.data.perfusionStartTime.split(' ')[0];
-        this.setData({
-          perfusionStartTime: date + " " + e.detail.value + ":00"
-        })
-        break;
-      case 'perfusionEndTime':
-        date = this.data.perfusionEndTime.split(' ')[0];
-        this.setData({
-          perfusionEndTime: date + " " + e.detail.value + ":00"
-        })
-        break;
-    }
-
+    let data = this.data.pang[whichTime].split(' ')[0] + " " + e.detail.value + ":00";
+    this.setData({
+      [`pang.${whichTime}`]: data
+    })
+    console.log('picker发送选择改变，携带值为', e.detail.value, this.data.pang[whichTime]);
     this.updatePangzhan();
-
-    console.log('picker发送选择改变，携带值为', e.detail.value);
-   
   },
   // -----------------------------------------------------------------------------------------------------------------------------
   /**edit
@@ -425,12 +373,20 @@ Page({
     console.log(e);
     let porp = `pang.${e.currentTarget.dataset.index}`
     let isEdit = `pang.is${e.currentTarget.dataset.index}Edit`
+    //负号检测是否正确,平台标高，桩顶标高
+    if (e.currentTarget.dataset.index == 'platformElevation' || e.currentTarget.dataset.index == 'pileTopHeight') {
+      if (isNaN(e.detail.value.value)) {
+        Toptips("符号错误");
+        return;
+      }
+    }
     //为空时不设置
     if (!e.detail.value.value.trim()){
       this.setData({
         [porp]: null,
         [isEdit]: false
       })
+      return;
     }else{
       this.setData({
         [porp]: e.detail.value.value,
@@ -450,6 +406,11 @@ Page({
         abc2: math.accSub(math.accSub(obj.platformElevation, obj.pileTopHeight), 0.5),
       })
     }
+    if (e.currentTarget.dataset.index == 'actualDeep' || e.currentTarget.dataset.index == 'pileTopHeight' || e.currentTarget.dataset.index == 'groundElevation' ){
+      this.setData({
+        ecd: math.accSub(math.accAdd(obj.actualDeep, obj.pileTopHeight), (obj.groundElevation)),
+      })
+    }
     // 充盈系数
     if (e.currentTarget.dataset.index == 'actualVolume' || e.currentTarget.dataset.index == 'theoryVolume') {
       this.setData({
@@ -462,6 +423,7 @@ Page({
         ['pang.mainBar']: `${this.data.pang.mainBarNum}φ${this.data.pang.mainBarType}`
       })
     }
+    
     this.updatePangzhan();
   },
   /**
@@ -469,48 +431,101 @@ Page({
    */
   submitToCheck: function () {
     let that = this;
+    let status;
+    //1.确定更新内容
     if(this.data.pang.status == 1){
       this.setData({
-        ['pang.status']: 2,
         ['pang.endTime']: new Date,
       })
+      status=2;
     } else if (this.data.pang.status == 2){
-      this.setData({
-        ['pang.status']: 3,
-      })
-    }
-    
-    this.updatePangzhan();
-    if (this.data.isWaitCheck){return;}
-    let toIds = [];
-    for (let i = 0; i < this.data.administrator.length; i++){
-      toIds.push(this.data.administrator[i].userId);
-    }
-    let data = {
-      type: "0001",
-      title: `${wx.getStorageSync('currentProjectName')} ${wx.getStorageSync('currentBuildingCode')}号楼 ${this.data.pang.pileCode}号机械灌注桩旁站完成`,
-      toIds: toIds,
-      parameter: {
-        "pangzhanId": this.data.pang.id
+      if (app.globalData.isCanCheck){//有权验收
+        status = 3;
+      }
+      if (app.globalData.isCanConfirm) {//有权确认
+        status = 4;
+      }
+      if (app.globalData.isCanCheck && app.globalData.isCanConfirm){
+        status = 5;
+      }
+    } else if (this.data.pang.status == 3){
+      if (app.globalData.isCanConfirm) {//有权确认
+        status = 5;
       }
     }
+    else if (this.data.pang.status == 4) {
+      if (app.globalData.isCanCheck) {//有权验收
+        status = 5;
+      }
+    }
+    this.setData({
+      ['pang.superName']: app.globalData.roles[0].userName,
+      ['pang.status']: status
+    })
+    //2.更新旁站
+    this.updatePangzhan();
+    //3.返回上一页
+    setTimeout(function () {
+      wx.navigateBack({
+        delta: -1
+      })
+    }, 2000)
+
+    //
+    this.savaOperationLog();
+    if (this.data.isWaitCheck){
+      //更新审核消息为已审核
+      return;
+    }
+    
+    //不发消息
+    // let toIds = [];
+    // for (let i = 0; i < this.data.administrator.length; i++){
+    //   toIds.push(this.data.administrator[i].userId);
+    // }
+    // let data = {
+    //   type: "0001",
+    //   title: `${wx.getStorageSync('currentProjectName')} ${wx.getStorageSync('currentBuildingCode')}号楼 ${this.data.pang.pileCode}号机械灌注桩旁站完成`,
+    //   toIds: toIds,
+    //   parameter: {
+    //     "pangzhanId": this.data.pang.id
+    //   }
+    // }
+    // if (toIds.length){//toIds不能为空
+    //   util.getDataByAjax({
+    //     url: "/message/addJxgzz",
+    //     method: "Post",
+    //     data,
+    //     success: function (res) {
+    //       Toptips({
+    //         duration: 1000,
+    //         content: "成功提交",
+    //         backgroundColor: "#06A940"
+    //       });
+    //       setTimeout(function () {
+    //         wx.navigateBack({
+    //           delta: -1
+    //         })
+    //       }, 2000)
+    //     },
+    //     error: function () { }
+    //   });
+    // }
+    
+  },
+  setMsgStatus: function (id) {
+    let that = this;
     util.getDataByAjax({
-      url: "/message/addJxgzz",
+      url: `/message/setRead?id=${id}`,
       method: "Post",
-      data,
-      success: function (res) {
-        Toptips({
-          duration: 1000,
-          content: "成功提交",
-          backgroundColor: "#06A940"
-        });
-        setTimeout(function () {
-          wx.navigateBack({
-            delta: -1
-          })
-        }, 2000)
+      data: {
       },
-      error: function () { }
+      success: function (res) {
+        // that.getUnreadNum();
+      },
+      error: function (error) {
+
+      },
     });
   },
   getOrCreate: function () {
@@ -522,7 +537,7 @@ Page({
       url: "/jxZkGzzPzjl/add",
       method: "Post",
       data: {
-        projectId: wx.getStorageSync("currentProjectId") - 0,
+        projectId:app.globalData.project.id,
         buildingId: wx.getStorageSync("currentBuildingId") - 0,
         pileCode: that.data.pang.pileCode - 0,
       },
@@ -532,11 +547,12 @@ Page({
           pang: obj,
           abc1: math.accSub(math.accAdd(obj.platformElevation, obj.designPileLength), (obj.pileTopHeight)),
           abc2: math.accSub(math.accSub(obj.platformElevation, obj.pileTopHeight), 0.5),
+          ecd: math.accSub(math.accAdd(obj.actualDeep, obj.pileTopHeight), (obj.groundElevation)),
           ['pang.actualDeepImg']: obj.actualDeepImg ? JSON.parse(obj.actualDeepImg) : [],
           ['pang.barCageCountImg']: obj.barCageCountImg ? JSON.parse(obj.barCageCountImg) : [],
           ['pang.deptRockUrl']: obj.deptRockUrl ? JSON.parse(obj.deptRockUrl) : [],
-          ['pang.mainBarNum']: obj.mainBar ? obj.mainBar.split('φ')[0] : null,
-          ['pang.mainBarType']: obj.mainBar ? obj.mainBar.split('φ')[1] : null,
+          // ['pang.mainBarNum']: obj.mainBar ? obj.mainBar.split('φ')[0] : null,
+          // ['pang.mainBarType']: obj.mainBar ? obj.mainBar.split('φ')[1] : null,
           ['pang.fe']: math.accDiv(obj.actualVolume, obj.theoryVolume, 2)
         })
 
@@ -548,11 +564,6 @@ Page({
   },
   updatePangzhan: function () {
     let that = this;
-    if (!this.data.pang.mainBarNum || !this.data.pang.mainBarType) {
-      this.setData({
-        ['pang.mainBar']: null
-      })
-    }
     if(!this.data.pang.status){
       this.setData({
         ['pang.status']: 1,
@@ -562,8 +573,8 @@ Page({
     }
     let obj = this.data;
     let data = this.data.pang;
-    data.openTime = data.startTime;
-    data.stopTime = data.endTime;
+    // data.openTime = data.startTime;
+    // data.stopTime = data.endTime;
     util.getDataByAjax({
       url: '/jxZkGzzPzjl/update',
       method: "Post",
@@ -592,11 +603,12 @@ Page({
           pang: obj,
           abc1: math.accSub(math.accAdd(obj.platformElevation, obj.designPileLength), (obj.pileTopHeight)),
           abc2: math.accSub(math.accSub(obj.platformElevation, obj.pileTopHeight), 0.5),
+          ecd: math.accSub(math.accAdd(obj.actualDeep, obj.pileTopHeight), (obj.groundElevation)),
           ['pang.actualDeepImg']: obj.actualDeepImg ? JSON.parse(obj.actualDeepImg) : [],
           ['pang.barCageCountImg']: obj.barCageCountImg ? JSON.parse(obj.barCageCountImg) : [],
           ['pang.deptRockUrl']: obj.deptRockUrl ? JSON.parse(obj.deptRockUrl) : [],
-          ['pang.mainBarNum']: obj.mainBar ? obj.mainBar.split('φ')[0] : null,
-          ['pang.mainBarType']: obj.mainBar ? obj.mainBar.split('φ')[1] : null,
+          // ['pang.mainBarNum']: obj.mainBar ? obj.mainBar.split('φ')[0] : null,
+          // ['pang.mainBarType']: obj.mainBar ? obj.mainBar.split('φ')[1] : null,
           ['pang.fe']: math.accDiv(obj.actualVolume, obj.theoryVolume, 2)
         })
 
@@ -606,30 +618,45 @@ Page({
       }
     });
   },
-
-
   // 是否可以修改
   isAllowEdit: function(){
-    //  
-    if (this.data.pang.status >= 3) {
-      console.log('旁站状态，不允许修改');
+    if (this.data.pang.status >= 3) {//3已完成状态
+      if (app.globalData.isCanWriteAfterCheck){
+        Toptips("请到PC端修改");
+      }else{
+        Toptips("此旁站已确认无法修改");
+      }
       return false;
     }
-    var roles = wx.getStorageSync('roles');
-    var currentProjectId = wx.getStorageSync('currentProjectId');
-    var isAllowRole = false;
-    roles.forEach(function(v){
-      if ((v.roleName == '专监' || v.roleName == '监理员') && v.projectId == currentProjectId){
-        isAllowRole = true;
-        return false;
-      }
-    })
-    if (!isAllowRole) {
-      console.log('身份不是专监或监理员，不允许修改');
+    if (app.globalData.isCanWrite){
+      return true;
+    }else{
+      Toptips("无修改权限");
       return false
     }
-  }
-
+  },
+  savaOperationLog: function () {
+    let that = this;
+    let data = {
+      pangzhanId: this.data.pang.id,
+      type: `000${app.globalData.currentPzIndex-0+1}`,
+      typeName: null,
+      buildingId: app.globalData.building.id,
+      projectId: app.globalData.project.id,
+      editPoint: '小程序旁站数据采集',
+      reason: null,
+      editerId: app.globalData.userInfo.id
+    }
+    util.getDataByAjax({
+      url: '/pangzhan/addEditReason',
+      method: "Post",
+      data,
+      success: function (res) {
+        console.log(data);
+      },
+      error: function () { }
+    });
+  },
 })  
   
   

@@ -5,6 +5,9 @@
     "zan-button": "../../../components/btn/index",
     "login-modal": "../../../components/login-modal/login-modal",
     "zan-tab": "../../../components/tab/index",
-    "zan-popup": "../../../components/popup/index"
-  }
+    "zan-popup": "../../../components/popup/index",
+    "zan-loading": "../../../components/loading/index"
+  },
+  "enablePullDownRefresh": true
+ 
 }

@@ -33,7 +33,7 @@ Page({
     this.setData({
       hour: hour,
       minute: minute,
-      zongjian: wx.getStorageSync("zongjian"),
+      // zongjian: wx.getStorageSync("zongjian"),
       shigongfang: wx.getStorageSync("shigongfang"),
       buildingCode: wx.getStorageSync("currentBuildingCode"),
       currentProjectName: wx.getStorageSync("currentProjectName"),
@@ -392,6 +392,7 @@ Page({
         [porp]: null,
         [isEdit]: false
       })
+      return;
     }else{
       this.setData({
         [porp]: e.detail.value.value,
