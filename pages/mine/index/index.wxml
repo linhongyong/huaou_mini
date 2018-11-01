@@ -19,7 +19,7 @@
 <view class='padding-10'>
   <view>
     当前用户拥有的角色：
-    <text wx:for="{{roles}}" class='padding-5'>{{item.roleName}}</text>
+    <text wx:for="{{roles}}" class='padding-5' wx:key="{{index}}">{{item.roleName}}{{item.projectName? "("+item.projectName+")" : ""}}</text>
   </view>
 </view>
 <!-- <view class="text-c padding-v-20 margin-t-20">期待新功能上线</view> -->

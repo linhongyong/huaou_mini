@@ -6,13 +6,13 @@ let app = getApp();
 Page({
   data: {
     projectList: [],
-    currentProject: 0,
+    currentProject: {},
     pangzhanType:[
       '机械灌注桩',
       '水泥搅拌桩',
       '预应力管桩',
-      '混泥土浇筑',
-      '塔吊安装',
+      // '混泥土浇筑',
+      // '塔吊安装',
     ],
     // jxgzzList: [],
     // shuiniList: [],
@@ -80,29 +80,27 @@ Page({
   //切换项目 
   changeProject: function(e) {
     var index = e.detail.value;
-    this.setData({
-      currentProject: index
-    })
-    wx.setStorageSync("currentProject", this.data.projectList[index])
-    wx.setStorageSync("currentProjectName", this.data.projectList[index].projectName)
     app.globalData.project = this.data.projectList[index];
+    wx.setStorageSync("currentProject", app.globalData.project)
+    this.setData({
+      currentProject: app.globalData.project
+    })
     this.getRightsUnderProject();
     this.getBuildingList();
     this.getProjectStaffs();
-    this.getPangzhanList();
   },
-  // 切换楼栋
+
+  //切换楼栋
   changeBuilding: function(e) {
     var index = e.detail.value;
-    this.setData({
-      currentBuildingIndex: index,
-    })
     app.globalData.building = this.data.buildingList[index];
-    wx.setStorageSync("currentBuildingId", this.data.buildingList[index].id)
-    wx.setStorageSync("currentBuildingCode", this.data.buildingList[index].buildingCode)
-    wx.setStorageSync("currentBuildingPileNum", this.data.buildingList[index].pileNum)
+    wx.setStorageSync("currentBuilding", app.globalData.building)
+    this.setData({
+      currentBuilding: app.globalData.building
+    })
     this.getPangzhanList();
   },
+
   // 切换旁站
   changePangzhan: function(e) {
     var index = e.detail.value;
@@ -165,34 +163,35 @@ Page({
       url,
       method: "get",
       success: function(res) {
-        // let projectNameList = [];
-        // for (let i = 0; i < res.data.result.length; i++) {
-        //   projectNameList.push(res.data.result[i].projectName);
-        // }
+        if (!res.data.result || !res.data.result.length) {
+          that.setData({
+            noProjects: true,
+            isShowLoading: false,
+
+            projectList: [],
+            currentProject: {}
+          })
+          app.globalData.project ={};
+          wx.setStorageSync("currentProject", {})
+          return;
+        }
+
         //初始化当前项目当前楼栋
         let storageProject = wx.getStorageSync("currentProject");
-        // let storageProject = JSON.parse(temp ? temp : null);
         if (storageProject && storageProject.id && util.isExistPropOfObjInArray(res.data.result, "id", storageProject.id)){
           app.globalData.project = storageProject;
         }else{
-          wx.setStorageSync("currentProject", res.data.result.length && res.data.result[0])
-          wx.setStorageSync("currentProjectName", res.data.result.length && res.data.result[0].projectName)
           app.globalData.project = res.data.result[0];
+          wx.setStorageSync("currentProject", app.globalData.project)
         }
-        
-        that.getRightsUnderProject();
-        that.getProjectStaffs();
+
         that.setData({
           projectList: res.data.result,
-          // ['multiArray[0]']: projectNameList
+          currentProject: app.globalData.project
         })
-        if (!app.globalData.project.id) {
-          this.setData({
-            noProjects: true,
-            isShowLoading: false
-          })
-          return;
-        }
+
+        that.getRightsUnderProject();
+        that.getProjectStaffs();
         that.getBuildingList();
       },
       error: function() {}
@@ -210,8 +209,9 @@ Page({
         projectId: app.globalData.project.id
       },
       success: function(res) {
-        if (!res.data.result.length) {
+        if (!res.data.result || !res.data.result.length) {
           console.log("此项目没有人员信息")
+          return;
         }
         that.setData({
           projectStaffs: res.data.result
@@ -226,7 +226,6 @@ Page({
           }
         }
         app.globalData.administrator = zhuanjian;
-        console.log('globalData', app.globalData)
       },
       error: function() {}
     });
@@ -243,34 +242,41 @@ Page({
         projectId: app.globalData.project.id
       },
       success: function(res) {
-        if (!res.data.result.length) {
-          this.setData({
+        if (!res.data.result || !res.data.result.length) {
+          that.setData({
             nobuildings: true,
-            isShowLoading: false
+            isShowLoading: false,
+
+            buildingList: [],
+            currentBuilding: {}
           })
+          app.globalData.building = {}
+          wx.setStorageSync("currentBuilding", {})
           return;
         }
-        let buildingCodeNameList = [];
-        for (let i = 0; i < res.data.result.length; i++) {
-          buildingCodeNameList.push(res.data.result[i].buildingCode);
+        
+        //初始化当前项目当前楼栋
+        let storageBuilding = wx.getStorageSync("currentBuilding");
+        // let storageProject = JSON.parse(temp ? temp : null);
+        if (storageBuilding && storageBuilding.id && util.isExistPropOfObjInArray(res.data.result, "id", storageBuilding.id)) {
+          app.globalData.building = storageBuilding;
+        } else {
+          app.globalData.building = res.data.result[0];
+          wx.setStorageSync("currentBuilding", app.globalData.building)
         }
+
         that.setData({
           buildingList: res.data.result,
-          // ['multiArray[1]']: buildingCodeNameList,
-          currentBuildingIndex: 0
+          currentBuilding: app.globalData.building
         })
-        app.globalData.building = res.data.result[0];
+
         if (!app.globalData.building.pileNum){
           that.setData({
             noPiles: true,
             isShowLoading: false
           })
         }
-        wx.setStorageSync("currentBuildingId", res.data.result.length > 0 && res.data.result[0].id)
-        wx.setStorageSync("currentBuildingCode", res.data.result.length > 0 && res.data.result[0].buildingCode)
-        wx.setStorageSync("currentBuildingPileNum", res.data.result.length > 0 && res.data.result[0].pileNum)
         that.getPangzhanList();
-
       },
       error: function() {}
     });
@@ -296,12 +302,12 @@ Page({
       url,
       method: "Get",
       data: {
-        buildingId: wx.getStorageSync('currentBuildingId')
+        buildingId: app.globalData.building.id
       },
       success: function(res) {
         let pangzhanList = [];//
         let pileCode;
-        let pileNum = wx.getStorageSync("currentBuildingPileNum");
+        let pileNum = app.globalData.building.pileNum;
         //将所有桩和已创建的旁站数组进行二重循环，以此角色显示的颜色
         for (pileCode = 1; pileCode <= pileNum; pileCode++) {
           let count = 0;
@@ -321,18 +327,21 @@ Page({
         //获得一键确认与验收的参数
         let idStatusForCheckByOneClick = [];
         let idStatusForConfirmByOneClick = [];
-        res.data.result.forEach(function(item){
-          if(item.status == 2){
-            idStatusForCheckByOneClick.push({pangzhanId: item.id, status: 3})
-            idStatusForConfirmByOneClick.push({ pangzhanId: item.id, status: 4 })
-          }
-          if (item.status == 3) {
-            idStatusForConfirmByOneClick.push({ pangzhanId: item.id, status: 5 })
-          }
-          if (item.status == 4){
-            idStatusForCheckByOneClick.push({ pangzhanId: item.id, status: 5 })
-          }
-        })
+        if (res.data.result && res.data.result.length){
+          res.data.result.forEach(function (item) {
+            if (item.status == 2) {
+              idStatusForCheckByOneClick.push({ pangzhanId: item.id, status: 3 })
+              idStatusForConfirmByOneClick.push({ pangzhanId: item.id, status: 4 })
+            }
+            if (item.status == 3) {
+              idStatusForConfirmByOneClick.push({ pangzhanId: item.id, status: 5 })
+            }
+            if (item.status == 4) {
+              idStatusForCheckByOneClick.push({ pangzhanId: item.id, status: 5 })
+            }
+          })
+        }
+        
         console.log("获得一键确认与验收的参数");
         console.log(idStatusForCheckByOneClick);
         console.log(idStatusForConfirmByOneClick);

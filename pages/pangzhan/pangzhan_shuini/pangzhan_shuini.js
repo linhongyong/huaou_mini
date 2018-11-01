@@ -1,7 +1,12 @@
 
 var util = require('../../../utils/util.js')
+var math = require('../../../utils/math.js')
 const Toptips = require('../../../components/toptips/index.js');
-const Dialog = require('../../../components/dialog/dialog');
+const pangzhan = require('../common/js/pangzhan.js')
+const uploadImages = require('../common/js/uploadImages.js')
+const textInput = require('../common/js/textInput.js')
+const time = require('../common/js/time.js')
+const radio = require('../common/js/radioInput.js')
 var app = getApp();
 Page({
   data: {
@@ -41,7 +46,10 @@ Page({
       shigongfang: wx.getStorageSync("shigongfang"),
       buildingCode: wx.getStorageSync("currentBuildingCode"),
       currentProjectName: wx.getStorageSync("currentProjectName"),
-      administrator: app.globalData.administrator
+      administrator: app.globalData.administrator,
+      isCanCheck: app.globalData.isCanCheck,
+      isCanConfirm: app.globalData.isCanConfirm,
+      isCanWrite: app.globalData.isCanWrite,
     })
     // this.getShuiniTmpl();
     
@@ -52,14 +60,6 @@ Page({
       })
       this.getOrCreate();
     }   
-    //审核旁站数据情况
-    if (options.pangzhanId) {
-      this.setData({
-        pangzhanId: options.pangzhanId,
-        isWaitCheck: true
-      })
-      this.getPangzhanById();
-    }
   },
   onShow: function () {
 
@@ -123,7 +123,7 @@ Page({
    * 天气选择
    */
   radioChangeOfWeather: function (e) {
-    if (!this.isAllowEdit()) {
+    if (!pangzhan.isAllowEdit(this)) {
       return false
     };
     if (!this.data.pang.id) {
@@ -140,7 +140,7 @@ Page({
   
   //------------------------------------------------------ff
   makeColonGlint: function () {
-    if (!this.isAllowEdit()) {
+    if (!pangzhan.isAllowEdit(this)) {
       return false
     };
     let that = this;
@@ -169,7 +169,7 @@ Page({
    * case index,表示顺序序号
    */
   getTime: function (e) {
-    if (!this.isAllowEdit()) {
+    if (!pangzhan.isAllowEdit(this)) {
       return false
     };
     let prop = `pang.${e.currentTarget.dataset.index}`
@@ -196,149 +196,79 @@ Page({
    * 上传照片
    */
   uploadImages: function (e) {
-    if (!this.isAllowEdit()) {
+    if (!pangzhan.isAllowEdit(this)) {
       return false
     };
-    // if (!this.data.pang.id) {
-    //   wx.showToast({
-    //     title: '旁站不存在',
-    //   })
-    //   return;
-    // }
     let that = this;
     wx.chooseImage({
       count: 6, // 默认9
       sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
       sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
       success: function (res) {
-        if (e.currentTarget.dataset.index == "tryDataUrl") {
-          let len1 = that.data.pang.tryDataUrl.length;
-          let len2 = res.tempFilePaths.length;
-          if (len2 > 8 - len1) {
-            res.tempFilePaths.length = 9 - len1;
-          }
-          util.uploadImgPromises(res.tempFilePaths, function (imgs) {
-
-            that.setData({
-              ['pang.tryDataUrl']: that.data.pang.tryDataUrl ? that.data.pang.tryDataUrl.concat(imgs) : imgs,
-              // actualDeepImg:null
-            })
-          });
+        let index = e.currentTarget.dataset.index;
+        let len1 = that.data.pang[index].length;
+        let len2 = res.tempFilePaths.length;
+        if (len2 > 8 - len1) {
+          res.tempFilePaths.length = 9 - len1;
         }
+        util.uploadImgPromises(res.tempFilePaths, function (imgs) {
+          that.setData({
+            ['pang.' + index]: that.data.pang[index] ? that.data.pang[index].concat(imgs) : imgs,
+          })
+        });
       }
     })
   },
   updateImagesOrSave: function (e) {
-    if (!this.isAllowEdit()) {
+    if (!pangzhan.isAllowEdit(this)) {
       return false
     };
     let that = this;
-    console.log(e);
-    if (e.currentTarget.dataset.index == "tryDataUrl") {
-      if (that.data.pang.tryDataUrl.length > 0) {
-        that.updatePangzhan();
-      } else {
-        wx.showToast({
-          title: '照片不能为空',
-        })
-      }
-
+    let index = e.currentTarget.dataset.index;
+    if (that.data.pang[index].length > 0) {
+      that.updatePangzhan();
+    } else {
+      Toptips("照片不能为空");
     }
   },
   deletePic: function (e) {
-    if (!this.isAllowEdit()) {
+    if (!pangzhan.isAllowEdit(this)) {
       return false
     };
     console.log(e);
     let index = e.currentTarget.dataset.index;
     let stepindex = e.currentTarget.dataset.stepindex;
     let that = this;
-
-    console.log(that.data.tempFilePaths);
-    if (stepindex == "tryDataUrl") {//下钢筋笼
-      that.data.pang.tryDataUrl.splice(index, 1);
-      this.setData({
-        ['pang.tryDataUrl']: that.data.pang.tryDataUrl
-      })
-    }
-  }, 
-
+    that.data.pang[stepindex].splice(index, 1);
+    this.setData({
+      ['pang.' + stepindex]: that.data.pang[stepindex]
+    })
+  },
   bindTimeChange: function (e) {
-    if (!this.isAllowEdit()) {
+    if (!pangzhan.isAllowEdit(this)) {
       return false
     };
-    // if (!this.data.pang.id) {
-    //   wx.showToast({
-    //     title: '旁站不存在',
-    //   })
-    //   return;
-    // }
-    console.log(e);
-    let date;
-    let time = util.formatTime(new Date());
-    switch (e.currentTarget.dataset.index) {
-      case 'finishPileStartTime':
-        date = this.data.finishPileStartTime.split(' ')[0];
-        this.setData({
-          finishPileStartTime: date + " " + e.detail.value + ":00"
-        })
-        break;
-      case 'finishPileEndTime':
-        date = this.data.finishPileEndTime.split(' ')[0];
-        this.setData({
-          finishPileEndTime: date + " " + e.detail.value + ":00"
-        })
-        break;
-      case 'dropCageEndTime':
-        date = this.data.dropCageStartTime.split(' ')[0];
-        this.setData({
-          dropCageEndTime: date + " " + e.detail.value + ":00"
-        })
-        break;
-      case 'dropCageEndTime':
-        date = this.data.dropCageStartTime.split(' ')[0];
-        this.setData({
-          dropCageEndTime: date + " " + e.detail.value + ":00"
-        })
-        break;
-      case 'secondCleanStartTime':
-        date = this.data.secondCleanStartTime.split(' ')[0];
-        this.setData({
-          secondCleanStartTime: date + " " + e.detail.value + ":00"
-        })
-        break;
-      case 'secondCleanEndTime':
-        date = this.data.secondCleanEndTime.split(' ')[0];
-        this.setData({
-          secondCleanEndTime: date + " " + e.detail.value + ":00"
-        })
-        break;
-      case 'perfusionStartTime':
-        date = this.data.perfusionStartTime.split(' ')[0];
-        this.setData({
-          perfusionStartTime: date + " " + e.detail.value + ":00"
-        })
-        break;
-      case 'perfusionEndTime':
-        date = this.data.perfusionEndTime.split(' ')[0];
-        this.setData({
-          perfusionEndTime: date + " " + e.detail.value + ":00"
-        })
-        break;
+    let whichTime = e.currentTarget.dataset.index
+    console.log("whichTime", whichTime);
+    if (!this.data.pang[whichTime]) {
+      console.log("时间字段出错", this.data.pang[whichTime]);
+      return;
     }
-
+    let data = this.data.pang[whichTime].split(' ')[0] + " " + e.detail.value + ":00";
+    this.setData({
+      [`pang.${whichTime}`]: data
+    })
+    console.log('picker发送选择改变，携带值为', e.detail.value, this.data.pang[whichTime]);
     this.updatePangzhan();
-
-    console.log('picker发送选择改变，携带值为', e.detail.value);
-
   },
+  // 
 
   // -----------------------------------------------------------------编辑框三个监听事件
   /**edit
    * 切换成可编辑状态
    */
   toEdit: function (e) {
-    if (!this.isAllowEdit()) {
+    if (!pangzhan.isAllowEdit(this)) {
       return false
     };
     let isEdit = `pang.is${e.currentTarget.dataset.index}Edit`
@@ -531,23 +461,23 @@ Page({
   },
 
   // 是否可以修改
-  isAllowEdit: function () {  
-    if (this.data.pang.status >= 3) {
-      console.log('旁站状态，不允许修改');
-      return false;
-    }
-    var roles = wx.getStorageSync('roles');
-    var currentProjectId = wx.getStorageSync('currentProjectId');
-    var isAllowRole = false;
-    roles.forEach(function (v) {
-      if ((v.roleName == '专监' || v.roleName == '监理员') && v.projectId == currentProjectId) {
-        isAllowRole = true;
-        return false;
-      }
-    })
-    if (!isAllowRole) {
-      console.log('身份不是专监或监理员，不允许修改');
-      return false
-    }
-  }
+  // isAllowEdit: function () {  
+  //   if (this.data.pang.status >= 3) {
+  //     console.log('旁站状态，不允许修改');
+  //     return false;
+  //   }
+  //   var roles = wx.getStorageSync('roles');
+  //   var currentProjectId = wx.getStorageSync('currentProjectId');
+  //   var isAllowRole = false;
+  //   roles.forEach(function (v) {
+  //     if ((v.roleName == '专监' || v.roleName == '监理员') && v.projectId == currentProjectId) {
+  //       isAllowRole = true;
+  //       return false;
+  //     }
+  //   })
+  //   if (!isAllowRole) {
+  //     console.log('身份不是专监或监理员，不允许修改');
+  //     return false
+  //   }
+  // }
 })  

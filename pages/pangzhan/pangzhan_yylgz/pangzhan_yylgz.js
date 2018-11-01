@@ -154,197 +154,72 @@ Page({
    * 上传照片
    */
   uploadImages: function (e) {
-    if (!this.isAllowEdit()) {
+    if (!pangzhan.isAllowEdit(this)) {
       return false
     };
-    if (!this.data.pang.id) {
-      wx.showToast({
-        title: '旁站不存在',
-      })
-      return;
-    }
     let that = this;
     wx.chooseImage({
-      count: e.currentTarget.dataset.index == "weldingUrlAndTime" ? 1 : 6, // 默认9
+      count: 6, // 默认9
       sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
       sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
       success: function (res) {
-        if (e.currentTarget.dataset.index == "lastTenHitLrrigationUrl"){
-          let len1 = that.data.pang.lastTenHitLrrigationUrl.length;
-          let len2 = res.tempFilePaths.length;
-          if (len2 > 8 - len1) {
-            res.tempFilePaths.length = 9 - len1;
-          }
-          util.uploadImgPromises(res.tempFilePaths, function (imgs) {
-            that.setData({
-              ['pang.lastTenHitLrrigationUrl']: that.data.pang.lastTenHitLrrigationUrl ? that.data.pang.lastTenHitLrrigationUrl.concat(imgs) : imgs,
-            })
-          });
+        let index = e.currentTarget.dataset.index;
+        let len1 = that.data.pang[index].length;
+        let len2 = res.tempFilePaths.length;
+        if (len2 > 8 - len1) {
+          res.tempFilePaths.length = 9 - len1;
         }
-        else if (e.currentTarget.dataset.index == "weldingUrlAndTime"){
-          // let len1 = that.data.pang.weldingUrlAndTime.length;
-          // let len2 = res.tempFilePaths.length;
-          // let time = util.formatTime(new Date());
-          // if (len2 > 8 - len1) {
-          //   res.tempFilePaths.length = 9 - len1;
-          // }
-          let time = util.formatTime(new Date());
-          util.uploadImgPromises(res.tempFilePaths, function (imgs) {
-            that.setData({
-              ['pang.weldingUrlAndTime']: that.data.pang.weldingUrlAndTime ? that.data.pang.weldingUrlAndTime.concat([{ url: imgs[0], time: time }]) : [{ url: imgs[0],time:time }]
-            })
-          });
-        }
-        else if (e.currentTarget.dataset.index == "deptRockUrl") {
-          let len1 = that.data.pang.deptRockUrl.length;
-          let len2 = res.tempFilePaths.length;
-          if (len2 > 8 - len1) {
-            res.tempFilePaths.length = 9 - len1;
-          }
-          util.uploadImgPromises(res.tempFilePaths, function (imgs) {
-            that.setData({
-              ['pang.deptRockUrl']: that.data.pang.deptRockUrl ? that.data.pang.deptRockUrl.concat(imgs) : imgs
-            })
-          });
-        }
+        util.uploadImgPromises(res.tempFilePaths, function (imgs) {
+          that.setData({
+            ['pang.' + index]: that.data.pang[index] ? that.data.pang[index].concat(imgs) : imgs,
+          })
+        });
       }
     })
   },
-
-  updateImagesOrSave:function(e){
-    if (!this.isAllowEdit()) {
+  updateImagesOrSave: function (e) {
+    if (!pangzhan.isAllowEdit(this)) {
       return false
     };
     let that = this;
-    console.log(e);
-    if (e.currentTarget.dataset.index == "lastTenHitLrrigationUrl") {
-      if (that.data.pang.lastTenHitLrrigationUrl.length > 0){
-        that.updatePangzhan();
-      }else{
-        wx.showToast({
-          title: '照片不能为空',
-        })
-      }
-      
-    }
-    else if (e.currentTarget.dataset.index == "weldingUrlAndTime"){
-      if (that.data.pang.weldingUrlAndTime.length > 0){
-        that.updatePangzhan();
-      }else{
-        wx.showToast({
-          title: '照片不能为空',
-        })
-      }
-    }
-    else if (e.currentTarget.dataset.index == "deptRockUrl") {
-      if (that.data.pang.deptRockUrl.length > 0) {
-        that.updatePangzhan();
-      } else {
-        wx.showToast({
-          title: '照片不能为空',
-        })
-      }
+    let index = e.currentTarget.dataset.index;
+    if (that.data.pang[index].length > 0) {
+      that.updatePangzhan();
+    } else {
+      Toptips("照片不能为空");
     }
   },
-
   deletePic: function (e) {
-    if (!this.isAllowEdit()) {
+    if (!pangzhan.isAllowEdit(this)) {
       return false
     };
     console.log(e);
     let index = e.currentTarget.dataset.index;
     let stepindex = e.currentTarget.dataset.stepindex;
     let that = this;
-    
-    console.log(that.data.tempFilePaths);
-    if (stepindex == "lastTenHitLrrigationUrl"){//
-      that.data.pang.lastTenHitLrrigationUrl.splice(index, 1);
-      this.setData({
-        ['pang.lastTenHitLrrigationUrl']: that.data.pang.lastTenHitLrrigationUrl
-      })
-    } else if (stepindex == "actualDeepImg") {//
-      that.data.pang.actualDeepImg.splice(index, 1);
-      this.setData({
-        ['pang.actualDeepImg']: that.data.pang.actualDeepImg
-      })
-    }
-    else if (stepindex == "deptRockUrl") {//
-      that.data.pang.deptRockUrl.splice(index, 1);
-      this.setData({
-        ['pang.deptRockUrl']: that.data.pang.deptRockUrl
-      })
-    }
-  }, 
-
+    that.data.pang[stepindex].splice(index, 1);
+    this.setData({
+      ['pang.' + stepindex]: that.data.pang[stepindex]
+    })
+  },
   bindTimeChange: function (e) {
-    if (!this.isAllowEdit()) {
+    if (!pangzhan.isAllowEdit(this)) {
       return false
     };
-    if (!this.data.pang.id) {
-      wx.showToast({
-        title: '旁站不存在',
-      })
+    let whichTime = e.currentTarget.dataset.index
+    console.log("whichTime", whichTime);
+    if (!this.data.pang[whichTime]) {
+      console.log("时间字段出错", this.data.pang[whichTime]);
       return;
     }
-    console.log(e);
-    let date;
-    let time = util.formatTime(new Date());
-    switch (e.currentTarget.dataset.index) {
-      case 'startTime':
-        date = this.data.startTime.split(' ')[0];
-        this.setData({
-          startTime: date + " " + e.detail.value + ":00"
-        })
-        break;
-      case 'endTime':
-        date = this.data.endTime.split(' ')[0];
-        this.setData({
-          endTime: date + " " + e.detail.value + ":00"
-        })
-        break;
-      case 'dropCageEndTime':
-        date = this.data.dropCageStartTime.split(' ')[0];
-        this.setData({
-          dropCageEndTime: date + " " + e.detail.value + ":00"
-        })
-        break;
-      case 'dropCageEndTime':
-        date = this.data.dropCageStartTime.split(' ')[0];
-        this.setData({
-          dropCageEndTime: date + " " + e.detail.value + ":00"
-        })
-        break;
-      case 'secondCleanStartTime':
-        date = this.data.secondCleanStartTime.split(' ')[0];
-        this.setData({
-          secondCleanStartTime: date + " " + e.detail.value + ":00"
-        })
-        break;
-      case 'secondCleanEndTime':
-        date = this.data.secondCleanEndTime.split(' ')[0];
-        this.setData({
-          secondCleanEndTime: date + " " + e.detail.value + ":00"
-        })
-        break;
-      case 'perfusionStartTime':
-        date = this.data.perfusionStartTime.split(' ')[0];
-        this.setData({
-          perfusionStartTime: date + " " + e.detail.value + ":00"
-        })
-        break;
-      case 'perfusionEndTime':
-        date = this.data.perfusionEndTime.split(' ')[0];
-        this.setData({
-          perfusionEndTime: date + " " + e.detail.value + ":00"
-        })
-        break;
-    }
-
+    let data = this.data.pang[whichTime].split(' ')[0] + " " + e.detail.value + ":00";
+    this.setData({
+      [`pang.${whichTime}`]: data
+    })
+    console.log('picker发送选择改变，携带值为', e.detail.value, this.data.pang[whichTime]);
     this.updatePangzhan();
-
-    console.log('picker发送选择改变，携带值为', e.detail.value);
-   
   },
+  // 
   // -----------------------------------------------------------------------------------------------------------------------------
   /**edit
    * 切换成可编辑状态

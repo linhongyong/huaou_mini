@@ -24,7 +24,7 @@
         </view>
     </form>
 
-    <view class='display-flex-center-center'  wx:else bindtap='toEdit' data-index="pileStartNum">
+    <view class='display-flex-center-center'  wx:else data-index="pileStartNum">
       <view class='font-666' wx:if="{{pang.pileStartNum == null}}">请输入</view>  
       <view class='' wx:else>{{ pang.pileStartNum }}</view>  
     </view>

@@ -21,7 +21,7 @@
 </picker> -->
 <view class='position-f bg-theme font-white display-flex-center-between' style='width:100%;line-height:60rpx' wx:if="{{projectList.length > 0}}">
   <text class='iconfont icon-caidan2 menu-icon' bindtap='toggleLeftPopup'></text>
-  <view>{{buildingList[currentBuildingIndex].buildingName}} - {{pangzhanType[currentPzIndex]}}</view>
+  <view>{{currentBuilding.buildingName}} - {{pangzhanType[currentPzIndex]}}</view>
   <text class='iconfont icon-xiaoxi menu-icon' bindtap='toMsg'><text style='font-size:26rpx;'>{{unreadNum ? unreadNum : ""}}</text></text>
 </view>
 
@@ -44,7 +44,7 @@
       <view class='s-list'>
         <radio-group class="radio-group" bindchange="changeBuilding">
           <label class="radio ng-textAuto1" wx:for="{{buildingList}}" wx:key="{{index}}">
-            <radio style='' value="{{index}}" color="#3B94F1" checked='{{ index==currentBuildingIndex }}' />
+            <radio style='' value="{{index}}" color="#3B94F1" checked='{{ item.id==currentBuilding.id }}' />
            {{item.buildingName}}
           </label>
         </radio-group>
@@ -60,10 +60,10 @@
             <radio style='' value="1" color="#3B94F1" checked='{{ currentPzIndex == 1 }}' />水泥搅拌桩 </label>
           <label class="radio">
             <radio style='' value="2" color="#3B94F1" checked='{{ currentPzIndex == 2 }}' />预应力管桩 </label>
-          <label class="radio">
+          <!-- <label class="radio">
             <radio style='' value="3" color="#3B94F1" checked='{{ currentPzIndex == 3 }}' />混泥土浇筑 </label>
           <label class="radio">
-            <radio style='' value="4" color="#3B94F1" checked='{{ currentPzIndex == 4 }}' />塔吊安装 </label>
+            <radio style='' value="4" color="#3B94F1" checked='{{ currentPzIndex == 4 }}' />塔吊安装 </label> -->
         </radio-group>
       </view>
     </view>
@@ -72,7 +72,7 @@
       <view class='s-list'>
         <radio-group class="radio-group" bindchange="changeProject">
           <label class="radio" wx:for="{{projectList}}" wx:key="{{index}}">
-            <radio style='' value="{{index}}" color="#3B94F1" checked='{{ index==currentProject }}' />
+            <radio style='' value="{{index}}" color="#3B94F1" checked='{{ item.id==currentProject.id }}' />
             {{item.projectName}}
           </label>
         </radio-group>

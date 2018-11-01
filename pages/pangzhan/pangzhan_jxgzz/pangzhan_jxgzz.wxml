@@ -8,26 +8,6 @@
   <text wx:if="{{buildingCode}}">{{buildingCode}}幢</text>
 </view>
 <view style='height:30px;line-height:30px'></view>
-<!-- <view class='text-c'>-----------请先输入楼号和桩号-----------</view> -->
-<!--楼栋号  -->
-<!-- <view class='padding-h-20 display-flex-center-between bottom-line height-80  bg-white'>
-  <view>楼栋号</view>
-  <view class='display-flex-center-right'>
-    <form bindsubmit="onInputSave" data-index="buildingCode" class='' wx:if="{{ isbuildingCodeEdit}}">
-        <view class='display-flex-center'>
-          <input  focus="true" class='input' type='number' placeholder='请输入...'  cursor-spacing="30" name="value" value='' ></input>
-          <text class='iconfont icon-17cuowu padding-l-5  margin-l-10' style='font-size:50rpx;color:red' bindtap='toDone' data-index="buildingCode"></text>
-          <button formType="submit" class='btn font-theme bg-white clear-btn-default margin-l-10'>
-            <text class='iconfont icon-dui1 padding-l-5' style='font-size:60rpx;'></text>
-          </button>
-        </view>
-    </form>
-    <view class='display-flex-center-center'  wx:else bindtap='toEdit' data-index="buildingCode">
-      <view class='font-666' wx:if="{{buildingCode == null}}">请输入楼栋号</view>  
-      <view class='' wx:else>{{ buildingCode }}</view>  
-    </view>
-  </view>
-</view>  -->
 <!--桩号  -->
 <view class='padding-h-20 display-flex-center-between bottom-line height-80  bg-white'>
   <view>桩号</view>
@@ -197,7 +177,7 @@
 
     <view class='display-flex-center-center'  wx:else bindtap='toEdit' data-index="strongBar">
       <view class='font-666' wx:if="{{pang.strongBar == null}}">请输入</view>  
-      <view class='' wx:else>Φ{{ pang.strongBar }}</view>  
+      <view class='' wx:else>{{ pang.strongBar }}</view>  
     </view>
   </view>
 </view>
@@ -267,7 +247,7 @@
 <view class='text-c'>----------------设计情况---------------</view> 
 <!-- 平台标高A  -->
 <view class='padding-h-20 display-flex-center-between bottom-line height-80  bg-white'>
-  <view>平台标高A（m）</view>
+  <view>平台标高/护筒标高A（m）</view>
   <view class='display-flex-center-right'>
     <form bindsubmit="onInputSave" data-index="platformElevation" class='' wx:if="{{ pang.isplatformElevationEdit}}">
         <view class='display-flex-center'>
@@ -448,7 +428,7 @@
     </view>
   </view>
 <!-- 地面标高 D  -->
-<view class='padding-h-20 display-flex-center-between bottom-line height-80  bg-white'>
+<!-- <view class='padding-h-20 display-flex-center-between bottom-line height-80  bg-white'>
   <view>地面标高 D（m）</view>
   <view class='display-flex-center-right'>
     <form bindsubmit="onInputSave" data-index="groundElevation" class='' wx:if="{{ pang.isgroundElevationEdit}}">
@@ -466,11 +446,11 @@
       <view class='' wx:else>{{ pang.groundElevation }}</view>  
     </view>
   </view>
-</view>
+</view> -->
 
   <view class='padding-h-20 display-flex-center-between bottom-line height-80' style='background-color:#F4F5F9'>
-  <view>有效桩长C+E-D（m）</view>
-  <view wx:if="{{pang.pileTopHeight && pang.groundElevation && pang.actualDeep}}">
+  <view>有效桩长C+E-A（m）</view>
+  <view wx:if="{{pang.pileTopHeight && pang.platformElevation && pang.actualDeep}}">
   <!-- {{ pang.platformElevation - pang.pileTopHeight - 0.5}} -->
   {{ ecd }}
   </view>
@@ -673,7 +653,7 @@
   </view>
 <!-- 入岩时间 -->
   <view class='padding-h-20 display-flex-center-between bottom-line height-80 bg-white'>
-    <view>入眼时间</view>
+    <view>入岩时间</view>
     <view class='display-flex-center-right'>
       <view class='display-flex-center-right' wx:if="{{pang.rockTime != null}}">
         <picker mode="time" value="{{tools.formatTimeTerse(pang.rockTime)}}" start="00:00" end="23:59" bindchange="bindTimeChange" data-index="rockTime" disabled='{{pang.status>=2?true:false}}'>
@@ -913,6 +893,7 @@
   <template is='administrator' data='{{administrator}}'/>
   <view class=' margin-h-auto padding-v-30' style='width:80%'>
     <button wx:if="{{pang.status==1}}" class='btn bg-theme margin-h-auto font-white' style='width:60%;' bindtap='submitToCheck' >确认完成</button>
+    <view class='font-14 padding-10' wx:if="{{(pang.status==2 || pang.status==4) && isCanWrite}}">此旁站已确认完成待审核，审核之前还可以进行修改。</view>
     <button  wx:if="{{(pang.status==2 || pang.status==4) && isCanCheck}}" class='btn bg-theme margin-h-auto font-white' style='width:60%;' bindtap='submitToCheck'>确认验收</button>
     <button  wx:if="{{(pang.status==2 || pang.status==3) && isCanConfirm}}" class='btn bg-theme margin-h-auto font-white' style='width:60%;' bindtap='submitToCheck'>确认（施工方）</button>
   </view>

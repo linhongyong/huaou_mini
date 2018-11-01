@@ -3,8 +3,8 @@ var Toptips = require('../components/toptips/toptips.js');
 
 //项目配置ff**********************************************************************************************************
 const appName = '华瓯监理';
-// var website = "https://www.believeyou.top";
-var website = "https://www.therethey.com";
+var website = "https://www.believeyou.top";
+// var website = "https://www.therethey.com";
 const logo = 'logo.png';
 
 //请求函数封装ff********************************************************************************************************
