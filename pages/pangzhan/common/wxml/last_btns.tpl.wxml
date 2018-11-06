@@ -1,0 +1,9 @@
+<!-- 监理人员 -->
+<template name='lastBtns'>
+  <view class=' margin-h-auto padding-v-30' style='width:80%'>
+    <button wx:if="{{pang.status==1}}" class='btn bg-theme margin-h-auto font-white' style='width:60%;' bindtap='submitToCheck' >确认完成</button>
+    <view class='font-14 padding-10' wx:if="{{(pang.status==2 || pang.status==4) && isCanWrite}}">此旁站已确认完成待审核，审核之前还可以进行修改。</view>
+    <button  wx:if="{{(pang.status==2 || pang.status==4) && isCanCheck}}" class='btn bg-theme margin-h-auto font-white' style='width:60%;' bindtap='submitToCheck'>确认验收</button>
+    <button  wx:if="{{(pang.status==2 || pang.status==3) && isCanConfirm}}" class='btn bg-theme margin-h-auto font-white' style='width:60%;' bindtap='submitToCheck'>确认（施工方）</button>
+  </view>
+</template>

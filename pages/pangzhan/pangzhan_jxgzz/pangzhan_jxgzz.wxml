@@ -2,10 +2,11 @@
 <zan-toptips id="zan-toptips" content="{{ content }}" is-show="{{ $zanui.toptips.show }}" /> 
 <zan-dialog id="zan-base-dialog"></zan-dialog>
 <import src="../../../wxml/administrator_tpl.wxml" />
+<import src="../common/wxml/last_btns.tpl.wxml" />
 
 <view class='bg-theme font-white text-c toptipbar' style='height:30px;line-height:30px; z-index:10'>
   <text wx:if="{{currentProjectName}}">{{currentProjectName}} </text>
-  <text wx:if="{{buildingCode}}">{{buildingCode}}幢</text>
+  <text wx:if="{{pang.pileCode}}">{{pang.pileCode}}桩</text>
 </view>
 <view style='height:30px;line-height:30px'></view>
 <!--桩号  -->
@@ -106,7 +107,7 @@
   <view class='display-flex-center-right'>
     <form bindsubmit="onInputSave" data-index="mainBarCount" class='' wx:if="{{ pang.ismainBarCountEdit}}">
         <view class='display-flex-center'>
-          <input  focus="true" class='input' type='text' placeholder='请输入...'  cursor-spacing="30" name="value" value='' ></input>
+          <input  focus="true" class='input' type='digit' placeholder='请输入...'  cursor-spacing="30" name="value" value='' ></input>
           <text class='iconfont icon-17cuowu padding-l-5  margin-l-10' style='font-size:50rpx;color:red' bindtap='toDone' data-index="mainBarCount"></text>
           <button formType="submit" class='btn font-theme bg-white clear-btn-default margin-l-10'>
             <text class='iconfont icon-dui1 padding-l-5' style='font-size:60rpx;'></text>
@@ -126,7 +127,7 @@
   <view class='display-flex-center-right'>
     <form bindsubmit="onInputSave" data-index="mainBarType" class='' wx:if="{{ pang.ismainBarTypeEdit}}">
         <view class='display-flex-center'>
-          <input focus="true" class='input' type='text' placeholder='请输入...'  cursor-spacing="30" name="value" value='' ></input>
+          <input focus="true" class='input' type='digit' placeholder='请输入...'  cursor-spacing="30" name="value" value='' ></input>
           <text class='iconfont icon-17cuowu padding-l-5  margin-l-10' style='font-size:50rpx;color:red' bindtap='toDone' data-index="mainBarType"></text>
           <button formType="submit" class='btn font-theme bg-white clear-btn-default margin-l-10'>
             <text class='iconfont icon-dui1 padding-l-5' style='font-size:60rpx;'></text>
@@ -372,6 +373,7 @@
     <view>开孔时间</view>
     <view class='display-flex-center-right'>
       <view class='display-flex-center-right' wx:if="{{pang.openTime != null}}">
+      <!-- <view class="picker">{{tools.formatTimeTerse(pang.openTime)}}</view> -->
         <picker mode="time" value="{{tools.formatTimeTerse(pang.openTime)}}" start="00:00" end="23:59" bindchange="bindTimeChange" data-index="openTime" disabled='{{pang.status>=2?true:false}}'>
           <view class="picker">{{tools.formatTimeTerse(pang.openTime)}}</view>
         </picker>
@@ -583,9 +585,9 @@
 </view>
 
 <!-- 成渣厚度10 sedimentHeight 沉渣厚度       （实际孔深 - 二次测量孔深）-->
-<view class='padding-h-20 display-flex-center-between bottom-line height-80  bg-white'>
+<view class='padding-h-20 display-flex-center-between bottom-line height-80' style='background-color:#F4F5F9'>
   <view>沉渣厚度（mm）</view>
-  <view wx:if="{{pang.actualDeep && pang.secondActualDeep}}">{{ (pang.actualDeep - pang.secondActualDeep)*1000}}</view>
+  <view wx:if="{{pang.actualDeep && pang.secondActualDeep}}">{{ chengZhaHouDu}}</view>
 </view>
 
 <!-- 泥浆比重  slurryProp-->
@@ -891,12 +893,7 @@
 
 <view class=' bg-white'>
   <template is='administrator' data='{{administrator}}'/>
-  <view class=' margin-h-auto padding-v-30' style='width:80%'>
-    <button wx:if="{{pang.status==1}}" class='btn bg-theme margin-h-auto font-white' style='width:60%;' bindtap='submitToCheck' >确认完成</button>
-    <view class='font-14 padding-10' wx:if="{{(pang.status==2 || pang.status==4) && isCanWrite}}">此旁站已确认完成待审核，审核之前还可以进行修改。</view>
-    <button  wx:if="{{(pang.status==2 || pang.status==4) && isCanCheck}}" class='btn bg-theme margin-h-auto font-white' style='width:60%;' bindtap='submitToCheck'>确认验收</button>
-    <button  wx:if="{{(pang.status==2 || pang.status==3) && isCanConfirm}}" class='btn bg-theme margin-h-auto font-white' style='width:60%;' bindtap='submitToCheck'>确认（施工方）</button>
-  </view>
+  <template is='lastBtns' data='{{pang, ...{isCanWrite, isCanCheck, isCanConfirm} }}'/>
 </view>
 
 

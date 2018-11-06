@@ -3,9 +3,35 @@ var util = require('../../../../utils/util.js')
 const Toptips = require('../../../../components/toptips/index.js');
 
 /**
+ * OnLoad中的公共部分
+ */
+function pangzhanOnLoad(){
+  let that = this;
+  let date = new Date();
+  let hour = date.getHours();
+  let minute = date.getMinutes();
+  if (hour < 10) { hour = "0" + hour }
+  if (minute < 10) { minute = "0" + minute }
+  this.setData({
+    hour: hour,
+    minute: minute,
+    administrator: app.globalData.administrator,
+    isCanCheck: app.globalData.isCanCheck,
+    isCanConfirm: app.globalData.isCanConfirm,
+    isCanWrite: app.globalData.isCanWrite,
+    currentProjectName: app.globalData.project.projectName
+  })
+  this.makeColonGlint();
+}
+/**
  * 记录用户对旁站数据采集的操作
  */
-function savaOperationLog (){
+function savaOperationLog (msg){
+  if (!msg){
+    msg = "小程序旁站数据采集"
+  }else{
+    msg = `小程序旁站数据采集——${msg}`
+  }
   let that = this;
   let data = {
     pangzhanId: that.data.pang.id,
@@ -13,7 +39,7 @@ function savaOperationLog (){
     typeName: null,
     buildingId: app.globalData.building.id,
     projectId: app.globalData.project.id,
-    editPoint: '小程序旁站数据采集',
+    editPoint: msg,
     reason: null,
     editerId: app.globalData.userInfo.id
   }
@@ -73,41 +99,49 @@ function  setMsgStatus(id) {
 function submitToCheck() {
   let that = this;
   let status;
+  let msg = "";
   //1.确定更新内容
   if (that.data.pang.status == 1) {
     that.setData({
       ['pang.endTime']: new Date,
+      ['pang.lookEndTime']: new Date,//兼容水泥
+      ['pang.superName']: app.globalData.roles[0].userName,
     })
+    msg = "提交旁站监理数据"
     status = 2;
   } else if (that.data.pang.status == 2) {
     if (app.globalData.isCanCheck) {//有权验收
       status = 3;
+      msg = "验收旁站监理数据"
     }
     if (app.globalData.isCanConfirm) {//有权确认
       status = 4;
+      msg = "确认旁站监理数据"
     }
     if (app.globalData.isCanCheck && app.globalData.isCanConfirm) {
       status = 5;
+      msg = "确认并验收旁站监理数据"
     }
   } else if (that.data.pang.status == 3) {
     if (app.globalData.isCanConfirm) {//有权确认
       status = 5;
+      msg = "确认旁站监理数据"
     }
   }
   else if (that.data.pang.status == 4) {
     if (app.globalData.isCanCheck) {//有权验收
       status = 5;
+      msg = "验收旁站监理数据"
     }
   }
   that.setData({
-    ['pang.superName']: app.globalData.roles[0].userName,
     ['pang.status']: status
   })
   //2.更新旁站
   that.updatePangzhan();
 
   //3.记录操作行为
-  this.savaOperationLog();
+  this.savaOperationLog(msg);
 
   //4.返回上一页
   setTimeout(function () {
@@ -129,6 +163,7 @@ function getOrCreate (url, okfn) {
       projectId: app.globalData.project.id,
       buildingId: app.globalData.building.id - 0,
       pileCode: that.data.pang.pileCode - 0,
+      pilestartnum: that.data.pang.pileStartNum - 0//兼容水泥旁站
     },
     success: function (res) {
       let obj = res.data.result ? res.data.result : {};
@@ -139,12 +174,13 @@ function getOrCreate (url, okfn) {
     }
   });
 }
-function updatePangzhan(url) {
+function updatePangzhan() {
   let that = this;
   if (!that.data.pang.status) {
     that.setData({
       ['pang.status']: 1,
       ['pang.startTime']: new Date,
+      ['pang.lookStartTime']: new Date,//兼容水泥的
       ['pang.projectName']: app.globalData.project.projectName
     })
   }
@@ -153,7 +189,7 @@ function updatePangzhan(url) {
   // data.openTime = data.startTime;
   // data.stopTime = data.endTime;
   util.getDataByAjax({
-    url,
+    url: that.data.updatePangzhanUrl,
     method: "Post",
     data,
     success: function (res) {
@@ -226,26 +262,14 @@ function updatePangzhan(url) {
   //         // ['pang.mainBarType']: obj.mainBar ? obj.mainBar.split('φ')[1] : null,
   //         ['pang.fe']: math.accDiv(obj.actualVolume, obj.theoryVolume, 2)
   //       })
-
   //     },
   //     error: function () {
-
   //     }
   //   });
   // },
 
-
-
-
-
-
-
-
-
-
-
-
 module.exports = {
+  pangzhanOnLoad,
   savaOperationLog,
   isAllowEdit,
   submitToCheck,

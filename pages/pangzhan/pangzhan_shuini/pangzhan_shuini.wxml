@@ -2,11 +2,11 @@
 <zan-toptips id="zan-toptips" content="{{ content }}" is-show="{{ $zanui.toptips.show }}" /> 
 <zan-dialog id="zan-base-dialog"></zan-dialog>
 <import src="../../../wxml/administrator_tpl.wxml" />
-
+<import src="../common/wxml/last_btns.tpl.wxml" />
 
 <view class='bg-theme font-white text-c toptipbar' style='height:30px;line-height:30px; z-index:10'>
-  <text wx:if="{{currentProjectName}}">{{currentProjectName}} </text>
-  <text wx:if="{{buildingCode}}">{{buildingCode}}幢</text>
+   <text wx:if="{{currentProjectName}}">{{currentProjectName}} </text>
+  <text wx:if="{{pang.pileStartNum}}">{{pang.pileStartNum}}桩</text>
 </view>
 <view style='height:30px;line-height:30px'></view>
  
@@ -393,9 +393,10 @@
 
 </view>
 <view class=' bg-white'>
-    <template is='administrator' data='{{administrator}}'/>
-  <view class=' margin-h-auto padding-v-30' style='width:80%'>
+  <template is='administrator' data='{{administrator}}'/>
+  <template is='lastBtns' data='{{pang, ...{isCanWrite, isCanCheck, isCanConfirm} }}'/>
+  <!-- <view class=' margin-h-auto padding-v-30' style='width:80%'>
     <button wx:if="{{pang.status==1}}" class='btn bg-theme margin-h-auto font-white' style='width:60%;' bindtap='submitToCheck' >确认完成</button>
     <button  wx:if="{{pang.status==2 && isWaitCheck}}" class='btn bg-theme margin-h-auto font-white' style='width:60%;' bindtap='submitToCheck'>确认验收</button>
-  </view>
+  </view> -->
 </view>

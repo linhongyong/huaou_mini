@@ -27,24 +27,12 @@ Page({
     result:{
       barCageCount: 2,
     },
+    updatePangzhanUrl: '/jxZkGzzPzjl/update'
   },
   onLoad: function (options) {
     Object.assign(this, pangzhan, uploadImages, textInput, time, radio)
-    let that = this;
-    let date = new Date();
-    let hour = date.getHours();
-    let minute = date.getMinutes();
-    if (hour < 10) { hour = "0" + hour }
-    if (minute < 10) { minute = "0" + minute }
-    this.setData({
-      hour: hour,
-      minute: minute,
-      administrator: app.globalData.administrator,
-      isCanCheck: app.globalData.isCanCheck,
-      isCanConfirm: app.globalData.isCanConfirm,
-      isCanWrite: app.globalData.isCanWrite,
-    })
-    this.makeColonGlint();
+    this.pangzhanOnLoad();
+    
     if (options.pileCode){
       this.setData({
         ['pang.pileCode']: options.pileCode,
@@ -97,9 +85,15 @@ Page({
       this.setData({
         ['pang.fe']: math.accDiv(obj.actualVolume, obj.theoryVolume, 2)
       })
-    }
-    this.savaOperationLog(this);
-    this.updatePangzhan('/jxZkGzzPzjl/update');
+    } 
+    // 成渣厚度
+    if (e.currentTarget.dataset.index == 'actualDeep' || e.currentTarget.dataset.index == 'secondActualDeep') {
+      this.setData({
+        chengZhaHouDu: math.accSub(pang.actualDeep, pang.secondActualDeep) * 1000
+      })
+    } 
+    this.savaOperationLog(e.currentTarget.dataset.index);
+    this.updatePangzhan();
   },
 
   afterGetOrCreate: function (obj) {
@@ -111,7 +105,8 @@ Page({
         ['pang.actualDeepImg']: obj.actualDeepImg ? JSON.parse(obj.actualDeepImg) : [],
         ['pang.barCageCountImg']: obj.barCageCountImg ? JSON.parse(obj.barCageCountImg) : [],
         ['pang.deptRockUrl']: obj.deptRockUrl ? JSON.parse(obj.deptRockUrl) : [],
-        ['pang.fe']: math.accDiv(obj.actualVolume, obj.theoryVolume, 2)
+        ['pang.fe']: math.accDiv(obj.actualVolume, obj.theoryVolume, 2),
+        chengZhaHouDu: math.accSub(obj.actualDeep, obj.secondActualDeep) * 1000
       })
     // })
   }

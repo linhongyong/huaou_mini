@@ -2,11 +2,11 @@
 <zan-toptips id="zan-toptips" content="{{ content }}" is-show="{{ $zanui.toptips.show }}" />
 <zan-dialog id="zan-base-dialog"></zan-dialog>
 <import src="../../../wxml/administrator_tpl.wxml" />
-
+<import src="../common/wxml/last_btns.tpl.wxml" />
 
 <view class='bg-theme font-white text-c toptipbar' style='height:30px;line-height:30px; z-index:10'>
-  <text wx:if="{{currentProjectName}}">{{currentProjectName}} </text>
-  <text wx:if="{{buildingCode}}">{{buildingCode}}幢</text>
+    <text wx:if="{{currentProjectName}}">{{currentProjectName}} </text>
+  <text wx:if="{{pang.pileCode}}">{{pang.pileCode}}桩</text>
 </view>
 <view style='height:30px;line-height:30px'></view>
 <view class='text-c'>-----------请先输入楼桩号-----------</view>
@@ -135,8 +135,7 @@
   <view class='display-flex-center-right'>
     <form bindsubmit="onInputSave" data-index="designDiameter" class='' wx:if="{{ pang.isdesignDiameterEdit}}">
       <view class='display-flex-center'>
-        Φ
-        <input focus="true" class='input' type='text' placeholder='请输入...' cursor-spacing="30" name="value" value=''></input>
+        <input focus="true" class='input' type='digit' placeholder='请输入...' cursor-spacing="30" name="value" value=''></input>
         <text class='iconfont icon-17cuowu padding-l-5  margin-l-10' style='font-size:50rpx;color:red' bindtap='toDone' data-index="designDiameter"></text>
         <button formType="submit" class='btn font-theme bg-white clear-btn-default margin-l-10'>
           <text class='iconfont icon-dui1 padding-l-5' style='font-size:60rpx;'></text>
@@ -146,7 +145,7 @@
 
     <view class='display-flex-center-center' wx:else bindtap='toEdit' data-index="designDiameter">
       <view class='font-666' wx:if="{{pang.designDiameter == null}}">请输入</view>
-      <view class='' wx:else>Φ{{ pang.designDiameter }}</view>
+      <view class='' wx:else>{{ pang.designDiameter }}</view>
     </view>
   </view>
 </view>
@@ -262,16 +261,15 @@
 
 <view class='text-c'>-----------施工情况-----------</view>
 <!-- 开始时间 -->
-<view class='padding-h-20 display-flex-center-between bottom-line height-80 bg-white'>
+<!-- <view class='padding-h-20 display-flex-center-between bottom-line height-80 bg-white'>
   <view>开始时间</view>
   <view class='display-flex-center-right'>
-    <view class='display-flex-center-right' wx:if="{{pang.pangzhan_starttime != null}}">
-      <picker mode="time" value="{{tools.formatTimeTerse(pang.pangzhan_starttime)}}" start="00:00" end="23:59" bindchange="bindTimeChange" data-index="pangzhan_starttime" disabled='{{pang.status>=2?true:false}}'>
-        <view class="picker">{{tools.formatTimeTerse(pang.pangzhan_starttime)}}</view>
+    <view class='display-flex-center-right' wx:if="{{pang.startTime != null}}">
+      <picker mode="time" value="{{tools.formatTimeTerse(pang.startTime)}}" start="00:00" end="23:59" bindchange="bindTimeChange" data-index="startTime" disabled='{{pang.status>=2?true:false}}'>
+        <view class="picker">{{tools.formatTimeTerse(pang.startTime)}}</view>
       </picker>
     </view>
-    <!-- <text class='padding-r-10 font-666' wx:else>点击记录时间</text> -->
-    <view class='display-flex-center-center' wx:if="{{ pang.pangzhan_starttime == null }}" bindtap='getTime' data-index="pangzhan_starttime">
+    <view class='display-flex-center-center' wx:if="{{ pang.startTime == null }}" bindtap='getTime' data-index="startTime">
       <view class='clock margin-h-auto display-flex-center-center'>
         <view class='display-flex-center-center'>
           <view class='time'>{{hour}}</view>
@@ -282,7 +280,7 @@
       </view>
     </view>
   </view>
-</view>
+</view> -->
 
   <!-- 施焊照片：照片路径和时间 -->
   <view class='bottom-line bg-white'>
@@ -293,9 +291,9 @@
       </view>
     </view>
     <view class='padding-v-10 ng-fl ' style=''>
-      <view class='margin-t-10 ng-fl-l position-r'  wx:for="{{pang.weldingUrlAndTime }}" wx:key="{{index}}"  style='margin-left:37rpx;background-color:#ccc;font-size:0px'>
+      <view class='margin-t-10 ng-fl-l position-r'  wx:for="{{pang.weldingUrlAndTime }}" wx:key="{{item}}"  style='margin-left:37rpx;background-color:#ccc;font-size:13px'>
         <view class='bg-white' style='width:200rpx;height:50rpx;text-align:center;'>第{{index+1}}节施焊</view>
-        <image src='{{item.url}}' style='width:200rpx;height:200rpx;' bindtap='preview' data-index="{{index}}" data-stepindex='weldingUrlAndTime'></image>
+        <image src='{{item}}' style='width:200rpx;height:200rpx;' bindtap='preview' data-index="{{index}}" data-stepindex='weldingUrlAndTime'></image>
         <view class='bg-white' style='width:200rpx;text-align:center;font-size:28rpx;'>{{item.time}}</view>
         <!-- <text class='iconfont icon-bad position-a font-ccc' data-index="{{index}}" bindtap='deletePic' style='font-size:50rpx;top:-26rpx;right:-26rpx;' data-stepindex="weldingUrlAndTime"></text> -->
       </view>
@@ -310,7 +308,7 @@
   <view class='display-flex-center-right'>
     <form bindsubmit="onInputSave" data-index="lastPressure" class='' wx:if="{{ pang.islastPressureEdit}}">
       <view class='display-flex-center'>
-        <input focus="true" class='input' type='text' placeholder='请输入...' cursor-spacing="30" name="value" value='' style='width:160rpx'></input>
+        <input focus="true" class='input' type='digit' placeholder='请输入...' cursor-spacing="30" name="value" value='' style='width:160rpx'></input>
         <text class='iconfont icon-17cuowu padding-l-5  margin-l-10' style='font-size:50rpx;color:red' bindtap='toDone' data-index="lastPressure"></text>
         <button formType="submit" class='btn font-theme bg-white clear-btn-default margin-l-10'>
           <text class='iconfont icon-dui1 padding-l-5' style='font-size:60rpx;'></text>
@@ -330,7 +328,7 @@
   <view class='display-flex-center-right'>
     <form bindsubmit="onInputSave" data-index="lastTenHitNum" class='' wx:if="{{ pang.islastTenHitNumEdit}}">
       <view class='display-flex-center'>
-        <input focus="true" class='input' type='text' placeholder='请输入...' cursor-spacing="30" name="value" value='' style='width:160rpx'></input>
+        <input focus="true" class='input' type='digit' placeholder='请输入...' cursor-spacing="30" name="value" value='' style='width:160rpx'></input>
         <text class='iconfont icon-17cuowu padding-l-5  margin-l-10' style='font-size:50rpx;color:red' bindtap='toDone' data-index="lastTenHitNum"></text>
         <button formType="submit" class='btn font-theme bg-white clear-btn-default margin-l-10'>
           <text class='iconfont icon-dui1 padding-l-5' style='font-size:60rpx;'></text>
@@ -351,7 +349,7 @@
   <view class='display-flex-center-right'>
     <form bindsubmit="onInputSave" data-index="lastTenHitLrrigation" class='' wx:if="{{ pang.islastTenHitLrrigationEdit}}">
       <view class='display-flex-center'>
-        <input focus="true" class='input' type='text' placeholder='请输入...' cursor-spacing="30" name="value" value='' style='width:160rpx'></input>
+        <input focus="true" class='input' type='digit' placeholder='请输入...' cursor-spacing="30" name="value" value='' style='width:160rpx'></input>
         <text class='iconfont icon-17cuowu padding-l-5  margin-l-10' style='font-size:50rpx;color:red' bindtap='toDone' data-index="lastTenHitLrrigation"></text>
         <button formType="submit" class='btn font-theme bg-white clear-btn-default margin-l-10'>
           <text class='iconfont icon-dui1 padding-l-5' style='font-size:60rpx;'></text>
@@ -406,8 +404,5 @@
 
 <view class=' bg-white'>
   <template is='administrator' data='{{administrator}}'/>
-   <view class=' margin-h-auto padding-v-30' style='width:80%'>
-    <button wx:if="{{pang.status==1}}" class='btn bg-theme margin-h-auto font-white' style='width:60%;' bindtap='submitToCheck' >确认完成</button>
-    <button  wx:if="{{pang.status==2 && isWaitCheck}}" class='btn bg-theme margin-h-auto font-white' style='width:60%;' bindtap='submitToCheck'>确认验收</button>
-  </view>
+  <template is='lastBtns' data='{{pang, ...{isCanWrite, isCanCheck, isCanConfirm} }}'/>
 </view>

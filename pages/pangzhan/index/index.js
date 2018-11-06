@@ -248,6 +248,7 @@ Page({
             isShowLoading: false,
 
             buildingList: [],
+            pangzhanList:[],
             currentBuilding: {}
           })
           app.globalData.building = {}

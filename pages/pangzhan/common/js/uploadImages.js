@@ -15,7 +15,12 @@ function uploadImages (e) {
     sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
     success: function (res) {
       let index = e.currentTarget.dataset.index;
-      let len1 = that.data.pang[index].length;
+      let len1;
+      if (that.data.pang[index] && that.data.pang[index].length){
+        len1 = that.data.pang[index].length;
+      }else{
+        len1 =0;
+      }
       let len2 = res.tempFilePaths.length;
       if (len2 > 8 - len1) {
         res.tempFilePaths.length = 9 - len1;
