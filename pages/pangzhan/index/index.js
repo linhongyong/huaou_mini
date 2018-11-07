@@ -2,11 +2,14 @@ var util = require('../../../utils/util.js')
 const Dialog = require('../../../components/dialog/dialog');
 const Toptips = require('../../../components/toptips/index.js');
 var login = require('../../../utils/login.js');
+const other = require('./other.js')
 let app = getApp();
 Page({
   data: {
     projectList: [],
     currentProject: {},
+    rangeColumnList:[],//桩号分页显示
+    curRange: -1,
     pangzhanType:[
       '机械灌注桩',
       '水泥搅拌桩',
@@ -27,7 +30,7 @@ Page({
 
   },
   onLoad: function(options) {
-
+    Object.assign(this, other)
     if (!util.isAuthorize()) {
       return; //弹出授权框
     } else {
@@ -98,6 +101,7 @@ Page({
     this.setData({
       currentBuilding: app.globalData.building
     })
+    this.getRangeColumnList();
     this.getPangzhanList();
   },
 
@@ -130,7 +134,7 @@ Page({
   },
   toDetail: function(e) {
     let currentPzIndex = app.globalData.currentPzIndex;
-    let pileCode = this.data.pangzhanList[e.currentTarget.dataset.index].pileCode;
+    let pileCode = this.data.pangzhanList[this.data.curRange][e.currentTarget.dataset.index].pileCode;
     if (currentPzIndex == 0) {
       wx.navigateTo({
         url: `../pangzhan_jxgzz/pangzhan_jxgzz?pileCode=${pileCode}`,
@@ -246,14 +250,18 @@ Page({
           that.setData({
             nobuildings: true,
             isShowLoading: false,
-
             buildingList: [],
             pangzhanList:[],
-            currentBuilding: {}
+            currentBuilding: {},
+            rangeColumnList: []
           })
           app.globalData.building = {}
           wx.setStorageSync("currentBuilding", {})
           return;
+        }else{
+          that.setData({
+            nobuildings: false,
+          })
         }
         
         //初始化当前项目当前楼栋
@@ -270,7 +278,7 @@ Page({
           buildingList: res.data.result,
           currentBuilding: app.globalData.building
         })
-
+        that.getRangeColumnList();
         if (!app.globalData.building.pileNum){
           that.setData({
             noPiles: true,
@@ -282,7 +290,19 @@ Page({
       error: function() {}
     });
   },
-  getPangzhanList: function() {
+  watchChange(e) {
+    console.log(e);
+    var curRange = e.detail.current;
+    this.setCurRange(curRange)
+    this.getPangzhanList();
+  },
+  switchTopTab: function (e) {
+    console.log(e);
+    // let curRange = e.target.dataset.index;
+    this.setCurRange(e.target.dataset.index)
+    this.getPangzhanList();
+  },
+  getPangzhanList: function () {
     let that = this;
     let currentPzIndex = app.globalData.currentPzIndex;
     let url;
@@ -299,18 +319,33 @@ Page({
       });
       return;
     }
+    //获得参数
+    let startPileCode = null, endPileCode = null;
+    if (this.getCurRange()){
+      if (this.data.curRange == 0){
+        startPileCode = 1;
+        endPileCode = this.data.rangeColumnList[0]
+      }else{
+        startPileCode = this.data.rangeColumnList[this.data.curRange - 1]+1;
+        endPileCode = this.data.rangeColumnList[this.data.curRange]
+      }
+    }else{
+      startPileCode = 1;
+      endPileCode = this.data.currentBuilding.pileNum 
+    }
     util.getDataByAjax({ //
       url,
       method: "Get",
       data: {
-        buildingId: app.globalData.building.id
+        buildingId: app.globalData.building.id,
+        startPileCode, 
+        endPileCode, 
       },
       success: function(res) {
         let pangzhanList = [];//
-        let pileCode;
-        let pileNum = app.globalData.building.pileNum;
+        pangzhanList[that.data.curRange] = []
         //将所有桩和已创建的旁站数组进行二重循环，以此角色显示的颜色
-        for (pileCode = 1; pileCode <= pileNum; pileCode++) {
+        for (let pileCode = startPileCode; pileCode <= endPileCode; pileCode++) {
           let count = 0;
           let status;
           for (let j = 0; j < res.data.result.length; j++) {
@@ -320,7 +355,7 @@ Page({
             }
             count++;
           }
-          pangzhanList.push({
+          pangzhanList[that.data.curRange].push({
             pileCode,
             status: count == res.data.result.length ? 0 : status//
           })
@@ -460,7 +495,7 @@ Page({
       app.globalData.isCanConfirm = true;
     }
   },
-
+  
   /**
    * 获得当前项目下的旁站
    */

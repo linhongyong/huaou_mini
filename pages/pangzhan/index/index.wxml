@@ -33,7 +33,7 @@
       scroll="{{ tab.scroll }}"
       height="{{ tab.height }}"/>
   </view> -->
-<view style="height:84rpx;"></view>
+<view style="height:72rpx;"></view>
 
 <!-- 左侧弹出框 -->
 <zan-popup show="{{ showLeftPopup }}" type="left" bindclose="toggleLeftPopup">
@@ -85,11 +85,49 @@
 <view class="zan-panel loading-example no-flex" wx:if="{{isShowLoading}}" style='margin-top:30px'>
   <zan-loading type="dot" color="black"></zan-loading>
 </view>
-<view class="padding-h-10 font-12"wx:if="{{!isShowLoading}}">注：绿色代表已开始、橙色代表待审核、蓝色代表已完成</view>
-<!-- 机械灌注桩 -->
-<view class="bg-white">
-  <!-- 楼栋列表 -->
-  <view class='between'>
+
+<!-- <view class="padding-h-10 font-12"wx:if="{{!isShowLoading}}">注：绿色代表已开始、橙色代表待审核、蓝色代表已完成</view> -->
+
+<view class="bg-white" style='height:100%' wx:if="{{rangeColumnList.length}}">
+  <!--------------------------------------------- 楼栋列表 ------------------------------------------------->
+  <!-- <view class='classify-column top-line'> -->
+  <view class="scroll_box">
+    <scroll-view class='cate-scroll' scroll-x="true" style="width: 100%">
+      <view class='flex-row'>
+        <view wx:for='{{ rangeColumnList }}' wx:key="{{item.id}}" data-index="{{index}}" class="rangeItem {{ curRange == index ? 'swiper-title--active' : '' }}" bindtap="switchTopTab">{{ index > 0 ? rangeColumnList[index-1]+1 : 1 }} - {{ rangeColumnList[index] }}
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+  <swiper bindchange="watchChange" current="{{curRange}}">
+      <swiper-item  wx:for='{{ rangeColumnList }}' wx:key="{{item.id}}">
+        <scroll-view scroll-y style="height: 100%" bindscrolltolower="scrolltolower">
+
+          <view class='between'>
+            <block wx:for="{{pangzhanList[index]}}" wx:key="{{index}}">
+              <view bindtap='toDetail' data-index="{{index}}" class='position-r'>
+                <button class='building-btn undo' wx:if='{{ item.status == 0 }}'>
+                  {{ item.pileCode }}
+                </button>
+                <button class='building-btn doing font-white' wx:if='{{ item.status == 1 }}'>
+                  {{ item.pileCode }}
+                </button>
+                <button class='building-btn finished font-white' wx:if='{{ item.status == 2 }}'>
+                  {{ item.pileCode }}
+                </button>
+                <button class='building-btn checked font-white' wx:if='{{ item.status == 3 || item.status == 4 || item.status == 5 }}'>
+                  {{ item.pileCode }}
+                </button>
+                <view class='status'  wx:if='{{ item.status == 3 || item.status == 2  || item.status == 1}}'></view>
+              </view>
+            </block>
+          </view>
+
+        </scroll-view>
+      </swiper-item>
+  </swiper>
+</view>
+  <!-- <view class='between'>
     <block wx:for="{{pangzhanList}}" wx:key="{{index}}">
       <view bindtap='toDetail' data-index="{{index}}" class='position-r'>
         <button class='building-btn undo' wx:if='{{ item.status == 0 }}'>
@@ -107,8 +145,8 @@
         <view class='status'  wx:if='{{ item.status == 3 || item.status == 2  || item.status == 1}}'></view>
       </view>
     </block>
-  </view>
-</view>
+  </view> -->
+
 <!-- <view class='text-c padding-10 font-13 margin-t-30' wx:if="{{!pangzhanList.length}}">当前用户未参与任何项目或项目的总桩数为零</view> -->
 
 <view class='text-c padding-10 font-13 margin-t-30' wx:if="{{noProjects}}">当前用户未参与任何项目</view>

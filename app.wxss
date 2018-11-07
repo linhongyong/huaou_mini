@@ -37,7 +37,7 @@ view{
 }
 .scroll_box{
   width: 100%;
-  overflow: hidden;
+  overflow-x: hidden;
   white-space: nowrap;
 }
 .scroll-item{
