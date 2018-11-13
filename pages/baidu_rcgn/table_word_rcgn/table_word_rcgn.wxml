@@ -1,0 +1,18 @@
+<zan-toptips id="zan-toptips" content="{{ content }}" is-show="{{ $zanui.toptips.show }}" />
+
+<view class='padding-t-10 text-c'>表格文字识别</view>
+<view class='text-c padding-v-20'>
+  <image src='{{imageUrl}}' style='border:1px solid white'  bindtap="chooseImage"></image>
+</view>
+
+<!-- <view class="text-c padding-v-20" bindtap="chooseImage">图像识别</view> -->
+
+<view class='bg-white ' wx:if="{{ !!imageData.length }}">
+  <view class='padding-v-15 text-c'>识别结果</view>
+  <view class='font-14'>
+    <view class='display-f bottom-line padding-10-20' wx:for="{{imageData}}" wx:key="{{index}}">
+      <view class='flex-1'>{{ index }}</view>
+      <view class='flex-11'>{{ item.words }}</view>
+    </view>
+  </view>
+</view>

@@ -1,5 +1,10 @@
 {
   "pages": [
+    "pages/baidu_rcgn/index/index",
+    "pages/baidu_rcgn/table_word_rcgn/table_word_rcgn",
+    "pages/baidu_rcgn/common_rcgn/common_rcgn",
+    "pages/baidu_rcgn/custom_tmpl_rcgn/custom_tmpl_rcgn",
+    
     "pages/pangzhan/index/index",
     "pages/mine/msg/msg",
     "pages/check/index/index",
@@ -8,7 +13,7 @@
     "pages/pangzhan/pangzhan_yylgz/pangzhan_yylgz",
     "pages/pangzhan/pangzhan_shuini/pangzhan_shuini",
     "pages/mine/index/index",
-    "pages/material/index/index",
+    
     "pages/home/home",
     "pages/logs/logs",
     "pages/mine/password/password"
@@ -31,10 +36,10 @@
         "text": "旁站"
       },
       {
-        "pagePath": "pages/material/index/index",
+        "pagePath": "pages/baidu_rcgn/index/index",
         "iconPath": "res/003.png",
         "selectedIconPath": "res/004.png",
-        "text": "材料"
+        "text": "AI识别"
       },
       {
         "pagePath": "pages/mine/msg/msg",
