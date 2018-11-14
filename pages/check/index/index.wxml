@@ -1,7 +1,0 @@
-<view class="">
-  <block wx:if="list" wx:key="{{index}}">
-    <view>
-    
-    </view>
-  </block>
-</view>

@@ -1,7 +1,0 @@
-{
-  "usingComponents": {
-    "zan-dialog": "../../components/dialog/index",
-    "zan-toptips": "../../components/toptips/index",
-    "zan-loading": "../../components/loading/index"
-  }
-}

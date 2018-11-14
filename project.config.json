@@ -11,7 +11,7 @@
 		"postcss": true,
 		"minified": true,
 		"newFeature": true,
-		"nodeModules": true
+		"nodeModules": false
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.2.2",
