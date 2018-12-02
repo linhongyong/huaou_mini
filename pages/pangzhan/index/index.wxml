@@ -19,21 +19,12 @@
 <!-- 项目楼栋选择
 <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
 </picker> -->
-<view class='position-f bg-theme font-white display-flex-center-between' style='width:100%;line-height:60rpx' wx:if="{{projectList.length > 0}}">
-  <text class='iconfont icon-caidan2 menu-icon' bindtap='toggleLeftPopup'></text>
-  <view>{{currentBuilding.buildingName}} - {{pangzhanType[currentPzIndex]}}</view>
-  <text class='iconfont icon-xiaoxi menu-icon' bindtap='toMsg'><text style='font-size:26rpx;'>{{unreadNum ? unreadNum : ""}}</text></text>
+<view class='position-f bg-theme font-white display-flex-center-between' style='width:100%;line-height:80rpx' wx:if="{{projectList.length > 0}}">
+  <text class='iconfont icon-list menu-icon' bindtap='toggleLeftPopup'></text>
+  <view>{{currentBuilding.buildingName}} {{pangzhanType[currentPzIndex]}}</view>
+  <text class='iconfont icon-news menu-icon' bindtap='toMsg'><text style='font-size:26rpx;'>{{unreadNum ? unreadNum : ""}}</text></text>
 </view>
-
-<!-- 旁站菜单 -->
-<!-- <zan-tab
-      bind:tabchange="onTabchange"
-      list="{{ tab.list }}"
-      selected-id="{{ currentPzIndex+1 }}"
-      scroll="{{ tab.scroll }}"
-      height="{{ tab.height }}"/>
-  </view> -->
-<view style="height:72rpx;"></view>
+<view style="height:92rpx;"></view>
 
 <!-- 左侧弹出框 -->
 <zan-popup show="{{ showLeftPopup }}" type="left" bindclose="toggleLeftPopup">
@@ -41,56 +32,33 @@
   <scroll-view class="" scroll-y style="height:100%">
     <view class='building-area'>
       <view class='s-title'>楼栋</view>
-      <view class='s-list'>
-        <radio-group class="radio-group" bindchange="changeBuilding">
-          <label class="radio ng-textAuto1" wx:for="{{buildingList}}" wx:key="{{index}}">
-            <radio style='' value="{{index}}" color="#3B94F1" checked='{{ item.id==currentBuilding.id }}' />
-           {{item.buildingName}}
-          </label>
-        </radio-group>
+      <view class='s-list display-flex-center-center-column'>
+        <view class='pztype {{item.id==currentBuilding.id ? "pztype-active" : ""}}' wx:for="{{buildingList}}" wx:key="{{index}}" data-value="{{index}}" bindtap="changeBuilding">{{item.buildingName}}</view>
       </view>
     </view>
     <view class='pangzhantype-area'>
       <view class='s-title'>旁站类型</view>
-      <view class='s-list'>
-        <radio-group class="radio-group" bindchange="changePangzhan">
-          <label class="radio">
-            <radio style='' value="0" color="#3B94F1" checked='{{ currentPzIndex == 0 }}' />机械灌注桩 </label>
-          <label class="radio">
-            <radio style='' value="1" color="#3B94F1" checked='{{ currentPzIndex == 1 }}' />水泥搅拌桩 </label>
-          <label class="radio">
-            <radio style='' value="2" color="#3B94F1" checked='{{ currentPzIndex == 2 }}' />预应力管桩 </label>
-          <!-- <label class="radio">
-            <radio style='' value="3" color="#3B94F1" checked='{{ currentPzIndex == 3 }}' />混泥土浇筑 </label>
-          <label class="radio">
-            <radio style='' value="4" color="#3B94F1" checked='{{ currentPzIndex == 4 }}' />塔吊安装 </label> -->
-        </radio-group>
+      <view class='s-list display-flex-center-center-column'>
+        <view class='pztype {{currentPzIndex == 0 ? "pztype-active" : ""}}' data-value="0" bindtap="changePangzhan">机械灌注桩</view>
+        <view class='pztype {{currentPzIndex == 1 ? "pztype-active" : ""}}' data-value="1" bindtap="changePangzhan">水泥搅拌桩</view>
+        <view class='pztype {{currentPzIndex == 2 ? "pztype-active" : ""}}' data-value="2" bindtap="changePangzhan">预应力管桩</view>
       </view>
     </view>
     <view class='project-area'>
       <view class='s-title'>项目</view>
-      <view class='s-list'>
-        <radio-group class="radio-group" bindchange="changeProject">
-          <label class="radio" wx:for="{{projectList}}" wx:key="{{index}}">
-            <radio style='' value="{{index}}" color="#3B94F1" checked='{{ item.id==currentProject.id }}' />
-            {{item.projectName}}
-          </label>
-        </radio-group>
+      <view class='s-list display-flex-center-center-column'>
+       <view class='pztype {{item.id==currentProject.id ? "pztype-active" : ""}}' wx:for="{{projectList}}" wx:key="{{index}}" data-value="{{index}}" bindtap="changeProject">{{item.projectName}}</view>
       </view>
     </view>
     <view class='padding-h-10 font-12' wx:if="{{!projectList.length}}">当前用户未参与任何项目</view>
     </scroll-view>
   </view>
 </zan-popup>
-<view class="zan-panel loading-example no-flex" wx:if="{{isShowLoading}}" style='margin-top:30px'>
-  <zan-loading type="dot" color="black"></zan-loading>
-</view>
 
 <!-- <view class="padding-h-10 font-12"wx:if="{{!isShowLoading}}">注：绿色代表已开始、橙色代表待审核、蓝色代表已完成</view> -->
 
 <view class="bg-white" style='height:100%' wx:if="{{rangeColumnList.length}}">
-  <!--------------------------------------------- 楼栋列表 ------------------------------------------------->
-  <!-- <view class='classify-column top-line'> -->
+  <!--------------------------------------------- 范围 ------------------------------------------------->
   <view class="scroll_box">
     <scroll-view class='cate-scroll' scroll-x="true" style="width: 100%">
       <view class='flex-row'>
@@ -99,10 +67,14 @@
       </view>
     </scroll-view>
   </view>
+
   <swiper bindchange="watchChange" current="{{curRange}}">
       <swiper-item  wx:for='{{ rangeColumnList }}' wx:key="{{item.id}}">
         <scroll-view scroll-y style="height: 100%" bindscrolltolower="scrolltolower">
-
+        <!-- 加载动画 -->
+        <view class="zan-panel loading-example no-flex" wx:if="{{isShowLoading || !pangzhanList.length}}" style='margin-top:30px'>
+          <zan-loading type="dot" color="black"></zan-loading>
+        </view>
           <view class='between'>
             <block wx:for="{{pangzhanList[index]}}" wx:key="{{index}}">
               <view bindtap='toDetail' data-index="{{index}}" class='position-r'>
@@ -127,27 +99,6 @@
       </swiper-item>
   </swiper>
 </view>
-  <!-- <view class='between'>
-    <block wx:for="{{pangzhanList}}" wx:key="{{index}}">
-      <view bindtap='toDetail' data-index="{{index}}" class='position-r'>
-        <button class='building-btn undo' wx:if='{{ item.status == 0 }}'>
-          {{ item.pileCode }}
-        </button>
-        <button class='building-btn doing font-white' wx:if='{{ item.status == 1 }}'>
-          {{ item.pileCode }}
-        </button>
-        <button class='building-btn finished font-white' wx:if='{{ item.status == 2 }}'>
-          {{ item.pileCode }}
-        </button>
-        <button class='building-btn checked font-white' wx:if='{{ item.status == 3 || item.status == 4 || item.status == 5 }}'>
-          {{ item.pileCode }}
-        </button>
-        <view class='status'  wx:if='{{ item.status == 3 || item.status == 2  || item.status == 1}}'></view>
-      </view>
-    </block>
-  </view> -->
-
-<!-- <view class='text-c padding-10 font-13 margin-t-30' wx:if="{{!pangzhanList.length}}">当前用户未参与任何项目或项目的总桩数为零</view> -->
 
 <view class='text-c padding-10 font-13 margin-t-30' wx:if="{{noProjects}}">当前用户未参与任何项目</view>
 <view class='text-c padding-10 font-13 margin-t-30' wx:if="{{nobuildings}}">当前项目未设置楼栋信息</view>

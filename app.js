@@ -50,6 +50,7 @@ App({
     isCanCheck: false,//是否有审核权限
     isCanConfirm: false,//是否有权确认
     isCanWrite: false,//是否有修改权限
+    isOnlyFinished: false,//是否只能查看已完成旁站
     isCanWriteAfterCheck: false,//是否有审核后修改权限
     currentPzIndex: 0,//旁站的类型
     userInfo: {},//用户信息

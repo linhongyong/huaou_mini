@@ -69,9 +69,9 @@
      </radio-group> 
     </view>
 </view>
-<!-- 水泥品种 -->
+<!-- 水泥标号 -->
 <view class='padding-h-20 display-flex-center-between bottom-line height-80  bg-white'>
-  <view>水泥品种</view>
+  <view>水泥标号</view>
   <view class='display-flex-center-right'>
     <form bindsubmit="onInputSave" data-index="cementVarieties" class='' wx:if="{{pang.iscementVarietiesEdit}}">
         <view class='display-flex-center'>
@@ -151,7 +151,7 @@
   <view class='display-flex-center-right'>
     <form bindsubmit="onInputSave" data-index="desigePileDiameter" class='' wx:if="{{pang.isdesigePileDiameterEdit}}">
         <view class='display-flex-center'>
-          <input  focus="true" class='input' type='digit' placeholder='请输入...'  cursor-spacing="30" name="value" value='' ></input>
+          <input  focus="true" class='input' type='text' placeholder='请输入...'  cursor-spacing="30" name="value" value='' ></input>
           <text class='iconfont icon-17cuowu padding-l-5  margin-l-10' style='font-size:50rpx;color:red' bindtap='toDone' data-index="desigePileDiameter"></text>
           <button formType="submit" class='btn font-theme bg-white clear-btn-default margin-l-10'>
             <text class='iconfont icon-dui1 padding-l-5' style='font-size:60rpx;'></text>
@@ -171,7 +171,7 @@
   <view class='display-flex-center-right'>
     <form bindsubmit="onInputSave" data-index="pileBottomHeight" class='' wx:if="{{pang.ispileBottomHeightEdit}}">
         <view class='display-flex-center'>
-          <input  focus="true" class='input' type='digit' placeholder='请输入...'  cursor-spacing="30" name="value" value='' ></input>
+          <input  focus="true" class='input' type='text' placeholder='请输入...'  cursor-spacing="30" name="value" value='' ></input>
           <text class='iconfont icon-17cuowu padding-l-5  margin-l-10' style='font-size:50rpx;color:red' bindtap='toDone' data-index="pileBottomHeight"></text>
           <button formType="submit" class='btn font-theme bg-white clear-btn-default margin-l-10'>
             <text class='iconfont icon-dui1 padding-l-5' style='font-size:60rpx;'></text>
@@ -191,7 +191,7 @@
   <view class='display-flex-center-right'>
     <form bindsubmit="onInputSave" data-index="pileTopHeight" class='' wx:if="{{pang.ispileTopHeightEdit}}">
         <view class='display-flex-center'>
-          <input  focus="true" class='input' type='digit' placeholder='请输入...'  cursor-spacing="30" name="value" value='' ></input>
+          <input  focus="true" class='input' type='text' placeholder='请输入...'  cursor-spacing="30" name="value" value='' ></input>
           <text class='iconfont icon-17cuowu padding-l-5  margin-l-10' style='font-size:50rpx;color:red' bindtap='toDone' data-index="pileTopHeight"></text>
           <button formType="submit" class='btn font-theme bg-white clear-btn-default margin-l-10'>
             <text class='iconfont icon-dui1 padding-l-5' style='font-size:60rpx;'></text>
@@ -242,6 +242,26 @@
     <view class='display-flex-center-center'  wx:else bindtap='toEdit' data-index="actualPileLength">
       <view class='font-666' wx:if="{{pang.actualPileLength == null}}">请输入</view>  
       <view class='' wx:else>{{ pang.actualPileLength }}</view>  
+    </view>
+  </view>
+</view>
+<!-- 水泥掺入量 -->
+<view class='padding-h-20 display-flex-center-between bottom-line height-80  bg-white'>
+  <view>水泥掺入量</view>
+  <view class='display-flex-center-right'>
+    <form bindsubmit="onInputSave" data-index="cementMixingAmount" class='' wx:if="{{pang.iscementMixingAmountEdit}}">
+        <view class='display-flex-center'>
+          <input  focus="true" class='input' type='digit' placeholder='请输入...'  cursor-spacing="30" name="value" value='' ></input>
+          <text class='iconfont icon-17cuowu padding-l-5  margin-l-10' style='font-size:50rpx;color:red' bindtap='toDone' data-index="cementMixingAmount"></text>
+          <button formType="submit" class='btn font-theme bg-white clear-btn-default margin-l-10'>
+            <text class='iconfont icon-dui1 padding-l-5' style='font-size:60rpx;'></text>
+          </button>
+        </view>
+    </form>
+
+    <view class='display-flex-center-center'  wx:else bindtap='toEdit' data-index="cementMixingAmount">
+      <view class='font-666' wx:if="{{pang.cementMixingAmount == null}}">请输入</view>  
+      <view class='' wx:else>{{ pang.cementMixingAmount }}</view>  
     </view>
   </view>
 </view>
@@ -320,7 +340,7 @@
   </view>
 
   <!-- 日完成桩数 -->
-  <view class='padding-h-20 display-flex-center-between bottom-line height-80  bg-white'>
+  <!-- <view class='padding-h-20 display-flex-center-between bottom-line height-80  bg-white'>
     <view>日完成桩数(根）</view>
     <view class='display-flex-center-right'>
       <form bindsubmit="onInputSave" data-index="dayFinishCount" class='' wx:if="{{pang.isdayFinishCountEdit}}">
@@ -338,11 +358,11 @@
         <view class='' wx:else>{{ pang.dayFinishCount }}</view>  
       </view>
     </view>
-  </view>
+  </view> -->
 
 
   <!-- 日完成量 -->
-  <view class='padding-h-20 display-flex-center-between bottom-line height-80  bg-white'>
+  <!-- <view class='padding-h-20 display-flex-center-between bottom-line height-80  bg-white'>
     <view>日完成量(m3)</view>
     <view class='display-flex-center-right'>
       <form bindsubmit="onInputSave" data-index="dayFinishVolume" class='' wx:if="{{pang.isdayFinishVolumeEdit}}">
@@ -360,7 +380,7 @@
         <view class='' wx:else>{{ pang.dayFinishVolume }}</view>  
       </view>
     </view>
-  </view>
+  </view> -->
 
 
 <view class='bg-white'>

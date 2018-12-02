@@ -107,7 +107,7 @@
   <view class='display-flex-center-right'>
     <form bindsubmit="onInputSave" data-index="mainBarCount" class='' wx:if="{{ pang.ismainBarCountEdit}}">
         <view class='display-flex-center'>
-          <input  focus="true" class='input' type='digit' placeholder='请输入...'  cursor-spacing="30" name="value" value='' ></input>
+          <input  focus="true" class='input' type='text' placeholder='请输入...'  cursor-spacing="30" name="value" value='' ></input>
           <text class='iconfont icon-17cuowu padding-l-5  margin-l-10' style='font-size:50rpx;color:red' bindtap='toDone' data-index="mainBarCount"></text>
           <button formType="submit" class='btn font-theme bg-white clear-btn-default margin-l-10'>
             <text class='iconfont icon-dui1 padding-l-5' style='font-size:60rpx;'></text>
@@ -123,7 +123,7 @@
 </view>
 <!-- 主筋类型  -->
 <view class='padding-h-20 display-flex-center-between bottom-line height-80  bg-white'>
-  <view>主筋类型</view>
+  <view>主筋</view>
   <view class='display-flex-center-right'>
     <form bindsubmit="onInputSave" data-index="mainBarType" class='' wx:if="{{ pang.ismainBarTypeEdit}}">
         <view class='display-flex-center'>
@@ -736,7 +736,28 @@
       </view>
     </view>
   </view>
-
+<!-- 灌注结束时间 -->
+  <view class='padding-h-20 display-flex-center-between bottom-line height-80 bg-white'>
+    <view>灌注结束时间</view>
+    <view class='display-flex-center-right'>
+      <view class='display-flex-center-right' wx:if="{{pang.perfusionEndTime != null}}">
+        <picker mode="time" value="{{tools.formatTimeTerse(pang.perfusionEndTime)}}" start="00:00" end="23:59" bindchange="bindTimeChange" data-index="perfusionEndTime" disabled='{{pang.status>=2?true:false}}'>
+          <view class="picker">{{tools.formatTimeTerse(pang.perfusionEndTime)}}</view>
+        </picker>
+      </view>
+      <!-- <text class='padding-r-10 font-666' wx:else>点击记录时间</text> -->
+      <view class='display-flex-center-center'  wx:if="{{ pang.perfusionEndTime == null }}" bindtap='getTime' data-index="perfusionEndTime">
+        <view class='clock margin-h-auto display-flex-center-center'>
+          <view  class='display-flex-center-center'>
+            <view class='time'>{{hour}}</view>
+            <view class='time colon' hidden="{{isColonShow}}">:</view>
+            <view class='time colon' hidden="{{!isColonShow}}"></view>
+            <view class='time'>{{minute}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
 <!-- 第一次灌入量 -->
 <view class='padding-h-20 display-flex-center-between bottom-line height-80  bg-white'>
   <view>第一次灌入量（m³）</view>

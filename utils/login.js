@@ -71,6 +71,7 @@ function getTime13() {
   })
 }
 function loginApi(userInfo) {
+  userInfo.type = 'pangzhan'
   console.log(userInfo);
   delete userInfo.nickName
   wx.request({

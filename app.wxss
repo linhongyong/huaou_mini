@@ -72,6 +72,9 @@ view{
 .bg-white{
   background-color: #FFFFFF;
 }
+.bg-error{
+  background-color: rgb(252, 47, 47);
+}
 .bg-f4{
   background-color: #f4f4f4;
 }
@@ -163,6 +166,7 @@ button.form_button::after{
 .theme-blue{
   color: #00A1BA;
 }
+
 .theme-blue-bg{
   background: #00A1BA;
 }

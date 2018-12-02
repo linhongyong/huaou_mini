@@ -1,14 +1,24 @@
 /* pages/mine/index/index.wxss */
-.header{
+page{
+  background-color: white;
+}
+/* .header{
+  background-image: url('../../../res/bg001.jpg');
+} */
+/* .header{
   display: flex;
   flex-direction: row;
   background-color: white;
   padding: 30rpx 40rpx;
   align-items: center;
-}
+} */
 .head-pic{
-  flex-shrink: 0;
-  padding-right:30rpx; 
+  /* flex-shrink: 0;
+  padding-right:30rpx;  */
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  margin-top: 60rpx;
 }
 .head-pic image{
   width: 160rpx;

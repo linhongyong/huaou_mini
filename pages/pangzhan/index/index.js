@@ -39,8 +39,9 @@ Page({
     }
   },
   onShow: function() {
+    let currentPzIndex= wx.getStorageSync("currentPzIndex");
     this.setData({
-      currentPzIndex: wx.getStorageSync("currentPzIndex")
+      currentPzIndex: currentPzIndex ? currentPzIndex : 1
     })
     app.globalData.currentPzIndex = this.data.currentPzIndex;
     //返回后刷新//第一次的时候顺序问题不能调用
@@ -63,9 +64,7 @@ Page({
     // });
     this.getRoles(this.getJoinedList)
   },
-  onReachBottom: function() {
-    console.log("eee");
-  },
+  onReachBottom: function() {},
   onShareAppMessage: function() {},
 
 
@@ -82,7 +81,10 @@ Page({
 
   //切换项目 
   changeProject: function(e) {
-    var index = e.detail.value;
+    var index = e.currentTarget.dataset.value;
+    if (isNaN(index)) {
+      return;
+    }
     app.globalData.project = this.data.projectList[index];
     wx.setStorageSync("currentProject", app.globalData.project)
     this.setData({
@@ -95,7 +97,10 @@ Page({
 
   //切换楼栋
   changeBuilding: function(e) {
-    var index = e.detail.value;
+    var index = e.currentTarget.dataset.value;
+    if (isNaN(index)) {
+      return;
+    }
     app.globalData.building = this.data.buildingList[index];
     wx.setStorageSync("currentBuilding", app.globalData.building)
     this.setData({
@@ -107,7 +112,10 @@ Page({
 
   // 切换旁站
   changePangzhan: function(e) {
-    var index = e.detail.value;
+    var index = e.currentTarget.dataset.value;
+    if (isNaN(index)){
+      return;
+    }
     //1.
     if (index>2) {
       Toptips({
@@ -135,6 +143,16 @@ Page({
   toDetail: function(e) {
     let currentPzIndex = app.globalData.currentPzIndex;
     let pileCode = this.data.pangzhanList[this.data.curRange][e.currentTarget.dataset.index].pileCode;
+    let status = this.data.pangzhanList[this.data.curRange][e.currentTarget.dataset.index].status;
+    if (app.globalData.isOnlyFinished){
+      if (status != 3 && status != 5) {
+        Toptips({
+          duration: 2000,
+          content: "此旁站未完成",
+        });
+        return;
+      }
+    }
     if (currentPzIndex == 0) {
       wx.navigateTo({
         url: `../pangzhan_jxgzz/pangzhan_jxgzz?pileCode=${pileCode}`,
@@ -303,6 +321,9 @@ Page({
     this.getPangzhanList();
   },
   getPangzhanList: function () {
+    if (!this.data.buildingList.length){
+      return;
+    }
     let that = this;
     let currentPzIndex = app.globalData.currentPzIndex;
     let url;
@@ -331,7 +352,7 @@ Page({
       }
     }else{
       startPileCode = 1;
-      endPileCode = this.data.currentBuilding.pileNum 
+      endPileCode = this.data.currentBuilding && this.data.currentBuilding.pileNum 
     }
     util.getDataByAjax({ //
       url,
@@ -460,7 +481,7 @@ Page({
         // wx.setStorageSync("roles", res.data.result);
         app.globalData.roles = res.data.result;
         app.globalData.roles.forEach(function(elem){
-          if (elem.roleName == '老板' || elem.roleName == '贵宾') {
+          if (elem.roleName == '老板' || elem.roleName == '系统管理员' || elem.roleName == '超级系统管理员') {
             app.globalData.isCanSeeAllProject = true
           }
         })
@@ -493,6 +514,9 @@ Page({
     }
     if (util.isExistInArray(app.globalData.projectRoleNames, "施工方")) {
       app.globalData.isCanConfirm = true;
+    }
+    if (util.isExistInArray(app.globalData.projectRoleNames, "贵宾")) {
+      app.globalData.isOnlyFinished = true;
     }
   },
   
@@ -565,7 +589,7 @@ Page({
     }
   },
   toMsg: function(){
-    wx.switchTab({
+    wx.navigateTo({
       url: '../../mine/msg/msg',
     })
   },
@@ -579,10 +603,8 @@ Page({
         that.setData({
           unreadNum: res.data.result
         })
-        console.log(res)
       },
       error: function (error) {
-        console.log(error);
       },
     });
   },

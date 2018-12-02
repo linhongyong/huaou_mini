@@ -1,25 +1,27 @@
 <!--pages/mine/index/index.wxml-->
 <zan-toptips id="zan-toptips" content="{{ content }}" is-show="{{ $zanui.toptips.show }}" />
-<view class='header'>
+<view class='display-flex-center-center-column header'>
   <view class='head-pic'>
     <image class='' src='{{info.headpic}}'></image>
   </view>
-  <view class='info'>
-    <view class='padding-b-10'>
-      <text class='nickname'>{{info.nickname}}</text>
-      <text class='iconfont icon-edit padding-l-10 font-16'  bindtap='toPassword'></text>
-      <!-- <text>{{ user.mobile}}</text> -->
-    </view>
-    <view class='logout-btn' bindtap='logout'>退出登录</view>
+  <view class='text-c margin-t-30 font-14'>
+    <text>{{ info.nickname}}</text>
+    <text class='iconfont icon-edit padding-l-10 font-16'  bindtap='toPassword'></text>
   </view>
 </view>
-<view class='padding-10'>
-    <view class='accout'>当前账户：{{user.mobile}}</view>
+<view style='width：100%;position:relative; top:-60rpx; z-index:-1'>
+  <image src='../../../res/bg001.gif' style='width:100%; height:180rpx'></image>
 </view>
-<view class='padding-10'>
-  <view>
-    当前用户拥有的角色：
+<view class='padding-h-20 font-14' style='margin-top:-40rpx;'>
+  <view class='accout bottom-line padding-v-10'>当前账户：{{user.mobile}}</view>
+  <view class=' padding-v-10' wx:if="{{roles.length}}">
+    当前用户拥有的职务：
     <text wx:for="{{roles}}" class='padding-5' wx:key="{{index}}">{{item.roleName}}{{item.projectName? "("+item.projectName+")" : ""}}</text>
   </view>
+  <view class=' padding-v-10' wx:else>
+    当前用户还没有职务
+  </view>
 </view>
+
+<button class='bottom-btn bg-error' bindtap='logout'>退出登录</button>
 <!-- <view class="text-c padding-v-20 margin-t-20">期待新功能上线</view> -->

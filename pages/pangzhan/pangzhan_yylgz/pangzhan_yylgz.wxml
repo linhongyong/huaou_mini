@@ -150,9 +150,9 @@
   </view>
 </view>
 
-<!-- 桩长   -->
+<!-- 设计桩长   -->
 <view class='padding-h-20 display-flex-center-between bottom-line height-80  bg-white'>
-  <view>桩长（m）</view>
+  <view>设计桩长（m）</view>
   <view class='display-flex-center-right'>
     <form bindsubmit="onInputSave" data-index="pileLength" class='' wx:if="{{ pang.ispileLengthEdit}}">
       <view class='display-flex-center'>
@@ -167,6 +167,25 @@
     <view class='display-flex-center-center' wx:else bindtap='toEdit' data-index="pileLength">
       <view class='font-666' wx:if="{{pang.pileLength == null}}">请输入</view>
       <view class='' wx:else>{{ pang.pileLength }}</view>
+    </view>
+  </view>
+</view>
+<!-- 管桩壁厚   -->
+<view class='padding-h-20 display-flex-center-between bottom-line height-80  bg-white'>
+  <view>管桩壁厚（mm）</view>
+  <view class='display-flex-center-right'>
+    <form bindsubmit="onInputSave" data-index="pileThickness " class='' wx:if="{{ pang.ispileThicknessEdit}}">
+      <view class='display-flex-center'>
+        <input focus="true" class='input' type='digit' placeholder='请输入...' cursor-spacing="30" name="value" value='' style='width:160rpx'></input>
+        <text class='iconfont icon-17cuowu padding-l-5  margin-l-10' style='font-size:50rpx;color:red' bindtap='toDone' data-index="pileThickness"></text>
+        <button formType="submit" class='btn font-theme bg-white clear-btn-default margin-l-10'>
+          <text class='iconfont icon-dui1 padding-l-5' style='font-size:60rpx;'></text>
+        </button>
+      </view>
+    </form>
+    <view class='display-flex-center-center' wx:else bindtap='toEdit' data-index="pileThickness">
+      <view class='font-666' wx:if="{{pang.pileThickness == null}}">请输入</view>
+      <view class='' wx:else>{{ pang.pileThickness }}</view>
     </view>
   </view>
 </view>
@@ -239,12 +258,50 @@
 </view>
 
 <!-- 配桩情况 -->
-<view class='padding-h-20 display-flex-center-between bottom-line height-80  bg-white'>
-  <view>配桩情况</view>
+<view class='padding-h-20 bottom-line height-80  bg-white'>
+  <view class='padding-t-5'>配桩情况(节，如：15、7、13、13)</view>
+  <view class=''>
+    <form bindsubmit="onInputSave" data-index="pileMatching" class='' wx:if="{{ pang.ispileMatchingEdit}}">
+      <view class='display-flex-center-between'>
+        <input focus="true" class='input' type='number' placeholder='请输入...' style='width:480rpx' cursor-spacing="30" name="value" value=''></input>
+        <text class='iconfont icon-17cuowu padding-l-5  margin-l-10' style='font-size:50rpx;color:red' bindtap='toDone' data-index="pileMatching"></text>
+        <button formType="submit" class='btn font-theme bg-white clear-btn-default margin-l-10'>
+          <text class='iconfont icon-dui1 padding-l-5' style='font-size:60rpx;'></text>
+        </button>
+      </view>
+    </form>
+    <view class='padding-t-5' wx:else bindtap='toEdit' data-index="pileMatching">
+      <view class='font-666' wx:if="{{pang.pileMatching == null}}">请输入</view>
+      <view class='' wx:else>{{ pang.pileMatching }}</view>
+    </view>
+  </view>
+</view>
+<!-- 冷却时间 -->
+<view class='padding-h-20 bottom-line height-80  bg-white'>
+  <view class='padding-t-5'>冷却时间(分钟，如：15、7、13、13) </view>
+  <view class=''>
+    <form bindsubmit="onInputSave" data-index="coolingTime" class='' wx:if="{{ pang.iscoolingTimeEdit}}">
+      <view class='display-flex-center-between'>
+        <input focus="true" class='input' type='number' placeholder='请输入...' style='width:480rpx' cursor-spacing="30" name="value" value=''></input>
+        <text class='iconfont icon-17cuowu padding-l-5  margin-l-10' style='font-size:50rpx;color:red' bindtap='toDone' data-index="coolingTime"></text>
+        <button formType="submit" class='btn font-theme bg-white clear-btn-default margin-l-10'>
+          <text class='iconfont icon-dui1 padding-l-5' style='font-size:60rpx;'></text>
+        </button>
+      </view>
+    </form>
+    <view class='padding-t-5' wx:else bindtap='toEdit' data-index="coolingTime">
+      <view class='font-666' wx:if="{{pang.coolingTime == null}}">请输入</view>
+      <view class='' wx:else>{{ pang.coolingTime }}</view>
+    </view>
+  </view>
+</view>
+<!-- 配桩情况 -->
+<!-- <view class='padding-h-20 display-flex-center-between bottom-line height-80  bg-white'>
+  <view>配桩情况(节)</view>
   <view class='display-flex-center-right'>
     <form bindsubmit="onInputSave" data-index="pileMatching" class='' wx:if="{{ pang.ispileMatchingEdit}}">
       <view class='display-flex-center'>
-        <input focus="true" class='input' type='text' placeholder='请输入...' cursor-spacing="30" name="value" value=''></input>
+        <input focus="true" class='input' type='number' placeholder='请输入...' cursor-spacing="30" name="value" value=''></input>
         <text class='iconfont icon-17cuowu padding-l-5  margin-l-10' style='font-size:50rpx;color:red' bindtap='toDone' data-index="pileMatching"></text>
         <button formType="submit" class='btn font-theme bg-white clear-btn-default margin-l-10'>
           <text class='iconfont icon-dui1 padding-l-5' style='font-size:60rpx;'></text>
@@ -257,7 +314,7 @@
       <view class='' wx:else>{{ pang.pileMatching }}</view>
     </view>
   </view>
-</view>
+</view> -->
 
 <view class='text-c'>-----------施工情况-----------</view>
 <!-- 开始时间 -->
@@ -345,7 +402,7 @@
 
 <!-- 最后10击灌入量  -->
 <view class='padding-h-20 display-flex-center-between bottom-line height-80  bg-white'>
-  <view>最后10击灌入量（m³）</view>
+  <view>最后10击灌入量（mm）</view>
   <view class='display-flex-center-right'>
     <form bindsubmit="onInputSave" data-index="lastTenHitLrrigation" class='' wx:if="{{ pang.islastTenHitLrrigationEdit}}">
       <view class='display-flex-center'>
@@ -381,7 +438,7 @@
 
 <!-- 实际标高  -->
 <view class='padding-h-20 display-flex-center-between bottom-line height-80  bg-white'>
-  <view>实际标高（m）</view>
+  <view>实际桩顶标高（m）</view>
   <view class='display-flex-center-right'>
     <form bindsubmit="onInputSave" data-index="actualElevation" class='' wx:if="{{ pang.isactualElevationEdit}}">
       <view class='display-flex-center'>
@@ -400,8 +457,46 @@
   </view>
 </view>
 
+<!-- 总锤击数  -->
+<view class='padding-h-20 display-flex-center-between bottom-line height-80  bg-white'>
+  <view>总锤击数（次）</view>
+  <view class='display-flex-center-right'>
+    <form bindsubmit="onInputSave" data-index="totalHitNum" class='' wx:if="{{ pang.istotalHitNumEdit}}">
+      <view class='display-flex-center'>
+        <input focus="true" class='input' type='digit' placeholder='请输入...' cursor-spacing="30" name="value" value='' style='width:160rpx'></input>
+        <text class='iconfont icon-17cuowu padding-l-5  margin-l-10' style='font-size:50rpx;color:red' bindtap='toDone' data-index="totalHitNum"></text>
+        <button formType="submit" class='btn font-theme bg-white clear-btn-default margin-l-10'>
+          <text class='iconfont icon-dui1 padding-l-5' style='font-size:60rpx;'></text>
+        </button>
+      </view>
+    </form>
 
+    <view class='display-flex-center-center' wx:else bindtap='toEdit' data-index="totalHitNum">
+      <view class='font-666' wx:if="{{pang.totalHitNum == null}}">请输入</view>
+      <view class='' wx:else>{{ pang.totalHitNum }}</view>
+    </view>
+  </view>
+</view>
+<!-- 垂直度  -->
+<view class='padding-h-20 display-flex-center-between bottom-line height-80  bg-white'>
+  <view>垂直度</view>
+  <view class='display-flex-center-right'>
+    <form bindsubmit="onInputSave" data-index="verticality" class='' wx:if="{{ pang.isverticalityEdit}}">
+      <view class='display-flex-center'>
+        <input focus="true" class='input' type='digit' placeholder='请输入...' cursor-spacing="30" name="value" value='' style='width:160rpx'></input>
+        <text class='iconfont icon-17cuowu padding-l-5  margin-l-10' style='font-size:50rpx;color:red' bindtap='toDone' data-index="verticality"></text>
+        <button formType="submit" class='btn font-theme bg-white clear-btn-default margin-l-10'>
+          <text class='iconfont icon-dui1 padding-l-5' style='font-size:60rpx;'></text>
+        </button>
+      </view>
+    </form>
 
+    <view class='display-flex-center-center' wx:else bindtap='toEdit' data-index="verticality">
+      <view class='font-666' wx:if="{{pang.verticality == null}}">请输入</view>
+      <view class='' wx:else>{{ pang.verticality }}</view>
+    </view>
+  </view>
+</view>
 <view class=' bg-white'>
   <template is='administrator' data='{{administrator}}'/>
   <template is='lastBtns' data='{{pang, ...{isCanWrite, isCanCheck, isCanConfirm} }}'/>
