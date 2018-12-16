@@ -56,5 +56,6 @@ App({
     userInfo: {},//用户信息
     project:{},//当前项目
     building:{},//当前楼栋
+    buildingList:[]
   }
 })

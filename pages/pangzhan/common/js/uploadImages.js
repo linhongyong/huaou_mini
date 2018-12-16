@@ -42,7 +42,8 @@ function updateImagesOrSave( e) {
   if (that.data.pang[index].length > 0) {
     that.updatePangzhan();
   } else {
-    Toptips("照片不能为空");
+    // Toptips("照片不能为空");
+    that.updatePangzhan();
   }
 }
 function deletePic(e) {

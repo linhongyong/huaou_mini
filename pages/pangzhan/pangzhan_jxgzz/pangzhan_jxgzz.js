@@ -89,7 +89,7 @@ Page({
     // 成渣厚度
     if (e.currentTarget.dataset.index == 'actualDeep' || e.currentTarget.dataset.index == 'secondActualDeep') {
       this.setData({
-        chengZhaHouDu: math.accSub(pang.actualDeep, pang.secondActualDeep) * 1000
+        chengZhaHouDu: math.accSub(obj.actualDeep, obj.secondActualDeep) * 1000
       })
     } 
     this.savaOperationLog(e.currentTarget.dataset.index);

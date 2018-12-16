@@ -912,7 +912,7 @@
   </view>
 </view>
 
-<view class=' bg-white'>
+<view class=' bg-white'  style='width:750rpx'>
   <template is='administrator' data='{{administrator}}'/>
   <template is='lastBtns' data='{{pang, ...{isCanWrite, isCanCheck, isCanConfirm} }}'/>
 </view>

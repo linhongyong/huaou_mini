@@ -291,7 +291,7 @@ Page({
           app.globalData.building = res.data.result[0];
           wx.setStorageSync("currentBuilding", app.globalData.building)
         }
-
+        app.globalData.buildingList = res.data.result;            
         that.setData({
           buildingList: res.data.result,
           currentBuilding: app.globalData.building

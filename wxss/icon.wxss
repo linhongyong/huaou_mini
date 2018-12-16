@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'iconfont';  /* project id 854262 */
-  src: url('//at.alicdn.com/t/font_854262_f6mdlldwwat.eot');
-  src: url('//at.alicdn.com/t/font_854262_f6mdlldwwat.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_854262_f6mdlldwwat.woff') format('woff'),
-  url('//at.alicdn.com/t/font_854262_f6mdlldwwat.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_854262_f6mdlldwwat.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_854262_5335jbgwgwj.eot');
+  src: url('//at.alicdn.com/t/font_854262_5335jbgwgwj.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_854262_5335jbgwgwj.woff') format('woff'),
+  url('//at.alicdn.com/t/font_854262_5335jbgwgwj.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_854262_5335jbgwgwj.svg#iconfont') format('svg');
 }
 .iconfont {
   font-family:"iconfont" !important;
@@ -24,3 +24,4 @@
 .icon-xiaoxi:before { content: "\e610"; }
 .icon-list:before { content: "\e63d"; }
 .icon-news:before { content: "\e623"; }
+.icon-zhengfangxing:before { content: "\e654"; }

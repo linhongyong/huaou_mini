@@ -23,5 +23,34 @@
   </view>
 </view>
 
-<button class='bottom-btn bg-error' bindtap='logout'>退出登录</button>
+<view class='font-14 padding-h-20'>
+  <view>{{project.projectName}}</view>
+  <block wx:for="{{ statisticsForToday }}" wx:key="{{index}}">
+    <view>
+      <text>{{ item.buildingName }}</text> 今日完成机械灌注桩旁站数： <text class=''>{{ item.num }}</text>
+    </view>
+  </block>
+</view>
+<view class='font-15 padding-h-20 padding-v-5'>{{ statisticsDes }}</view>
+<view class='font-15 padding-h-20 margin-t-5'>
+  <view>说明(不同颜色代表不同状态)：</view>
+  <view>
+    <text class='iconfont icon-zhengfangxing' style='color:#3ef356'></text>
+    <text class='margin-l-10'>已开始</text>
+  </view>
+  <view>
+    <text class='iconfont icon-zhengfangxing' style='color:#ff9900'></text>
+    <text class='margin-l-10'>待审核</text>
+  </view>
+  <view>
+    <text class='iconfont icon-zhengfangxing' style='color:#3B94F1'></text>
+    <text class='margin-l-10'>已完成</text>
+  </view>
+  <!-- <view>
+    <text class='iconfont icon-zhengfangxing' style='color:#3ef356'></text>
+    <text class='margin-l-10'>代表已开始</text>
+  </view> -->
+</view>
+<view style='height:100px'></view>
+<button class='font-white bg-error' bindtap='logout'>退出登录</button>
 <!-- <view class="text-c padding-v-20 margin-t-20">期待新功能上线</view> -->

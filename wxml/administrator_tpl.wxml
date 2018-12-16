@@ -1,10 +1,9 @@
 <!-- 监理人员 -->
 <template name='administrator'>
-  <view class='padding-t-20 padding-h-20 ng-fl'>
-    <view class='text-c ng-fl-l margin-r-5' wx:if="{{administrator.length}}" wx:for="{{administrator}}" wx:key="{{index}}">
-      
+  <view class='display-flex-center padding-t-20 padding-h-20'>
+    <view class='text-c margin-r-5' wx:if="{{administrator.length}}" wx:for="{{administrator}}" wx:key="{{index}}">
       <image class='avatar' src="{{item.avatar ? item.avatar : 'https://csbucket.oss-cn-shanghai.aliyuncs.com/huaou/900e2571-e396-424b-8643-8f7dc99799f4.png'}}"></image>
-      <view class='font-13'>{{item.userName}}({{item.roleName}})</view>
+      <view class='font-12'>{{item.userName}}({{item.roleName}})</view>
     </view>
     <!-- <view class='text-c ng-fl-l' wx:if="{{shigongfang}}">
       <view>{{shigongfang.roleName}}</view>
