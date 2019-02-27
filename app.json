@@ -1,8 +1,8 @@
 {
   "pages": [
     "pages/pangzhan/index/index",
-    "pages/pangzhan/pangzhan_yylgz/pangzhan_yylgz",
     "pages/mine/index/index",
+    "pages/pangzhan/pangzhan_yylgz/pangzhan_yylgz",
     "pages/mine/msg/msg",
     "pages/pangzhan/pangzhan_jxgzz/pangzhan_jxgzz",
     "pages/pangzhan/pangzhan_tongyong/pangzhan_tongyong",

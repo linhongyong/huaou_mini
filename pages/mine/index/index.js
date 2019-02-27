@@ -186,12 +186,10 @@ Page({
       success: function(res){
         if (res.confirm){
           wx.clearStorage();
-          // wx.reLaunch({
-          //   url: '../../pangzhan/index/index',
-          // })
           util.getDataByAjax({
             url: '/signOutWeiXin',
             method: "Post",
+            data:{},
             success: function (res) {
               console.log("----------------------------------")
               wx.clearStorage();

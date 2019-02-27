@@ -7,7 +7,6 @@
     "zan-tab": "../../../components/tab/index",
     "zan-popup": "../../../components/popup/index",
     "zan-loading": "../../../components/loading/index"
-  },
-  "enablePullDownRefresh": true
+  }
  
 }

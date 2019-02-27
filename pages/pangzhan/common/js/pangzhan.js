@@ -58,7 +58,7 @@ function savaOperationLog (msg){
  */
 function isAllowEdit() {
   let that = this;
-  if (that.data.pang.status >= 3) {//3已完成状态
+  if (that.data.pang.status == 3 || that.data.pang.status == 5) {//3已完成状态
     if (app.globalData.isCanWriteAfterCheck) {
       Toptips("请到PC端修改");
     } else {

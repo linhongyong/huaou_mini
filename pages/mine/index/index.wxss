@@ -35,3 +35,6 @@ page{
   font-size: 28rpx;
   text-align: center
 }
+.bg-error{
+  border-radius: 0;
+}

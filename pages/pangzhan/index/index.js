@@ -429,7 +429,7 @@ Page({
           setTimeout(function () {
             Dialog({
               title: '一键确认',
-              message: `你有${idStatusForConfirmByOneClick.length}条旁站需要确认\n是否一键完成确认`,
+              message: `你有${idStatusForConfirmByOneClick.length}条旁站需要确认\n是否一键完成确认（24小时后默认确认）`,
               selector: '#zan-base-dialog2',
               showCancelButton: true
             }).then(() => {
@@ -571,11 +571,6 @@ Page({
       this.setData({
         isHasAccount: false
       })
-      // Toptips({
-      //   duration: 2000,
-      //   content: "授权成功",
-      //   backgroundColor: "#06A940"
-      // });
       wx.setStorageSync("token", res.data.result);
       this.getPageContentData();
     } else {
@@ -621,80 +616,4 @@ Page({
       },
     });
   },
-/**
-   * 显示新增菜单
-   */
-  // showAddMenu: function(){
-  //   Dialog({
-  //     title: '添加旁站',
-  //     message: '选择旁站类型',
-  //     selector: '#zan-vertical-dialog',
-  //     buttonsShowVertical: true,
-  //     buttons: [{
-  //       text: '机械灌注桩',
-  //       type: '1'
-  //     }, {
-  //         text: '水泥旁站',
-  //       type: '2'
-  //     },{
-  //       text: '预应力管桩',
-  //       type: '3',
-  //     }, {
-  //       text: '通用旁站',
-  //       type: '4',
-  //     }, {
-  //       text: '取消',
-  //       type: 'cancel'
-  //     }]
-  //   }).then(({ type }) => {
-  //     console.log('=== dialog with vertical buttons ===', `type: ${type}`);
-  //     if (type == 1){
-  //       wx.navigateTo({
-  //         url: '../pangzhan_jxgzz/pangzhan_jxgzz',
-  //       })
-  //     } else if (type == 2){
-  //       wx.navigateTo({
-  //         url: '../pangzhan_shuini/pangzhan_shuini',
-  //       })
-  //     } else if (type == 3){
-  //       wx.navigateTo({
-  //         url: '../pangzhan_yylgz/pangzhan_yylgz',
-  //       })
-  //     } else if (type == 4) {
-  //       wx.navigateTo({
-  //         url: '../pangzhan_tongyong/pangzhan_tongyong',
-  //       })
-  //     }
-  //   });
-  // },
-
-/**
-   * 项目切换
-   */
-  // bindMultiPickerChange: function (e) {
-  //   console.log('picker发送选择改变，携带值为', e.detail.value)
-  //   this.setData({
-  //     multiIndex: e.detail.value,
-  //     currentBuildingIndex: e.detail.value[1]
-  //   })
-  //   wx.setStorageSync("currentBuildingId", this.data.buildingList.length && this.data.buildingList[e.detail.value[1]].id)
-  //   wx.setStorageSync("currentBuildingCode", this.data.buildingList.length && this.data.buildingList[e.detail.value[1]].buildingCode)
-  //   wx.setStorageSync("currentBuildingPileNum", this.data.buildingList.length && this.data.buildingList[e.detail.value[1]].pileNum)
-  //   this.getPangzhanList();
-  // },
-
-  // bindMultiPickerColumnChange: function (e) {
-  //   console.log('修改的列为', e.detail.column, '，值为', e.detail.value);
-  //   switch (e.detail.column) {
-  //     case 0:
-  //       wx.setStorageSync("currentProjectId", this.data.projectList[e.detail.value].id)
-  //       wx.setStorageSync("currentProjectName", this.data.projectList[e.detail.value].projectName)
-  //       this.getBuildingList();
-  //       this.getProjectStaffs();
-  //       this.getPangzhanList();
-
-  //       break;
-  //   }
-  // },
-
 })

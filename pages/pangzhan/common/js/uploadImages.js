@@ -63,9 +63,10 @@ function preview (e) {
   let that = this;
   console.log(e);
   let index = e.currentTarget.dataset.index;
+  let stepindex = e.currentTarget.dataset.stepindex;
   wx.previewImage({
-    current: that.data.tempFilePaths[index], // 当前显示图片的http链接
-    urls: that.data.tempFilePaths // 需要预览的图片http链接列表
+    current: that.data.pang[stepindex][index], // 当前显示图片的http链接
+    urls: that.data.pang[stepindex] // 需要预览的图片http链接列表
   })
 }
 

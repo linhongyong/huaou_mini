@@ -53,4 +53,5 @@
 </view>
 <view style='height:100px'></view>
 <button class='font-white bg-error' bindtap='logout'>退出登录</button>
+<view class="font-12 color-999 padding-5 text-c">厦门定风波科技有限公司提供技术支持</view>
 <!-- <view class="text-c padding-v-20 margin-t-20">期待新功能上线</view> -->
